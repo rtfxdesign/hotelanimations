@@ -6,7 +6,7 @@ Written 2026-09-25 by the cloud session on branch `claude/wizardly-edison-00x4h8
 
 - `generation_kit/PROMPTS.md` (+ `.html`, `.pdf`): every asset still to generate, film by film, with the frame to feed and the prompt. Human-readable source of truth.
 - `generation_kit/jobs.json`: the same prompts as 34 machine-readable jobs. Each job has `id`, `film`, `phase` (A or B), `endpoint` (Higgsfield endpoint id), `inputs` (kit frames, or `out:JOB[:first_frame|last_frame]` for phase B), `args`, `prompt`, `takes`.
-- `generation_kit/0N_<film>/`: the 35 input frames. Git-ignored; they live in Allen's local checkout and in the per-film zips delivered in chat. If missing locally, unzip `theria_kit_*.zip` into `generation_kit/`.
+- `generation_kit/0N_<film>/`: the 35 input frames, committed on the branch (122 MB). A plain clone has them; no zips needed.
 - `tools/higgsfield_run.py`: REST runner (needs `HF_KEY`). Use it if the MCP is unavailable; otherwise it is only a reference for the request shapes. `--dry-run` prints the full plan without network.
 - `generation_kit/README_higgsfield.md`: model choices and phase rules.
 

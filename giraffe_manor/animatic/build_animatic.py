@@ -227,7 +227,9 @@ def s6_frame(i):
     """Frame i (0..62) of the generated turn, fitted to 1920x1080 RGBA."""
     if i not in _s6_cache:
         files = sorted(GEN_S6.glob("*.png"))
-        im = Image.open(files[min(i, len(files) - 1)]).convert("RGBA")
+        # the shot is 63 frames; a longer clip is retimed to fit (121 source frames = 2x speed), a 63-frame clip plays 1:1
+        j = round(i * (len(files) - 1) / 62)
+        im = Image.open(files[min(j, len(files) - 1)]).convert("RGBA")
         if im.size != (W, H):
             im = im.resize((W, H), Image.LANCZOS)
         _s6_cache[i] = im
@@ -298,7 +300,7 @@ def render_frame(A: Assets, f: int, burnin=True):
             canvas = Image.blend(A.stage(1.0, frozen_walker), gen, ease((f - 216) / 6))
         else:
             canvas = gen
-        extra = "SHOT 6 — Kling GM-2 t3, f58-120; turn is partial, roto candidate"
+        extra = "SHOT 6 — Kling GM-2 t3 retimed 2x (121 f into 63); no in-place turn yet, roto candidate"
     elif 216 <= f < 269:
         # ---- S6 placeholder: giraffes shrink and drift up toward the house (they do not turn; that is Kling's job)
         t = ease((f - 216) / 53)
@@ -310,12 +312,8 @@ def render_frame(A: Assets, f: int, burnin=True):
         # ---- S7: cut to the GM-3b payoff plate (12 f dissolve from the last S6 frame), 4 % push-in over the shot.
         # The necks-rise motion (GM-4) is not generated yet; this is a still with a push.
         t = ease((f - 269) / 53)
-        ref = s7_plate(lerp(1.0, 1.04, t))
-        if f < 281:
-            prev = s6_frame(62) if GEN_S6 is not None else A.stage(1.0, frozen_walker, hero_shift=(-40, -150), walker_shift=(-40, -150), giraffe_scale=0.62)
-            canvas = Image.blend(prev, ref, ease((f - 269) / 12))
-        else:
-            canvas = ref
+        # hard cut: shot 7 is a new framing of the same house, a dissolve across the zoom reads as an error
+        canvas = s7_plate(lerp(1.0, 1.04, t))
         extra = "SHOT 7 — GM-3b plate, still + push-in; GM-4 motion pending"
     elif 269 <= f < 322:
         # ---- S7 placeholder: dissolve (12 f) to the client reference of the payoff, slow push-in

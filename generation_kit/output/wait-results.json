@@ -1,0 +1,56 @@
+{
+  "jobs": [
+    {
+      "index": 0,
+      "job_id": "00b3067d-51f7-4439-a890-e4177f940d6d",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114835_00b3067d-51f7-4439-a890-e4177f940d6d.mp4",
+      "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/0d14334e-719f-4eeb-813f-cdfd8a43482d.png"
+    },
+    {
+      "index": 1,
+      "job_id": "e58c1f93-3500-49a1-a607-0c76378da898",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114836_e58c1f93-3500-49a1-a607-0c76378da898.mp4",
+      "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/0d14334e-719f-4eeb-813f-cdfd8a43482d.png"
+    },
+    {
+      "index": 2,
+      "job_id": "7851df98-0aa7-4e9c-a378-22c3105384ba",
+      "status": "in_progress",
+      "type": "image",
+      "model": "kling3_0"
+    },
+    {
+      "index": 3,
+      "job_id": "a7a24e26-fc09-41e0-8880-69271cea9bc0",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114849_a7a24e26-fc09-41e0-8880-69271cea9bc0.mp4",
+      "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/2e774aad-f83a-4fd3-9d2e-89d13dc76dac.png"
+    },
+    {
+      "index": 4,
+      "job_id": "2a11c48c-17b3-45ae-be20-90a23adcfd36",
+      "status": "completed",
+      "type": "image",
+      "model": "flux_2",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_115042_2a11c48c-17b3-45ae-be20-90a23adcfd36.png"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "completed": 4,
+    "failed": 0,
+    "active": 1,
+    "errors": 0
+  },
+  "all_terminal": false,
+  "timed_out": true,
+  "poll_after_seconds": 10
+}

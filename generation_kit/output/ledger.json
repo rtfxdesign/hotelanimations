@@ -1,1 +1,272 @@
-{}
+{
+  "CL-2#1": {
+    "job": "CL-2",
+    "take": 1,
+    "film": "08_club22",
+    "endpoint": "flux_2",
+    "request_id": "cc7c92aa-1b12-4de8-b9c6-08d79028e91b",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114744_cc7c92aa-1b12-4de8-b9c6-08d79028e91b.png",
+    "file": "generation_kit/output/08_club22/cl_2_t1.png",
+    "qc": "REVIEW / top-down vinyl reference produced; slightly oval disc, textured black ground and label colour need comp correction. Actual resolution 1536 square despite requested 2K.",
+    "probe": {
+      "width": 1536,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    "submitted": null,
+    "finished": null,
+    "error": null,
+    "prompt_sent": "A single black 12-inch vinyl record perfectly top-down, deep matte black grooves catching a narrow crescent of warm light, plain deep-red centre label (RGB 178,47,40) with no text, tiny dust motes. Pure black background, no reflection. Entire circular record visible with margin on all sides. Studio product photography. No text, letters, watermark, signature, logo or branding."
+  },
+  "GM-2#1": {
+    "job": "GM-2",
+    "take": 1,
+    "film": "01_giraffe_manor",
+    "endpoint": "kling3_0",
+    "request_id": "00b3067d-51f7-4439-a890-e4177f940d6d",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114835_00b3067d-51f7-4439-a890-e4177f940d6d.mp4",
+    "file": "generation_kit/output/01_giraffe_manor/gm_2_t1.mp4",
+    "params": {
+      "prompt": "Both giraffes turn away from the camera together, slowly, and walk up the lawn toward the ivy-covered stone house, getting smaller as they go. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
+      "aspect_ratio": "16:9",
+      "duration": 5,
+      "reference_images": [
+        "0d14334e-719f-4eeb-813f-cdfd8a43482d"
+      ],
+      "mode": "pro",
+      "sound": "off"
+    },
+    "probe": {
+      "width": 1920,
+      "height": 1080,
+      "codec_name": "h264",
+      "avg_frame_rate": "24/1",
+      "nb_frames": "121",
+      "duration": "5.041667",
+      "has_audio": false
+    },
+    "qc": "HOLD / sampled frames: giraffes travel sideways and overlap; no clear back-facing approach to the house. Not approved for Shot 6.",
+    "submitted": null,
+    "finished": null,
+    "error": null
+  },
+  "GM-2#2": {
+    "job": "GM-2",
+    "take": 2,
+    "film": "01_giraffe_manor",
+    "endpoint": "kling3_0",
+    "request_id": "e58c1f93-3500-49a1-a607-0c76378da898",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114836_e58c1f93-3500-49a1-a607-0c76378da898.mp4",
+    "file": "generation_kit/output/01_giraffe_manor/gm_2_t2.mp4",
+    "params": {
+      "prompt": "Both giraffes turn away from the camera together, slowly, and walk up the lawn toward the ivy-covered stone house, getting smaller as they go. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
+      "aspect_ratio": "16:9",
+      "duration": 5,
+      "reference_images": [
+        "0d14334e-719f-4eeb-813f-cdfd8a43482d"
+      ],
+      "mode": "pro",
+      "sound": "off"
+    },
+    "probe": {
+      "width": 1920,
+      "height": 1080,
+      "codec_name": "h264",
+      "avg_frame_rate": "24/1",
+      "nb_frames": "121",
+      "duration": "5.041667",
+      "has_audio": false
+    },
+    "qc": "HOLD / sampled frames at 0.5-second intervals: animals remain largely side-on and move left along the foreground. Required turn/retreat is not established. Do not use as a phase-B start without review.",
+    "submitted": null,
+    "finished": null,
+    "error": null
+  },
+  "FA-1#1": {
+    "job": "FA-1",
+    "take": 1,
+    "film": "02_fifth_avenue",
+    "endpoint": "kling3_0",
+    "request_id": "7851df98-0aa7-4e9c-a378-22c3105384ba",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114849_7851df98-0aa7-4e9c-a378-22c3105384ba.mp4",
+    "file": "generation_kit/output/02_fifth_avenue/fa_1_t1.mp4",
+    "params": {
+      "prompt": "A Gilded Age couple in period dress, the woman with a lace parasol, walk forward beside a golden tortoise on a leash through a sunlit park. Normal walking speed, natural gait, the parasol turns slightly, the leash sways. Leaves and light move naturally. Painterly oil-painting texture preserved. Keep the tortoise gold, the same two people and the original frame composition. No morphing, warping limbs, flickering, extra animals, text or style change. Camera locked off, no camera movement, no zoom.",
+      "aspect_ratio": "16:9",
+      "duration": 5,
+      "reference_images": [
+        "2e774aad-f83a-4fd3-9d2e-89d13dc76dac"
+      ],
+      "mode": "pro",
+      "sound": "off"
+    },
+    "probe": {
+      "width": 1920,
+      "height": 1080,
+      "codec_name": "h264",
+      "avg_frame_rate": "24/1",
+      "nb_frames": "121",
+      "duration": "5.041667",
+      "has_audio": false
+    },
+    "qc": "REVIEW / sampled frames: couple and gold tortoise walk; painting detail softens and changes from the source. Needs continuous gait/hand/leash QC and separate subject retiming. No take selected.",
+    "submitted": null,
+    "finished": null,
+    "error": null
+  },
+  "FA-1#2": {
+    "job": "FA-1",
+    "take": 2,
+    "film": "02_fifth_avenue",
+    "endpoint": "kling3_0",
+    "request_id": "a7a24e26-fc09-41e0-8880-69271cea9bc0",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114849_a7a24e26-fc09-41e0-8880-69271cea9bc0.mp4",
+    "file": "generation_kit/output/02_fifth_avenue/fa_1_t2.mp4",
+    "params": {
+      "prompt": "A Gilded Age couple in period dress, the woman with a lace parasol, walk forward beside a golden tortoise on a leash through a sunlit park. Normal walking speed, natural gait, the parasol turns slightly, the leash sways. Leaves and light move naturally. Painterly oil-painting texture preserved. Keep the tortoise gold, the same two people and the original frame composition. No morphing, warping limbs, flickering, extra animals, text or style change. Camera locked off, no camera movement, no zoom.",
+      "aspect_ratio": "16:9",
+      "duration": 5,
+      "reference_images": [
+        "2e774aad-f83a-4fd3-9d2e-89d13dc76dac"
+      ],
+      "mode": "pro",
+      "sound": "off"
+    },
+    "probe": {
+      "width": 1920,
+      "height": 1080,
+      "codec_name": "h264",
+      "avg_frame_rate": "24/1",
+      "nb_frames": "121",
+      "duration": "5.041667",
+      "has_audio": false
+    },
+    "qc": "REVIEW / sampled frames: couple and gold tortoise walk; pose and painterly detail vary. Needs continuous gait/hand/leash QC and separate subject retiming. No take selected.",
+    "submitted": null,
+    "finished": null,
+    "error": null
+  },
+  "CL-1#1": {
+    "job": "CL-1",
+    "take": 1,
+    "film": "08_club22",
+    "endpoint": "flux_2",
+    "request_id": "2a11c48c-17b3-45ae-be20-90a23adcfd36",
+    "status": "completed",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_115042_2a11c48c-17b3-45ae-be20-90a23adcfd36.png",
+    "file": "generation_kit/output/08_club22/cl_1_t1.png",
+    "probe": {
+      "width": 1920,
+      "height": 1088,
+      "mode": "RGB"
+    },
+    "qc": "REJECT as final prop: invented branding/lettering, complete deck body instead of isolated platter, and duplicated arm-like hardware. Lighting reference only.",
+    "submitted": null,
+    "finished": null,
+    "error": null,
+    "prompt_sent": "Single vintage direct-drive turntable platter from a low three-quarter angle at 30 degree camera elevation, brushed aluminium rim, black rubber slipmat, chrome centre spindle, matte black tonearm with counterweight resting at the side. Studio product photography on pure black, single soft key from upper left, warm specular highlights on the metal. Whole object fully visible with generous black margin. No text, no branding, no record on the platter."
+  },
+  "GM-2-REAR#1": {
+    "job": "GM-2-REAR",
+    "take": 1,
+    "film": "01_giraffe_manor",
+    "endpoint": "gpt_image_2_5",
+    "request_id": "d9a7f565-982b-41ed-beca-4fcb7bae32b9",
+    "status": "completed",
+    "url": null,
+    "file": "generation_kit/output/01_giraffe_manor/gm_2_rear_end.png",
+    "error": null,
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Edit the first reference photograph as the end frame for a continuous locked-camera shot. Preserve the exact ivy-covered manor, guests, trees, terrace, sun direction, photographic texture and camera perspective pixel-faithfully. Change only the two giraffes in the lower foreground: both now seen clearly from behind, walking straight away from camera up the center approach toward the front steps, noticeably smaller than in the first image, each with four natural legs and correct tan reticulated coat. Place them near the center path without covering the guests. No new people or animals. No text, logo, watermark, perspective change or zoom."
+  },
+  "MI-4#attempt1": {
+    "job": "MI-4",
+    "take": 1,
+    "film": "06_miavana",
+    "endpoint": "gpt_image_2_5",
+    "request_id": null,
+    "status": "rejected_before_submission",
+    "url": null,
+    "file": null,
+    "error": "The connector rejected the raw GitHub PNG reference as octet-stream; no generation job was created.",
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Edit this real resort aerial photograph conservatively. Preserve the buildings, beach, palms, coastline, green forest, lighting, camera viewpoint, and image framing. Add two small photoreal ring-tailed lemurs perched naturally in existing palm crowns: one seated in a palm in the left quarter of the frame, the other hanging safely from a palm near the right quarter. They are wildlife details integrated at the correct scale for the aerial, not large foreground cutouts. Their ringed tails and poses are visible on closer look. Add no text, no lettering, no wordmark, no new buildings, no extra animals. 16:9 landscape."
+  },
+  "MI-4#1": {
+    "job": "MI-4",
+    "take": 1,
+    "film": "06_miavana",
+    "endpoint": "openai_image_gen",
+    "request_id": null,
+    "status": "completed",
+    "url": null,
+    "file": "generation_kit/output/06_miavana/mi_4_t1.png",
+    "error": null,
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Edit the first photograph (Miavana aerial) as a clean 16:9 hotel animation plate. Preserve its real resort, beach, palms, shoreline, lighting, camera angle and architecture. Add the two ring-tailed lemurs from references 2 and 3 into distinct existing palm crowns, one seated on a left-side palm near x=20% of frame and one hanging on a right-side palm near x=83%. They should be visually identifiable yet proportionate to an aerial view, with convincing contact to the fronds and matching sunset light. No text, no logos, no arrows, no extra animals. Keep this a photoreal scene, not a collage."
+  },
+  "GM-3#1": {
+    "job": "GM-3",
+    "take": 1,
+    "film": "01_giraffe_manor",
+    "endpoint": "openai_image_gen",
+    "request_id": null,
+    "status": "completed",
+    "url": null,
+    "file": "generation_kit/output/01_giraffe_manor/gm_3_t1.png",
+    "error": null,
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Create a photorealistic 16:9 continuation still of the FIRST image, preserving its exact Giraffe Manor building facade, roof, window layout, lawn, front terrace and late afternoon sunlight. Camera has moved a little closer toward the central upper-story windows; two giraffes stand at the house and extend their heads toward separate open upper-floor windows as in the SECOND reference photo. Keep both entire giraffe necks and most bodies visible, anatomy natural, no invented windows or people in the windows, no text, no logos. This is a cinematic hotel-film payoff plate, high detail, stable architecture."
+  },
+  "PA-1#1": {
+    "job": "PA-1",
+    "take": 1,
+    "film": "03_passalacqua",
+    "endpoint": "openai_image_gen",
+    "request_id": null,
+    "status": "completed",
+    "url": null,
+    "file": "generation_kit/output/03_passalacqua/pa_1_t1.png",
+    "error": null,
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Edit this exact landscape image into a clean 16:9 photographic plate of the same Lake Como villa and lake. Preserve the architecture, mountain horizon, shoreline, time of day, reflection and composition. Remove all three breaching gold fish and all splashes or rings they caused; replace them with natural undisturbed lake water. No text, no logo, no added people or animals. High resolution cinematic clean background plate for animation compositing."
+  },
+  "VE-1#1": {
+    "job": "VE-1",
+    "take": 1,
+    "film": "04_versailles",
+    "endpoint": "openai_image_gen",
+    "request_id": null,
+    "status": "completed",
+    "url": null,
+    "file": "generation_kit/output/04_versailles/ve_1_t1.png",
+    "error": null,
+    "submitted": null,
+    "finished": null,
+    "prompt_sent": "Create a photorealistic wide 16:9 clean background plate of this exact lavish Versailles salon, same warm afternoon lighting, perspective, gilded boiserie, tall windows, parquet, wall spacing and colour. Remove the blue cake, gold table and chandelier entirely and reconstruct the empty room naturally; leave centre foreground and ceiling clear to composite those objects later. Camera locked, no people, no text, no logos. Preserve luxurious cinematic realism."
+  },
+  "_local_outputs": {
+    "note": "Locally composited or derived artifacts copied into the same film folders; no generation request or model credit was used for these. QC frames are co-located.",
+    "files": [
+      "generation_kit/output/01_giraffe_manor/giraffe_manor_v0.2.mp4",
+      "generation_kit/output/02_fifth_avenue/fifth_avenue_picture.mp4",
+      "generation_kit/output/02_fifth_avenue/fifth_avenue_v0.1.mp4",
+      "generation_kit/output/03_passalacqua/passalacqua_v0.1.mp4",
+      "generation_kit/output/06_miavana/miavana_v0.1.mp4",
+      "generation_kit/output/08_club22/club22_picture.mp4",
+      "generation_kit/output/08_club22/club22_rhythm_124bpm.wav",
+      "generation_kit/output/08_club22/club22_seamless_loop_v0.1.mp4",
+      "generation_kit/output/08_club22/club22_v0.1.mp4"
+    ]
+  }
+}

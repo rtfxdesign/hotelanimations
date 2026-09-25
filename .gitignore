@@ -1,3 +1,4 @@
-generation_kit/*/
+generation_kit/output/
+generation_kit/_aux/
 __pycache__/
 generation_kit/.uploads.json

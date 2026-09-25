@@ -141,7 +141,7 @@
     "cfg_scale": 0.5
    },
    "prompt": "The two giraffes slowly raise their necks and push their heads gently in through the open upstairs windows, ending exactly on the final frame. Calm, slow. The house, ivy, terrace and people do not change. Camera locked off, no camera movement, no zoom.",
-   "note": "Kling first-last: GM-3c (necks lowered) to GM-3b (heads in the windows). Replaces the earlier plan of chaining from GM-2."
+   "note": "Kling first-last: GM-3c (necks lowered) to GM-3b. Run GM-3c first, then GM-4 with its output, in the same round."
   },
   {
    "id": "FA-1",
@@ -195,6 +195,23 @@
     "cfg_scale": 0.5
    },
    "prompt": "Three solid gold fish sculptures, standing vertically side by side on white, come alive: they rotate slightly toward the viewer, gain a soft cast shadow, and take their first tail beat, each a beat apart. Pure white background throughout. The fish stay gold. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "PA-3",
+   "film": "03_passalacqua",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "output/03_passalacqua/pa_3_START_comp.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The three golden fish drop straight down into the lake one after another, centre first, then left, then right, each landing with a small splash and ripple rings, and disappear under the surface. The villa, mountains and light do not change. Camera locked off, no camera movement, no zoom.",
+   "note": "Start frame = clean lake (PA-1) with the three gold fish comped hovering over the water."
   },
   {
    "id": "PA-4",
@@ -354,7 +371,8 @@
     "enable_thinking": false,
     "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
    },
-   "prompt": "Extend this image to a wider 16:9 frame by continuing the turquoise shallow water with sun caustics to the left and right edges at the same scale. Do not change, move, add or remove any turtles or any lettering; keep the centre of the image pixel-for-pixel as it is."
+   "prompt": "Extend this image to a wider 16:9 frame by continuing the turquoise shallow water with sun caustics to the left and right edges at the same scale. Do not change, move, add or remove any turtles or any lettering; keep the centre of the image pixel-for-pixel as it is.",
+   "note": "Round 2 output rejected; superseded by output/05_north_island/ni_1_comp.png (Pillow mirror-extension). Do not rerun."
   },
   {
    "id": "NI-2",
@@ -363,14 +381,15 @@
    "endpoint": "kling-video/v3.0/pro/image-to-video",
    "takes": 1,
    "inputs": {
-    "image_url": "out:NI-1"
+    "image_url": "output/05_north_island/ni_1_comp.png"
    },
    "args": {
     "duration": 5,
     "sound": "off",
     "cfg_scale": 0.5
    },
-   "prompt": "The five golden turtles begin to swim, front flippers stroking one after another, drifting slowly to the right by about a tenth of the frame. Sun caustics move across their shells and the sand. The lettering does not move. Seen from directly above. Five turtles only. Camera locked off, no camera movement, no zoom."
+   "prompt": "The five golden turtles begin to swim, front flippers stroking one after another, drifting slowly to the right by about a tenth of the frame. Sun caustics move across their shells and the sand. The lettering does not move. Seen from directly above. Five turtles only. Camera locked off, no camera movement, no zoom.",
+   "note": "Start = Claude mirror-extended 16:9 plate (ni_1_comp.png). Round-2 NI-1 model output rejected (rebuilt the centre)."
   },
   {
    "id": "NI-3",
@@ -404,7 +423,7 @@
     "cfg_scale": 0.5
    },
    "prompt": "The golden turtles turn around one after another and crawl back down the beach into the shallow turquoise water. Five turtles only, same gold. Camera locked off, no camera movement, no zoom.",
-   "note": "ends on NI-3's first frame so the beach beat loops"
+   "note": "first = last frame of NI-3, last = first frame of NI-3 so the beach beat loops. NI-3 turtle count drifts (3-5); accept for the animatic."
   },
   {
    "id": "MI-1a",

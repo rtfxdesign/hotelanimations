@@ -16,7 +16,9 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "docs" / "theria_storyboards.html"
+CLIENT = "--client" in sys.argv
+args = [a for a in sys.argv[1:] if not a.startswith("--")]
+OUT = Path(args[0]) if args else ROOT / "docs" / ("theria_storyboards_client.html" if CLIENT else "theria_storyboards.html")
 
 FILMS = [
     ("01", "Giraffe Manor", "Nairobi, Kenya", "giraffe_manor", [
@@ -217,6 +219,13 @@ footer svg{height:22px;width:auto}
 """
 
 
+def first_sentence(t: str, limit=160) -> str:
+    t = re.sub(r"\*\*|`", "", t).strip()
+    m = re.match(r"(.+?[.!?])(\s|$)", t)
+    t = m.group(1) if m else t
+    return t if len(t) <= limit else t[:limit].rsplit(" ", 1)[0] + "…"
+
+
 def status_class(s: str):
     u = s.upper()
     if "GENERATE" in u:
@@ -233,14 +242,20 @@ def build():
     wordmark = load_svg("rtfx-wordmark-white.svg")
     mark = load_svg("rtfx-mark-x-white.svg")
     today = date.today().isoformat()
+    sub = ("Storyboards for review · " + today + " · eight films · 16:9 HD · 24 fps · each film loops") if CLIENT else ("v2 · " + today + " · eight films · one 16:9 HD master · 24 fps · every film loops on its first frame")
+    intro = ("For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; amber tags mark shots still to be generated. Nothing is animated yet.") if CLIENT else ("Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet.")
+    label_beats = "Your beats" if CLIENT else "Client beats · from the brief"
+    label_board = "Storyboard" if CLIENT else "Expanded board"
+    footer_txt = ("RTFX DESIGN · " + today) if CLIENT else ("RTFX DESIGN · ARTIFEX MACHINA · built from the Drive assets, " + today)
+    title_txt = "Theria Storyboards" if CLIENT else "Theria Storyboards (production)"
     parts.append(f"""<header class=wrap>
 <div><div class=logo>{wordmark}</div><h1>THERIA · HOTEL ANIMATIONS · STORYBOARDS</h1>
-<div class=sub>v2 · {today} · eight films · one 16:9 HD master · 24 fps · every film loops on its first frame</div></div>
-<div class=chips><span class="chip amber">For review</span><span class=chip>Client beats first</span><span class=chip>Expanded board below</span></div>
+<div class=sub>{sub}</div></div>
+<div class=chips><span class="chip amber">For review</span><span class=chip>Your beats first</span><span class=chip>Storyboard below</span></div>
 </header>
 <div class=wrap><nav class=films>{''.join(f'<a href="#f{n}"><span>{n}</span>{html.escape(t)}</a>' for n, t, _, _, _ in FILMS)}</nav>
 <div class=tick></div>
-<p class=intro>Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet.</p></div>""")
+<p class=intro>{"For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; amber tags mark shots still to be generated. Nothing is animated yet." if CLIENT else "Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet."}</p></div>""")
 
     for num, title, place, d, brief in FILMS:
         sb = ROOT / d / "storyboard" / "STORYBOARD.md"
@@ -248,6 +263,9 @@ def build():
         md = sb.read_text(encoding="utf-8") if sb.exists() else ""
         headers, rows = find_beat_table(md)
         trt = header_meta(md)
+        if CLIENT:
+            m = re.match(r"\s*(\d+(?:\.\d+)?\s*s)", trt)
+            trt = (m.group(1) + " · 24 fps · 16:9") if m else ""
         smalls = {p.stem.replace("_small", ""): p for p in sorted(frames_dir.glob("*_small.jpg"))} if frames_dir.exists() else {}
 
         cards = []
@@ -278,7 +296,13 @@ def build():
                     foot += f"<span class=chip>{inline_md(get(c_trans))}</span>"
                 if status:
                     foot += f"<span class='chip {status_class(status)}'>{inline_md(status[:90])}</span>"
-                cards.append(f"""<article class="card chamfer">{img}<div class=body>
+                if CLIENT:
+                    cards.append(f"""<article class="card chamfer">{img}<div class=body>
+<div class=beat>Beat {inline_md(get(c_beat))}<span class=t>{inline_md(get(c_time))}</span></div>
+<div class=on>{html.escape(first_sentence(get(c_on)))}</div>
+</div></article>""")
+                else:
+                    cards.append(f"""<article class="card chamfer">{img}<div class=body>
 <div class=beat>Beat {inline_md(get(c_beat))}<span class=t>{inline_md(get(c_time))}</span></div>
 {f'<div class=brieftxt>{inline_md(get(c_brief))}</div>' if get(c_brief) else ''}
 <div class=on>{inline_md(get(c_on))}</div>
@@ -291,11 +315,10 @@ def build():
             if k not in used and not k.startswith("contact"):
                 cards.append(f"<article class='card chamfer'><img src='{b64(p)}' alt='{html.escape(k)}' loading=lazy><div class=body><div class=beat>{html.escape(k.replace('_', ' '))}</div></div></article>")
 
-        print(f'{d}: rows={len(rows)} frames={len(smalls)} matched={len(used)} extra={len(smalls)-len(used)}')
         decisions = section_bullets(md, r"Decisions taken|Decisions")
         needed = section_bullets(md, r"Assets still needed|Assets needed")
         aside = ""
-        if decisions or needed:
+        if (decisions or needed) and not CLIENT:
             aside = "<div class=aside>"
             if decisions:
                 aside += "<div class='box chamfer'><p class=label>Decisions taken</p><ul>" + "".join(f"<li>{inline_md(x)}</li>" for x in decisions) + "</ul></div>"
@@ -306,17 +329,17 @@ def build():
         parts.append(f"""<section class="film wrap" id="f{num}">
 <div class=tick></div>
 <div class=filmhead><span class=num>{num}</span><h2>{html.escape(title)}</h2><span class=place>{html.escape(place)}</span></div>
-<div class=meta>{f'<span class=chip>{inline_md(trt)}</span>' if trt else ''}<span class=chip>{len(brief)} client beats</span><span class=chip>{len(cards)} board frames</span></div>
-<p class=label>Client beats · from the brief</p>
+<div class=meta>{f'<span class=chip>{inline_md(trt)}</span>' if trt else ''}<span class=chip>{len(brief)} beats</span><span class=chip>{len(cards)} frames</span></div>
+<p class=label>{label_beats}</p>
 <div class="brief chamfer"><ol>{''.join(f'<li><span>{html.escape(b)}</span></li>' for b in brief)}</ol></div>
-<p class=label style="margin-top:26px">Expanded board</p>
+<p class=label style="margin-top:26px">{label_board}</p>
 <div class=cards>{''.join(cards)}</div>
 {aside}
 </section>""")
 
-    parts.append(f"<footer class=wrap>{mark}<span>RTFX DESIGN · ARTIFEX MACHINA · built from the Drive assets, {today}</span></footer>")
+    parts.append(f"<footer class=wrap>{mark}<span>{footer_txt}</span></footer>")
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Theria Storyboards</title>
+<title>{title_txt}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <style>{CSS}</style></head><body>{''.join(parts)}</body></html>"""
     OUT.parent.mkdir(parents=True, exist_ok=True)

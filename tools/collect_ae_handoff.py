@@ -85,10 +85,41 @@ def passalacqua(pull: Path, out: Path):
     cp(SHEETS / "passalacqua_EDIT_SHEET.md", out / "passalacqua", "EDIT_SHEET.md")
 
 
+def miavana(pull: Path, out: Path):
+    a = out / "miavana" / "assets"
+    up = pull / "Miavana" / "upscaled"
+    for n in ("miavana_0000_left_lemur.png", "miavana_0001_right_lemur.png", "miavana_0003_islandsanctuary.png", "miavana_0004_bytimeandtide.png", "resort_16x9.png"):
+        cp(up / n, a)
+    cp(WM / "miavana_wordmark.png", a)
+    cp(GEN / "06_miavana" / "mi_4_comp_5k.png", a, "mi_palms_lemurs_comp_4988x2806.png")
+    cp(GEN / "06_miavana" / "mi_4b_seated_alpha.png", a, "mi_seated_lemur_keyed_alpha.png")
+    cp(GEN / "06_miavana" / "mi_4b_hanging_alpha.png", a, "mi_hanging_lemur_keyed_alpha.png")
+    for n in ("mi_1a_t1.png", "mi_1b_t1.png", "mi_1c_t1.png", "mi_2_t1.mp4", "mi_3_t1.mp4"):
+        cp(GEN / "06_miavana" / n, a)
+    mango = ROOT / "miavana" / "animatic" / "mi_mango_cutout_alpha.png"
+    if mango.exists():
+        cp(mango, a)
+    cp(ROOT / "miavana" / "animatic" / "miavana_animatic_v0.1.mp4", out / "miavana")
+    cp(SHEETS / "miavana_EDIT_SHEET.md", out / "miavana", "EDIT_SHEET.md")
+
+
+def necker_island(pull: Path, out: Path):
+    a = out / "necker_island" / "assets"
+    kit = ROOT / "generation_kit" / "07_necker_island"
+    cp(pull / "Necker Island" / "flamingo.png", a)
+    cp(kit / "ne_shot1_START_flamingo_on_white.png", a)
+    cp(kit / "ne_shot3_aerial_16x9.png", a, "ne_aerial_16x9_3840x2160.png")
+    cp(kit / "ne_ref_flamingo_cutout_alpha.png", a)
+    for n in ("ne_1_t1.mp4", "ne_2_t1.png", "ne_3_t1.mp4", "ne_4a_t1.png", "ne_4b_t1.png", "ne_5_t1.mp4"):
+        cp(GEN / "07_necker_island" / n, a)
+    cp(ROOT / "necker_island" / "animatic" / "necker_island_animatic_v0.1.mp4", out / "necker_island")
+    cp(SHEETS / "necker_island_EDIT_SHEET.md", out / "necker_island", "EDIT_SHEET.md")
+
+
 def main():
     pull, out = (Path(a).expanduser().resolve() for a in sys.argv[1:3])
     out.mkdir(parents=True, exist_ok=True)
-    giraffe_manor(pull, out); north_island(pull, out); passalacqua(pull, out)
+    giraffe_manor(pull, out); north_island(pull, out); passalacqua(pull, out); miavana(pull, out); necker_island(pull, out)
     cp(SHEETS / "README.md", out)
     total = 0
     for p in sorted(out.rglob("*")):

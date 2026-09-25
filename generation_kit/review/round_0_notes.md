@@ -19,3 +19,7 @@ Contact sheets in `review/r0/`. Verdicts: KEEP = use as is, KEEP+COMP = use with
 Provisional picks written to `picks.json` (FA-1=1, PA-1=1, VE-1=1, MI-4=1, CL-2=1) pending Allen.
 
 Policy from Allen, 2026-09-25: Sol may use whichever model serves the shot; rotoscoping in After Effects is acceptable, so prefer clean separable elements over perfect in-plate integration.
+
+## Addendum (Allen, 12:35 UTC)
+
+`passalacqua_v0.1.mp4` f311: wordmark over the lake is a luma-keyed white-background raster; letter counters (O, D, A, Q) are filled white. See `r0/pa_f311_logo_zoom.png`. Fix: use `assets/wordmarks/passalacqua_wordmark.png` (RGBA from the vector). Rule restated to Sol on PR #3. Applies to all films.

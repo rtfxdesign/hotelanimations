@@ -38,7 +38,7 @@ WORDMARK = REPO / "assets" / "wordmarks" / "giraffe_manor_wordmark.png"
 SHOTS = [
     ("S1 hold", 0, 48), ("S2 logo", 48, 86), ("S3a enter", 86, 120), ("S3b stop", 120, 154),
     ("S4 reveal", 154, 178), ("S5 pull-back", 178, 206), ("S6 turn (Kling GM-2 t3, 2x)", 206, 269),
-    ("S7 windows (GM-3b plate, push-in)", 269, 322), ("S8 payoff + mark", 322, 351),
+    ("S7 windows (Kling GM-4)", 269, 322), ("S8 payoff + mark", 322, 351),
     ("S9 return", 351, 373), ("S10 loop hold", 373, 384),
 ]
 TOTAL = 384
@@ -199,7 +199,7 @@ def end_mark(canvas, logo, opacity):
 def burn(canvas, f, shot, extra=None):
     d = ImageDraw.Draw(canvas)
     ff = font(22)
-    txt = f"GIRAFFE MANOR · ANIMATIC v0.2 · {shot} · f{f:03d} · {f / FPS:05.2f}s"
+    txt = f"GIRAFFE MANOR · ANIMATIC v0.3 · {shot} · f{f:03d} · {f / FPS:05.2f}s"
     tw = d.textlength(txt, font=ff)
     d.rectangle((16, 16, 16 + tw + 20, 16 + 36), fill=(0, 0, 0, 200))
     d.text((26, 22), txt, font=ff, fill=(255, 176, 32))
@@ -219,6 +219,19 @@ def shot_name(f):
 
 GEN_S6 = Path(os.environ["GM_S6_FRAMES"]) if os.environ.get("GM_S6_FRAMES") else None   # dir of 63 PNGs, Kling GM-2 take, f58..f120
 GEN_S7 = Path(os.environ["GM_S7_PLATE"]) if os.environ.get("GM_S7_PLATE") else None    # GM-3b still, any 16:9 size
+GEN_S7F = Path(os.environ["GM_S7_FRAMES"]) if os.environ.get("GM_S7_FRAMES") else None  # dir of GM-4 clip PNGs (necks rise), used over the still
+_s7f_cache = {}
+
+
+def s7_clip(i):
+    """Frame i of the GM-4 clip, fitted to 1920x1080 RGBA, clamped to the last frame."""
+    if i not in _s7f_cache:
+        files = sorted(GEN_S7F.glob("*.png"))
+        im = Image.open(files[min(max(i, 0), len(files) - 1)]).convert("RGBA")
+        if im.size != (W, H):
+            im = im.resize((W, H), Image.LANCZOS)
+        _s7f_cache[i] = im
+    return _s7f_cache[i]
 _s6_cache = {}
 _s7_cache = {}
 
@@ -308,6 +321,10 @@ def render_frame(A: Assets, f: int, burnin=True):
         shift = (round(lerp(0, -40, t)), round(lerp(0, -150, t)))
         canvas = A.stage(1.0, frozen_walker, hero_shift=shift, walker_shift=shift, giraffe_scale=gs)
         extra = "SHOT 6 PLACEHOLDER — Kling: both turn and walk up to the house"
+    elif 269 <= f < 322 and GEN_S7F is not None:
+        # ---- S7: hard cut to the GM-4 clip (necks rise f0-22, heads in the windows, gentle hold)
+        canvas = s7_clip(f - 269).copy()
+        extra = "SHOT 7 — Kling GM-4 (GM-3c to GM-3b), clip f0-52"
     elif 269 <= f < 322 and GEN_S7 is not None:
         # ---- S7: cut to the GM-3b payoff plate (12 f dissolve from the last S6 frame), 4 % push-in over the shot.
         # The necks-rise motion (GM-4) is not generated yet; this is a still with a push.
@@ -329,11 +346,11 @@ def render_frame(A: Assets, f: int, burnin=True):
         extra = "SHOT 7 PLACEHOLDER — Kling: heads through the upstairs windows (client reference photo)"
     elif 322 <= f < 351:
         # ---- S8: payoff hold, small mark fades up bottom-right over 0.5 s
-        canvas = s7_plate(1.04).copy() if GEN_S7 is not None else A.ref_ext.copy()
+        canvas = s7_clip(f - 269).copy() if GEN_S7F is not None else (s7_plate(1.04).copy() if GEN_S7 is not None else A.ref_ext.copy())
         end_mark(canvas, A.logo, ease(min(1, (f - 322) / 12)))
     elif 351 <= f < 373:
         # ---- S9: exposure lift (8 f) then dissolve to the hero alone
-        payoff = s7_plate(1.04).copy() if GEN_S7 is not None else A.ref_ext.copy(); end_mark(payoff, A.logo, 1.0)
+        payoff = s7_clip(f - 269).copy() if GEN_S7F is not None else (s7_plate(1.04).copy() if GEN_S7 is not None else A.ref_ext.copy()); end_mark(payoff, A.logo, 1.0)
         t = (f - 351) / 22
         lift = Image.blend(payoff, blank(), 0.25 * ease(min(1, (f - 351) / 8)))
         canvas = Image.blend(lift, hero_alone, ease(t))
@@ -359,7 +376,7 @@ def main():
     # loop check: last frame equals first frame apart from the burn-in
     a = render_frame(A, 0, False).tobytes(); b = render_frame(A, TOTAL - 1, False).tobytes()
     print("loop frame identical:", a == b)
-    mp4 = out / ("giraffe_manor_animatic_v0.2.mp4" if (GEN_S6 or GEN_S7) else "giraffe_manor_animatic_v0.1.mp4")
+    mp4 = out / ("giraffe_manor_animatic_v0.3.mp4" if GEN_S7F else "giraffe_manor_animatic_v0.2.mp4" if (GEN_S6 or GEN_S7) else "giraffe_manor_animatic_v0.1.mp4")
     bed = pull / "Giraffe Manor" / "audio" / "birdsong01.wav"
     cmd = ["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-i", str(frames_dir / "gm_%04d.png")]
     if bed.exists():

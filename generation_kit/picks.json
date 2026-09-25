@@ -1,5 +1,5 @@
 {
- "_provisional": "proposed by Claude, rounds 0-2; awaiting Allen. GM-2 take 3 used retimed. NI-1 = ni_1_comp.png (Claude), not the model output.",
+ "_provisional": "proposed by Claude, rounds 0-3; awaiting Allen. GM-2 take 3 used retimed. NI-1 = ni_1_comp.png (Claude).",
  "FA-1": 1,
  "PA-1": 1,
  "VE-1": 1,
@@ -25,5 +25,15 @@
  "NE-2": 1,
  "NE-4a": 1,
  "NE-4b": 1,
- "CL-3": 1
+ "CL-3": 1,
+ "GM-1v": 1,
+ "GM-3c": 1,
+ "GM-4": 1,
+ "PA-3": 1,
+ "PA-4": 1,
+ "NI-2": 1,
+ "NI-4": 1,
+ "MI-1b": 1,
+ "MI-1c": 1,
+ "NE-3": 1
 }

@@ -9,6 +9,7 @@ previews. Everything is embedded (base64), so the file is self-contained.
 Usage: python tools/build_storyboard_site.py [out.html]
 """
 import base64
+import json
 import html
 import re
 import sys
@@ -17,6 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT = "--client" in sys.argv
+OVERRIDES = {}
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 OUT = Path(args[0]) if args else ROOT / "docs" / ("theria_storyboards_client.html" if CLIENT else "theria_storyboards.html")
 
@@ -74,6 +76,21 @@ FILMS = [
 
 def b64(p: Path, mime="image/jpeg") -> str:
     return f"data:{mime};base64," + base64.b64encode(p.read_bytes()).decode()
+
+
+def load_overrides() -> dict:
+    """docs/frame_overrides.json: {"film/frame_stem": {"file": ..., "note": ...}} from tools/make_frame_overrides.py."""
+    f = ROOT / "docs" / "frame_overrides.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
+def b64_small(p: Path) -> str:
+    """Any image, downscaled to the 960x540 preview size and inlined as JPEG."""
+    import io
+    from PIL import Image
+    im = Image.open(p).convert("RGB"); im.thumbnail((960, 540))
+    b = io.BytesIO(); im.save(b, "JPEG", quality=85)
+    return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
 
 
 def inline_md(s: str) -> str:
@@ -209,6 +226,7 @@ section.film{padding-top:8px}
 .card .foot .chip.gen{color:var(--amber);border-color:#5a3d00}
 .card .foot .chip.ready{color:#8fd694;border-color:#1f4a24}
 .card .foot .chip.comp{color:#9dc1ff;border-color:#1f3556}
+.card .foot .chip.generated{color:#000;background:var(--amber);border-color:var(--amber)}
 .aside{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
 .aside .box{background:var(--panel);border:1px solid var(--rule);padding:14px 16px}
 .aside ul{margin:0;padding-left:18px;font-size:13.5px;color:#cfcfcf}
@@ -238,12 +256,14 @@ def status_class(s: str):
 
 
 def build():
+    global OVERRIDES
+    OVERRIDES = load_overrides()
     parts = []
     wordmark = load_svg("rtfx-wordmark-white.svg")
     mark = load_svg("rtfx-mark-x-white.svg")
     today = date.today().isoformat()
     sub = ("Storyboards for review · " + today + " · eight films · 16:9 HD · 24 fps · each film loops") if CLIENT else ("v2 · " + today + " · eight films · one 16:9 HD master · 24 fps · every film loops on its first frame")
-    intro = ("For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; amber tags mark shots still to be generated. Nothing is animated yet.") if CLIENT else ("Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet.")
+    intro = ("For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; an amber <em>generated</em> chip marks a beat now illustrated with a first generated plate. Nothing is animated yet.") if CLIENT else ("Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet.")
     label_beats = "Your beats" if CLIENT else "Client beats · from the brief"
     label_board = "Storyboard" if CLIENT else "Expanded board"
     footer_txt = ("RTFX DESIGN · " + today) if CLIENT else ("RTFX DESIGN · ARTIFEX MACHINA · built from the Drive assets, " + today)
@@ -255,7 +275,7 @@ def build():
 </header>
 <div class=wrap><nav class=films>{''.join(f'<a href="#f{n}"><span>{n}</span>{html.escape(t)}</a>' for n, t, _, _, _ in FILMS)}</nav>
 <div class=tick></div>
-<p class=intro>{"For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; amber tags mark shots still to be generated. Nothing is animated yet." if CLIENT else "Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet."}</p></div>""")
+<p class=intro>{"For each film: your beats as written, then the storyboard, one frame per beat. Frames are built from the supplied artwork; an amber <em>generated</em> chip marks a beat now illustrated with a first generated plate. Nothing is animated yet." if CLIENT else "Each film: the client's beats as written in the brief, then the expanded board. One card per beat, illustrated with a frame built from the supplied assets. <strong>Amber tags</strong> on a frame mean comp work or a shot still to generate; untagged frames are real assets as-is. Nothing is animated yet."}</p></div>""")
 
     for num, title, place, d, brief in FILMS:
         sb = ROOT / d / "storyboard" / "STORYBOARD.md"
@@ -267,6 +287,7 @@ def build():
             m = re.match(r"\s*(\d+(?:\.\d+)?\s*s)", trt)
             trt = (m.group(1) + " · 24 fps · 16:9") if m else ""
         smalls = {p.stem.replace("_small", ""): p for p in sorted(frames_dir.glob("*_small.jpg"))} if frames_dir.exists() else {}
+        overrides = {k.split("/", 1)[1]: v for k, v in OVERRIDES.items() if k.split("/", 1)[0] == d}
 
         cards = []
         used = set()
@@ -284,14 +305,23 @@ def build():
                 get = lambda i: (r[i] if i is not None and i < len(r) else "")
                 key = frame_key(get(c_frame))
                 img = ""
+                gen_note = ""
                 if key:
+                    ov = overrides.get(key) or next((v for k, v in overrides.items() if k.startswith(key)), None)
                     # prefer exact stem, else the first small whose stem starts with key
                     p = smalls.get(key) or next((v for k, v in smalls.items() if k.startswith(key)), None)
-                    if p:
+                    if ov and (ROOT / ov["file"]).exists():
+                        img = f"<img src='{b64_small(ROOT / ov['file'])}' alt='{html.escape(key)}' loading=lazy>"
+                        gen_note = ov.get("note", "generated")
+                        if p:
+                            used.add(p.stem.replace("_small", ""))
+                    elif p:
                         img = f"<img src='{b64(p)}' alt='{html.escape(key)}' loading=lazy>"
                         used.add(p.stem.replace("_small", ""))
                 status = re.sub(r"\*", "", get(c_status))
                 foot = ""
+                if gen_note:
+                    foot += f"<span class='chip generated'>generated</span>"
                 if get(c_trans):
                     foot += f"<span class=chip>{inline_md(get(c_trans))}</span>"
                 if status:
@@ -300,6 +330,7 @@ def build():
                     cards.append(f"""<article class="card chamfer">{img}<div class=body>
 <div class=beat>Beat {inline_md(get(c_beat))}<span class=t>{inline_md(get(c_time))}</span></div>
 <div class=on>{html.escape(first_sentence(get(c_on)))}</div>
+{"<div class=foot><span class='chip generated'>generated</span></div>" if gen_note else ''}
 </div></article>""")
                 else:
                     cards.append(f"""<article class="card chamfer">{img}<div class=body>

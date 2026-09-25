@@ -1,0 +1,34 @@
+{
+ "giraffe_manor/07_turn_TOGEN": {
+  "file": "docs/frame_overrides/giraffe_manor__07_turn_TOGEN.jpg",
+  "note": "generated end plate, round 0"
+ },
+ "giraffe_manor/08_window_TOGEN": {
+  "file": "docs/frame_overrides/giraffe_manor__08_window_TOGEN.jpg",
+  "note": "generated plate, round 0 (house continuity being redone)"
+ },
+ "fifth_avenue/06_walk_end_TOGEN": {
+  "file": "docs/frame_overrides/fifth_avenue__06_walk_end_TOGEN.jpg",
+  "note": "generated clip, take 1, last frame"
+ },
+ "passalacqua/07_pullback_TOGEN": {
+  "file": "docs/frame_overrides/passalacqua__07_pullback_TOGEN.jpg",
+  "note": "generated clean lake plate, round 0"
+ },
+ "versailles/02b_salon": {
+  "file": "docs/frame_overrides/versailles__02b_salon.jpg",
+  "note": "generated clean salon plate + real cake cut-out"
+ },
+ "miavana/06_palms_TOGEN": {
+  "file": "docs/frame_overrides/miavana__06_palms_TOGEN.jpg",
+  "note": "generated plate with lemurs, round 0"
+ },
+ "club22/03_decks_TOGEN": {
+  "file": "docs/frame_overrides/club22__03_decks_TOGEN.jpg",
+  "note": "generated vinyl, comp draft"
+ },
+ "club22/04_spotlight_COMP": {
+  "file": "docs/frame_overrides/club22__04_spotlight_COMP.jpg",
+  "note": "generated vinyl, comp draft"
+ }
+}

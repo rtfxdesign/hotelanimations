@@ -85,11 +85,14 @@ function addClip(comp, item, name, fin, fout, srcFrame, stretchPct) {
     return L;
 }
 function freeze(layer, srcFrame) {   // hold one source frame for the whole layer span
-    layer.timeRemapEnabled = true;
+    layer.timeRemapEnabled = true;     // AE adds two keys; removing them all would hide the property again
     var tr = layer.property("ADBE Time Remapping");
     var t = T(srcFrame);
-    for (var k = tr.numKeys; k >= 1; k--) tr.removeKey(k);
-    tr.setValueAtTime(layer.inPoint, t); tr.setValueAtTime(layer.outPoint, t);
+    if (tr.numKeys == 0) { tr.setValueAtTime(layer.inPoint, t); tr.setValueAtTime(layer.outPoint, t); }
+    for (var k = 1; k <= tr.numKeys; k++) {
+        tr.setValueAtKey(k, t);
+        try { tr.setInterpolationTypeAtKey(k, KeyframeInterpolationType.HOLD, KeyframeInterpolationType.HOLD); } catch (e) {}
+    }
 }
 function solid(comp, name, rgb, w, h, fin, fout) {
     var L = comp.layers.addSolid([rgb[0] / 255, rgb[1] / 255, rgb[2] / 255], name, w, h, 1.0, comp.duration);

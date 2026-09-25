@@ -118,119 +118,61 @@ function adjustment(comp, name, fin, fout) {
 }
 
 (function () {
-    var COMP_NAME = "Giraffe Manor";
+    var COMP_NAME = "Miavana";
     app.beginUndoGroup("Build " + COMP_NAME);
     var proj = app.project || app.newProject();
     var folder = proj.items.addFolder(COMP_NAME + " assets");
-    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 384 / FPS, FPS);
-    comp.bgColor = [1.0000, 1.0000, 0.9412];
+    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 288 / FPS, FPS);
+    comp.bgColor = [0.6157, 0.7843, 0.7176];
 
-    // ---- shot markers
-    var shots = [["S1 hold", 0], ["S2 logo", 48], ["S3 enter", 86], ["S4 reveal", 154], ["S5 pull-back", 178], ["S6 turn (Kling GM-2 t3)", 216],
-                 ["S7 windows (Kling GM-4)", 269], ["S8 payoff + mark", 322], ["S9 return", 351], ["S10 loop hold", 373]];
+    var shots = [["B1 hold", 0], ["B2a wind-up", 58], ["B2b throw", 72], ["B2c catch", 92], ["B3 reveal", 101], ["B4 palms", 149], ["B5 return", 230], ["B6 hold / loop", 274]];
     for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var plateItem = importFootage("mi_palms_lemurs_comp_4988x2806.png", null, folder);
+    var wmItem    = importFootage("mi_wordmark_fitted_alpha.png", "vector MIAVANA fitted 1730 px wide", folder);
+    var isItem    = importFootage("miavana_0003_islandsanctuary.png", null, folder);
+    var btItem    = importFootage("miavana_0004_bytimeandtide.png", null, folder);
+    var seatItem  = importFootage("miavana_0000_left_lemur.png", null, folder);
+    var hangItem  = importFootage("miavana_0001_right_lemur.png", null, folder);
+    var mangoItem = importFootage("mi_mango_cutout_alpha.png", null, folder);
+    var windItem  = importFootage("mi_2_t1.mp4", null, folder);
+    var catchItem = importFootage("mi_3_t1.mp4", null, folder);
+    var PS = 76.56;                                   // PSD px -> HD
 
-    // ---- footage
-    var heroItem  = importFootage("gm_hero_cutout_alpha.png", null, folder);
-    var plateItem = importFootage("gm_manor_plate_no_giraffes.png", null, folder);
-    var logoItem  = importFootage("giraffe_manor_wordmark.png", null, folder);
-    var walkItem  = importFootage("giraffe_walking.mov", "Drive: Giraffe Manor/upscaled, 327 MB ProRes 4444 alpha, 30 fps", folder);
-    var s6Item    = importFootage("gm_2_t3.mp4", null, folder);
-    var s7Item    = importFootage("gm_4_t1.mp4", null, folder);
-    var bedItem   = importFootage("birdsong01.wav", "Drive: Giraffe Manor/audio", folder);
-
-    var HERO_ANCHOR = [489.5, 1505];           // bottom-centre of the giraffe in the 1024x1536 cut-out
-    var HERO_SCALE = 53.8;                     // 800 px tall on the cream
-    var PLATE_ANCHOR = [2140, 1490];           // pivot in plate px
-    var PLATE_POS = [1497.5, 1047.7];
-    var S0 = 70.31;                            // plate at 100 % of the frame height = 70.31 % of 2752x1536
-    var Z = 2.65;
-
-    // 1 cream background
-    solid(comp, "Cream BG", [255, 255, 240], 1920, 1080, 0, 384);
-
-    // 2 hero on cream (the loop frame)
-    if (heroItem) {
-        var hero = addStill(comp, heroItem, "Hero on cream", 0, 384);
-        place(hero, HERO_ANCHOR, [760, 880], HERO_SCALE);
-    }
-
-    // 3 walker on cream: enters from the right f86-154 and stops beside the hero
-    if (walkItem) {
-        var walker = addClip(comp, walkItem, "Walker on cream (giraffe_walking.mov)", 86, 154, 0, 100);
-        place(walker, null, [1945, 621], 50);
-        keys(xf(walker).property("ADBE Position"), [[86, [1945, 621]], [154, [1065, 621]]], true);
-        walker.comment = "Colour-match to the hero: the walker is warmer and darker (per-channel levels, gain <= 1.35).";
-    }
-
-    // 4 logo small under the hooves
-    if (logoItem) {
-        var logo = addStill(comp, logoItem, "Wordmark small", 48, 178);
-        place(logo, null, [760, 969], 16.2);
-        keys(xf(logo).property("ADBE Scale"), [[48, [15.5, 15.5]], [67, [16.2, 16.2]]], true);
-        keys(opacity(logo), [[48, 0], [67, 100], [120, 100], [154, 35], [178, 0]], true);
-    }
-
-    // 5 manor plate: dissolves in large and soft, rack focus, pull-back to 100 %
-    var plate = null;
+    solid(comp, "Sage BG", [157, 200, 183], 1920, 1080, 0, 288);
     if (plateItem) {
-        plate = addStill(comp, plateItem, "Manor plate", 154, 222);
-        place(plate, PLATE_ANCHOR, PLATE_POS, S0 * Z);
-        keys(xf(plate).property("ADBE Scale"), [[154, [S0 * Z, S0 * Z]], [188, [S0 * Z, S0 * Z]], [216, [S0, S0]]], true);
-        keys(opacity(plate), [[154, 0], [178, 100]], true);
-        var blur = effect(plate, "ADBE Gaussian Blur 2", "Rack focus");
-        keys(blur.property("ADBE Gaussian Blur 2-0001"), [[154, 20], [178, 20], [188, 0]], true);
+        var pl = addStill(comp, plateItem, "Aerial with lemurs (drift R→L)", 101, 274);
+        place(pl, null, [1018, 540], 40.8);
+        keys(xf(pl).property("ADBE Position"), [[149, [1018, 540]], [230, [902, 540]]], true);
+        keys(opacity(pl), [[101, 0], [149, 100], [230, 100], [274, 0]], false);
+        pl.comment = "Colour-match the greens toward the sage so the change reads as focus, not a cut.";
     }
-
-    // 6 hero on the plate (parented), feet at plate px (1744, 1400), 429 plate px tall
-    if (heroItem && plate) {
-        var heroP = addStill(comp, heroItem, "Hero on plate", 154, 222);
-        heroP.parent = plate;
-        place(heroP, HERO_ANCHOR, [1744, 1400], 28.85);
-        keys(opacity(heroP), [[154, 0], [178, 100]], true);
+    var lockOp = [[0, 100], [101, 100], [125, 0], [230, 0], [274, 100]];
+    if (wmItem) { var wm = addStill(comp, wmItem, "MIAVANA wordmark", 0, 288); place(wm, null, [976, 403.5], 100); keys(opacity(wm), lockOp, true); }
+    if (isItem) { var is1 = addStill(comp, isItem, "ISLAND SANCTUARY", 0, 288); place(is1, null, [980.6, 677.7], PS); keys(opacity(is1), lockOp, true); }
+    if (btItem) { var bt = addStill(comp, btItem, "BY TIME+TIDE", 0, 288); place(bt, null, [981.1, 994.2], PS); keys(opacity(bt), lockOp, true); }
+    var lemOp = [[0, 100], [149, 100], [150, 0], [229, 0], [230, 100]];
+    if (seatItem) { var se = addStill(comp, seatItem, "Seated lemur (PSD)", 0, 288); place(se, null, [120.5, 417.9], PS); keys(opacity(se), lemOp, false); }
+    if (hangItem) { var ha = addStill(comp, hangItem, "Hanging lemur (PSD)", 0, 288); place(ha, null, [1749.7, 552.8], PS); keys(opacity(ha), lemOp, false);
+        ha.comment = "Arm frees f58-70 for the throw (2-key puppet), or use the Kling wind-up clip."; }
+    if (mangoItem) {
+        var mg = addStill(comp, mangoItem, "Mango", 0, 288);
+        var MS = 100 * 84 / 1709;                     // 84 px wide on screen
+        place(mg, null, [1756, 645], MS);
+        // throw: quadratic arc release (1750,651) -> apex (932,197) -> catch (207,344), sampled at 5 keys
+        var P0 = [1750, 651], P1 = [932, 197], P2 = [207, 344], arc = [];
+        for (var k = 0; k <= 4; k++) { var t = k / 4, u = 1 - t;
+            var px = u * u * P0[0] + 2 * u * t * (2 * P1[0] - (P0[0] + P2[0]) / 2) + t * t * P2[0];
+            var py = u * u * P0[1] + 2 * u * t * (2 * P1[1] - (P0[1] + P2[1]) / 2) + t * t * P2[1];
+            arc.push([72 + 5 * k, [px, py]]); }
+        var posKeys = [[0, [1756, 645]], [71, [1756, 645]]].concat(arc).concat([[101, [217, 340]], [230, [1756, 645]], [288, [1756, 645]]]);
+        keys(xf(mg).property("ADBE Position"), posKeys, true);
+        keys(xf(mg).property("ADBE Rotate Z"), [[72, 0], [82, 35], [92, 0]], true);
+        keys(opacity(mg), [[0, 100], [101, 100], [102, 0], [229, 0], [230, 100]], false);
+        mg.comment = "Second toss in beat 4 goes back left-to-right, apex 90 px lower, so the mango is home by f230.";
     }
-
-    // 7 walker frozen on the plate (parented), source frame 85, feet at plate px (2050, 1400)
-    if (walkItem && plate) {
-        var walkP = addClip(comp, walkItem, "Walker on plate (frozen f85)", 154, 222, 0, 100);
-        freeze(walkP, 85);
-        walkP.parent = plate;
-        place(walkP, null, [1954, 1239], 27.8);
-        keys(opacity(walkP), [[154, 0], [178, 100]], true);
-        walkP.comment = "Placement approximates the animatic: feet centre (2050, 1400) plate px, 429 plate px tall. Nudge to taste.";
-    }
-
-    // 8 shot 6: the turn (Kling GM-2 take 3), 121 source frames into 63
-    if (s6Item) {
-        var s6 = addClip(comp, s6Item, "S6 turn — gm_2_t3.mp4 (stretch 52.07 %)", 216, 269, 0, 52.07);
-        keys(opacity(s6), [[216, 0], [222, 100]], true);
-        s6.comment = "No in-place turn in the clip: the giraffes travel to the steps and end rear-facing. Roto/retime candidate.";
-    }
-
-    // 9 shots 7-9: heads into the windows (Kling GM-4), plays on under the mark, dissolves out to the hero
-    if (s7Item) {
-        var s7 = addClip(comp, s7Item, "S7-9 windows — gm_4_t1.mp4", 269, 373, 0, 100);
-        keys(opacity(s7), [[351, 100], [373, 0]], true);
-    }
-
-    // 10-11 end card + mark, bottom-right
-    var card = solid(comp, "End card", [255, 255, 240], 444, 115, 322, 373);
-    place(card, null, [1638, 962.5], 100);
-    keys(opacity(card), [[322, 0], [334, 88], [351, 88], [373, 0]], true);
-    card.comment = "Round the corners 14 px (mask) if wanted.";
-    if (logoItem) {
-        var mark = addStill(comp, logoItem, "End mark", 322, 373);
-        place(mark, null, [1638, 962.5], 10.12);
-        keys(opacity(mark), [[322, 0], [334, 100], [351, 100], [373, 0]], true);
-    }
-
-    // 12 audio bed
-    if (bedItem) {
-        var bed = comp.layers.add(bedItem); bed.name = "birdsong01.wav (-14 dB)";
-        bed.startTime = 0; span(bed, 0, 384);
-        keys(audioLevels(bed), [[0, [-96, -96]], [12, [-14, -14]], [372, [-14, -14]], [384, [-96, -96]]], false);
-    }
-    log("Loop: f383 must equal f0 (hero on cream, nothing else).");
+    if (windItem) { var wi = addClip(comp, windItem, "Kling wind-up — mi_2_t1.mp4 (optional)", 58, 72, 0, 11.6); wi.enabled = false; }
+    if (catchItem) { var ca = addClip(comp, catchItem, "Kling catch — mi_3_t1.mp4 (optional, source f44 on f72)", 72, 101, 44, 44.6); ca.enabled = false; }
+    log("Loop: f287 must equal f0.");
 
     try { app.project.timeDisplayType = TimeDisplayType.FRAMES; } catch (e) {}
     comp.openInViewer();

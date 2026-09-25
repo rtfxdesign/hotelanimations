@@ -59,16 +59,30 @@ def giraffe_manor(pull: Path, out: Path):
     jsx(out, "giraffe_manor")
 
 
+def key_white(im: Image.Image, span: int = 40) -> Image.Image:
+    """Object on an off-white field -> RGBA, field level measured from the border."""
+    import numpy as np
+    a = np.array(im.convert("RGB")).astype(np.float32)
+    lum = a.min(axis=2)
+    border = np.concatenate([lum[:8].ravel(), lum[-8:].ravel(), lum[:, :8].ravel(), lum[:, -8:].ravel()])
+    field = float(np.median(border))
+    alpha = np.clip((field - 6 - lum) / span, 0, 1)
+    return Image.fromarray(np.dstack([a, alpha * 255]).astype(np.uint8), "RGBA")
+
+
 def north_island(pull: Path, out: Path):
     a = out / "north_island" / "assets"
     ni = pull / "North Island"
     cp(ni / "b261916d-7215-4f97-8607-d091aabe911a.png", a, "ni_lockup_white_1536x1024.png")
+    a.mkdir(parents=True, exist_ok=True)
+    key_white(Image.open(ni / "b261916d-7215-4f97-8607-d091aabe911a.png")).save(a / "ni_lockup_turtles_wordmark_alpha.png")
     cp(GEN / "05_north_island" / "ni_1_comp.png", a, "ni_water_16x9_3641x2048.png")
     cp(ni / "0873e031-511a-499b-a9d5-8a2b7a701d87.png", a, "ni_beach_3_turtles_1536x1024.png")
     for n in ("ni_2_t1.mp4", "ni_3_t1.mp4", "ni_4_t1.mp4"):
         cp(GEN / "05_north_island" / n, a)
     cp(ROOT / "north_island" / "animatic" / "north_island_animatic_v0.1.mp4", out / "north_island")
     cp(SHEETS / "north_island_EDIT_SHEET.md", out / "north_island", "EDIT_SHEET.md")
+    jsx(out, "north_island")
 
 
 def passalacqua(pull: Path, out: Path):
@@ -91,6 +105,7 @@ def passalacqua(pull: Path, out: Path):
     cp(WM / "passalacqua_wordmark.png", a)
     cp(ROOT / "passalacqua" / "animatic" / "passalacqua_animatic_v0.1.mp4", out / "passalacqua")
     cp(SHEETS / "passalacqua_EDIT_SHEET.md", out / "passalacqua", "EDIT_SHEET.md")
+    jsx(out, "passalacqua")
 
 
 def miavana(pull: Path, out: Path):
@@ -99,6 +114,11 @@ def miavana(pull: Path, out: Path):
     for n in ("miavana_0000_left_lemur.png", "miavana_0001_right_lemur.png", "miavana_0003_islandsanctuary.png", "miavana_0004_bytimeandtide.png", "resort_16x9.png"):
         cp(up / n, a)
     cp(WM / "miavana_wordmark.png", a)
+    import importlib.util as ilu
+    spec = ilu.spec_from_file_location("miavana_build_frames", ROOT / "miavana" / "storyboard" / "build_frames.py")
+    mb = ilu.module_from_spec(spec); spec.loader.exec_module(mb)
+    fitted, origin = mb.load_wordmark()
+    fitted.save(a / "mi_wordmark_fitted_alpha.png")                # 1730 px wide, top-left (111, 326) at 100 %
     cp(GEN / "06_miavana" / "mi_4_comp_5k.png", a, "mi_palms_lemurs_comp_4988x2806.png")
     cp(GEN / "06_miavana" / "mi_4b_seated_alpha.png", a, "mi_seated_lemur_keyed_alpha.png")
     cp(GEN / "06_miavana" / "mi_4b_hanging_alpha.png", a, "mi_hanging_lemur_keyed_alpha.png")
@@ -109,6 +129,7 @@ def miavana(pull: Path, out: Path):
         cp(mango, a)
     cp(ROOT / "miavana" / "animatic" / "miavana_animatic_v0.1.mp4", out / "miavana")
     cp(SHEETS / "miavana_EDIT_SHEET.md", out / "miavana", "EDIT_SHEET.md")
+    jsx(out, "miavana")
 
 
 def necker_island(pull: Path, out: Path):
@@ -122,6 +143,7 @@ def necker_island(pull: Path, out: Path):
         cp(GEN / "07_necker_island" / n, a)
     cp(ROOT / "necker_island" / "animatic" / "necker_island_animatic_v0.1.mp4", out / "necker_island")
     cp(SHEETS / "necker_island_EDIT_SHEET.md", out / "necker_island", "EDIT_SHEET.md")
+    jsx(out, "necker_island")
 
 
 def fifth_avenue(pull: Path, out: Path):
@@ -140,6 +162,7 @@ def fifth_avenue(pull: Path, out: Path):
             cp(an / n, a)
     cp(an / "fifth_avenue_animatic_v0.1.mp4", out / "fifth_avenue")
     cp(SHEETS / "fifth_avenue_EDIT_SHEET.md", out / "fifth_avenue", "EDIT_SHEET.md")
+    jsx(out, "fifth_avenue")
 
 
 def versailles(pull: Path, out: Path):
@@ -154,6 +177,7 @@ def versailles(pull: Path, out: Path):
         cp(p, a)
     cp(an / "versailles_animatic_v0.1.mp4", out / "versailles")
     cp(SHEETS / "versailles_EDIT_SHEET.md", out / "versailles", "EDIT_SHEET.md")
+    jsx(out, "versailles")
 
 
 def club22(pull: Path, out: Path):
@@ -166,6 +190,7 @@ def club22(pull: Path, out: Path):
         cp(p, a)
     cp(an / "club22_animatic_v0.1.mp4", out / "club22")
     cp(SHEETS / "club22_EDIT_SHEET.md", out / "club22", "EDIT_SHEET.md")
+    jsx(out, "club22")
 
 
 def main():

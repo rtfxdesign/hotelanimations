@@ -104,6 +104,39 @@ function effect(layer, matchName, displayName) {
 }
 function marker(comp, f, text) { try { comp.markerProperty.setValueAtTime(T(f), new MarkerValue(text)); } catch (e) {} }
 function audioLevels(layer) { return layer.property("ADBE Audio Group").property("ADBE Audio Levels"); }
+function linearWipe(layer, completionKeys, angleDeg, feather) {
+    var fx = effect(layer, "ADBE Linear Wipe", "Wipe");
+    keys(fx.property("ADBE Linear Wipe-0001"), completionKeys, true);
+    fx.property("ADBE Linear Wipe-0002").setValue(angleDeg);
+    fx.property("ADBE Linear Wipe-0003").setValue(feather);
+    layer.comment = (layer.comment ? layer.comment + " " : "") + "If the wipe runs the wrong way, add 180 to Wipe Angle.";
+    return fx;
+}
+function ellipseMask(layer, cx, cy, rx, ry, feather) {
+    // an elliptical mask in layer space; 4 vertices with bezier tangents (kappa 0.5523)
+    var k = 0.5523;
+    var m = layer.property("ADBE Mask Parade").addProperty("ADBE Mask Atom");
+    var sh = new Shape();
+    sh.vertices = [[cx, cy - ry], [cx + rx, cy], [cx, cy + ry], [cx - rx, cy]];
+    sh.inTangents = [[-rx * k, 0], [0, -ry * k], [rx * k, 0], [0, ry * k]];
+    sh.outTangents = [[rx * k, 0], [0, ry * k], [-rx * k, 0], [0, -ry * k]];
+    sh.closed = true;
+    m.property("ADBE Mask Shape").setValue(sh);
+    m.property("ADBE Mask Feather").setValue([feather, feather]);
+    return m;
+}
+function polyMask(layer, pts, feather) {
+    var m = layer.property("ADBE Mask Parade").addProperty("ADBE Mask Atom");
+    var sh = new Shape(); sh.vertices = pts; sh.closed = true;
+    m.property("ADBE Mask Shape").setValue(sh);
+    if (feather) m.property("ADBE Mask Feather").setValue([feather, feather]);
+    return m;
+}
+function adjustment(comp, name, fin, fout) {
+    var L = solid(comp, name, [255, 255, 255], comp.width, comp.height, fin, fout);
+    L.adjustmentLayer = true;
+    return L;
+}
 """
 
 EPILOGUE = r"""
@@ -247,8 +280,351 @@ def giraffe_manor() -> str:
     return PRELUDE + body + EPILOGUE
 
 
+
+
+# --------------------------------------------------------------------------------------------- North Island
+def north_island() -> str:
+    body = film_header("North Island", 1920, 1080, 312, (255, 255, 255))
+    body += r"""
+    var shots = [["S1 hold", 0], ["S2 flood", 53], ["S3 swim (Kling NI-2)", 96], ["S4a landfall", 168], ["S4b sand (Kling NI-3)", 197],
+                 ["S5 return (Kling NI-4)", 226], ["S6a whiteout", 274], ["S6b loop", 298]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var whiteItem = importFootage("ni_lockup_white_1536x1024.png", null, folder);
+    var waterItem = importFootage("ni_water_16x9_3641x2048.png", null, folder);
+    var cutItem   = importFootage("ni_lockup_turtles_wordmark_alpha.png", "keyed from the white lock-up", folder);
+    var swimItem  = importFootage("ni_2_t1.mp4", null, folder);
+    var sandItem  = importFootage("ni_3_t1.mp4", null, folder);
+    var backItem  = importFootage("ni_4_t1.mp4", null, folder);
+
+    solid(comp, "White BG", [255, 255, 255], 1920, 1080, 0, 312);
+    if (whiteItem) { var wl = addStill(comp, whiteItem, "Lock-up white", 0, 312); place(wl, null, [960, 540], 105.47); }
+    if (waterItem) { var wa = addStill(comp, waterItem, "Water plate A", 53, 96); place(wa, null, [960, 540], 52.73); }
+    var coverA = solid(comp, "Flood cover (wipe bottom→top)", [255, 255, 255], 1920, 1080, 53, 82);
+    linearWipe(coverA, [[53, 0], [82, 100]], 180, 90);
+    if (swimItem) addClip(comp, swimItem, "S3 swim — ni_2_t1.mp4", 96, 197, 0, 100);
+    if (sandItem) { var sd = addClip(comp, sandItem, "S4 sand — ni_3_t1.mp4 (source f92 on f197)", 168, 226, 92, 100); keys(opacity(sd), [[168, 0], [197, 100]], true); }
+    if (backItem) addClip(comp, backItem, "S5 return — ni_4_t1.mp4 (stretch 39.67 %)", 226, 274, 0, 39.67);
+    if (waterItem) { var wb = addStill(comp, waterItem, "Water plate B", 258, 298); place(wb, null, [960, 540], 52.73); keys(opacity(wb), [[258, 0], [274, 100]], true); }
+    var coverB = solid(comp, "Whiteout cover (wipe top→bottom)", [255, 255, 255], 1920, 1080, 274, 298);
+    linearWipe(coverB, [[274, 100], [298, 0]], 180, 90);
+    if (cutItem) {
+        var c1 = addStill(comp, cutItem, "Turtles + wordmark cut-out (held over the flood)", 53, 96); place(c1, null, [960, 540], 105.47);
+        var c2 = addStill(comp, cutItem, "Turtles + wordmark cut-out (held over the whiteout)", 274, 312); place(c2, null, [960, 540], 105.47);
+        c2.comment = "The board holds the lock-up elements as one cut-out layer over both grounds so nothing pops; the plates' baked turtles sit 5-11 px off this.";
+    }
+    log("Loop: f311 must equal f0.");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- Passalacqua
+def passalacqua() -> str:
+    body = film_header("Passalacqua", 1920, 1080, 360, (255, 255, 255))
+    body += r"""
+    var shots = [["B1 crest", 0], ["B2 wordmark", 48], ["B3 fill", 86], ["B4 alive (Kling PA-2)", 120], ["B5 lake (Kling PA-3)", 158],
+                 ["B6 leap (Kling PA-4)", 197], ["B7 end card", 293], ["B8 settle", 312], ["B9 flatten", 336], ["B10 loop", 355]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var fishArt = importFootage("pa_crest_fish_lineart.png", null, folder);
+    var waveArt = importFootage("pa_crest_wave_rule.png", null, folder);
+    var typeArt = importFootage("pa_crest_type.png", null, folder);
+    var waveW   = importFootage("pa_crest_wave_rule_white.png", null, folder);
+    var typeW   = importFootage("pa_crest_type_white.png", null, folder);
+    var gold = [importFootage("pa_gold_fish_L.png", null, folder), importFootage("pa_gold_fish_C.png", null, folder), importFootage("pa_gold_fish_R.png", null, folder)];
+    var aliveItem = importFootage("pa_2_t1.mp4", null, folder);
+    var dropItem  = importFootage("pa_3_t1.mp4", null, folder);
+    var leapItem  = importFootage("pa_4_t1.mp4", null, folder);
+    var lastItem  = importFootage("pa_4_last_frame.png", null, folder);
+    var CS = 39.32;                                   // crest scale
+    var GS = 28.36;                                   // gold fish scale (registered on the line art)
+
+    solid(comp, "White BG", [255, 255, 255], 1920, 1080, 0, 360);
+    if (aliveItem) { var al = addClip(comp, aliveItem, "B4 alive — pa_2_t1.mp4", 120, 158, 0, 100); keys(opacity(al), [[120, 0], [126, 100]], true); }
+    if (dropItem)  { var dr = addClip(comp, dropItem, "B5 drop — pa_3_t1.mp4 (stretch 32.2 %)", 158, 197, 0, 32.2); keys(opacity(dr), [[158, 0], [170, 100]], true); }
+    if (leapItem)  addClip(comp, leapItem, "B6 leap — pa_4_t1.mp4 (stretch 79.3 %)", 197, 293, 0, 79.3);
+    if (lastItem)  { var hl = addStill(comp, lastItem, "B7 held lake (last frame of the leap)", 293, 336); hl.comment = "Desaturate 50 % here (Hue/Saturation); rings spread from (960, 555) f293-312 as a shape layer."; }
+    var dark = solid(comp, "End-card darken", [0, 10, 25], 1920, 1080, 293, 336); keys(opacity(dark), [[293, 0], [305, 59]], true);
+    var wr = solid(comp, "White return", [255, 255, 255], 1920, 1080, 312, 360); keys(opacity(wr), [[312, 0], [336, 100]], true);
+    if (waveArt) { var wv = addStill(comp, waveArt, "Wave rule, line art", 0, 360); place(wv, null, [957.4, 554.5], CS); }
+    if (fishArt) { var fa = addStill(comp, fishArt, "Fish, line art", 0, 360); place(fa, null, [957.4, 343.6], CS); }
+    var homeX = [819.5, 958.5, 1100.5], names = ["L", "C", "R"], rot = [-6, 3, -4], dy = [90, 60, 110];
+    for (var g = 0; g < 3; g++) {
+        if (!gold[g]) continue;
+        var gf = addStill(comp, gold[g], "Gold fish " + names[g], 100, 355);
+        place(gf, null, [homeX[g], 343.5], GS);
+        keys(opacity(gf), [[100, 100], [126, 100], [132, 0], [311, 0], [312, 100]], false);
+        // B3 fill from the tail up (completion 100 -> 0 reveals bottom-up at angle 0), B9 drain head-down (0 -> 100)
+        var fx = linearWipe(gf, [[100 + 3 * g, 100], [116 + 3 * g, 0], [335, 0], [336 + 3 * (2 - g), 0], [348 + 3 * (2 - g), 100]], 0, 12);
+        // B8 settle: rise from below at 112 %, small rotation, to the registered position
+        keys(xf(gf).property("ADBE Position"), [[312, [homeX[g], 343.5 + dy[g]]], [336, [homeX[g], 343.5]]], true);
+        keys(xf(gf).property("ADBE Rotate Z"), [[312, rot[g]], [336, 0]], true);
+        keys(xf(gf).property("ADBE Scale"), [[312, [GS * 1.12, GS * 1.12]], [336, [GS, GS]]], true);
+    }
+    if (typeArt) { var ty = addStill(comp, typeArt, "Type, black", 48, 355); place(ty, null, [957.4, 798.7], CS);
+        keys(opacity(ty), [[48, 0], [67, 100], [86, 100], [98, 0], [312, 0], [336, 100], [343, 100], [355, 0]], true); }
+    if (typeW) { var tw = addStill(comp, typeW, "Type, white (end card)", 293, 336); place(tw, null, [957.4, 798.7], CS); keys(opacity(tw), [[293, 0], [305, 100], [312, 100], [336, 0]], true); }
+    if (waveW) { var ww = addStill(comp, waveW, "Wave rule, white (end card)", 293, 336); place(ww, null, [957.4, 554.5], CS); keys(opacity(ww), [[293, 0], [305, 100], [312, 100], [336, 0]], true); }
+    log("Loop: f359 must equal f0 (line-art fish + wave rule on white).");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- Miavana
+def miavana() -> str:
+    body = film_header("Miavana", 1920, 1080, 288, (157, 200, 183))
+    body += r"""
+    var shots = [["B1 hold", 0], ["B2a wind-up", 58], ["B2b throw", 72], ["B2c catch", 92], ["B3 reveal", 101], ["B4 palms", 149], ["B5 return", 230], ["B6 hold / loop", 274]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var plateItem = importFootage("mi_palms_lemurs_comp_4988x2806.png", null, folder);
+    var wmItem    = importFootage("mi_wordmark_fitted_alpha.png", "vector MIAVANA fitted 1730 px wide", folder);
+    var isItem    = importFootage("miavana_0003_islandsanctuary.png", null, folder);
+    var btItem    = importFootage("miavana_0004_bytimeandtide.png", null, folder);
+    var seatItem  = importFootage("miavana_0000_left_lemur.png", null, folder);
+    var hangItem  = importFootage("miavana_0001_right_lemur.png", null, folder);
+    var mangoItem = importFootage("mi_mango_cutout_alpha.png", null, folder);
+    var windItem  = importFootage("mi_2_t1.mp4", null, folder);
+    var catchItem = importFootage("mi_3_t1.mp4", null, folder);
+    var PS = 76.56;                                   // PSD px -> HD
+
+    solid(comp, "Sage BG", [157, 200, 183], 1920, 1080, 0, 288);
+    if (plateItem) {
+        var pl = addStill(comp, plateItem, "Aerial with lemurs (drift R→L)", 101, 274);
+        place(pl, null, [1018, 540], 40.8);
+        keys(xf(pl).property("ADBE Position"), [[149, [1018, 540]], [230, [902, 540]]], true);
+        keys(opacity(pl), [[101, 0], [149, 100], [230, 100], [274, 0]], false);
+        pl.comment = "Colour-match the greens toward the sage so the change reads as focus, not a cut.";
+    }
+    var lockOp = [[0, 100], [101, 100], [125, 0], [230, 0], [274, 100]];
+    if (wmItem) { var wm = addStill(comp, wmItem, "MIAVANA wordmark", 0, 288); place(wm, null, [976, 403.5], 100); keys(opacity(wm), lockOp, true); }
+    if (isItem) { var is1 = addStill(comp, isItem, "ISLAND SANCTUARY", 0, 288); place(is1, null, [980.6, 677.7], PS); keys(opacity(is1), lockOp, true); }
+    if (btItem) { var bt = addStill(comp, btItem, "BY TIME+TIDE", 0, 288); place(bt, null, [981.1, 994.2], PS); keys(opacity(bt), lockOp, true); }
+    var lemOp = [[0, 100], [149, 100], [150, 0], [229, 0], [230, 100]];
+    if (seatItem) { var se = addStill(comp, seatItem, "Seated lemur (PSD)", 0, 288); place(se, null, [120.5, 417.9], PS); keys(opacity(se), lemOp, false); }
+    if (hangItem) { var ha = addStill(comp, hangItem, "Hanging lemur (PSD)", 0, 288); place(ha, null, [1749.7, 552.8], PS); keys(opacity(ha), lemOp, false);
+        ha.comment = "Arm frees f58-70 for the throw (2-key puppet), or use the Kling wind-up clip."; }
+    if (mangoItem) {
+        var mg = addStill(comp, mangoItem, "Mango", 0, 288);
+        var MS = 100 * 84 / 1709;                     // 84 px wide on screen
+        place(mg, null, [1756, 645], MS);
+        // throw: quadratic arc release (1750,651) -> apex (932,197) -> catch (207,344), sampled at 5 keys
+        var P0 = [1750, 651], P1 = [932, 197], P2 = [207, 344], arc = [];
+        for (var k = 0; k <= 4; k++) { var t = k / 4, u = 1 - t;
+            var px = u * u * P0[0] + 2 * u * t * (2 * P1[0] - (P0[0] + P2[0]) / 2) + t * t * P2[0];
+            var py = u * u * P0[1] + 2 * u * t * (2 * P1[1] - (P0[1] + P2[1]) / 2) + t * t * P2[1];
+            arc.push([72 + 5 * k, [px, py]]); }
+        var posKeys = [[0, [1756, 645]], [71, [1756, 645]]].concat(arc).concat([[101, [217, 340]], [230, [1756, 645]], [288, [1756, 645]]]);
+        keys(xf(mg).property("ADBE Position"), posKeys, true);
+        keys(xf(mg).property("ADBE Rotate Z"), [[72, 0], [82, 35], [92, 0]], true);
+        keys(opacity(mg), [[0, 100], [101, 100], [102, 0], [229, 0], [230, 100]], false);
+        mg.comment = "Second toss in beat 4 goes back left-to-right, apex 90 px lower, so the mango is home by f230.";
+    }
+    if (windItem) { var wi = addClip(comp, windItem, "Kling wind-up — mi_2_t1.mp4 (optional)", 58, 72, 0, 11.6); wi.enabled = false; }
+    if (catchItem) { var ca = addClip(comp, catchItem, "Kling catch — mi_3_t1.mp4 (optional, source f44 on f72)", 72, 101, 44, 44.6); ca.enabled = false; }
+    log("Loop: f287 must equal f0.");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- Necker Island
+def necker_island() -> str:
+    body = film_header("Necker Island", 1920, 1080, 372, (255, 255, 255))
+    body += r"""
+    var shots = [["S1 hold", 0], ["S2 takeoff (Kling NE-1)", 58], ["S3 pull-back", 110], ["S4 kite (Kling NE-3)", 178], ["S5 tennis", 245], ["S6 whiteout", 312], ["S7 landing (Kling NE-5)", 336]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var birdItem = importFootage("flamingo.png", null, folder);
+    var aerItem  = importFootage("ne_aerial_16x9_3840x2160.png", null, folder);
+    var tkItem   = importFootage("ne_1_t1.mp4", null, folder);
+    var kiteItem = importFootage("ne_3_t1.mp4", null, folder);
+    var taItem   = importFootage("ne_4a_t1.png", null, folder);
+    var tbItem   = importFootage("ne_4b_t1.png", null, folder);
+    var ldItem   = importFootage("ne_5_t1.mp4", null, folder);
+    var BIRD_ANCHOR = [457.5, 1666];
+
+    solid(comp, "White BG", [255, 255, 255], 1920, 1080, 0, 372);
+    if (birdItem) { var b1 = addStill(comp, birdItem, "Flamingo still", 0, 372); place(b1, BIRD_ANCHOR, [920, 940], 46.64);
+        keys(opacity(b1), [[0, 100], [62, 100], [63, 0], [365, 0], [366, 100]], false); }
+    if (tkItem) { var tk = addClip(comp, tkItem, "S2 takeoff — ne_1_t1.mp4 (stretch 43 %)", 58, 110, 0, 43); keys(opacity(tk), [[58, 0], [62, 100]], true);
+        tk.comment = "Background drifts light grey: key or lift to white."; }
+    if (aerItem) { var a1 = addStill(comp, aerItem, "Aerial, pull-back", 110, 178); place(a1, null, [960, 540], 110); keys(xf(a1).property("ADBE Scale"), [[110, [110, 110]], [178, [50, 50]]], true); }
+    var ramp = solid(comp, "White ramp (pull-back)", [255, 255, 255], 1920, 1080, 110, 140); keys(opacity(ramp), [[110, 85], [140, 0]], true);
+    if (birdItem) { var bs = addStill(comp, birdItem, "Flamingo small (stand-in flier)", 110, 178); place(bs, BIRD_ANCHOR, [1313, 461], 5.16);
+        keys(xf(bs).property("ADBE Position"), [[110, [1313, 461]], [178, [1623, 381]]], true); bs.comment = "Replace with a flight-pose crop (necker_flamingos_08.jpg in Drive) or a Kling flier."; }
+    if (kiteItem) addClip(comp, kiteItem, "S4 kite — ne_3_t1.mp4 (stretch 55.4 %)", 178, 245, 0, 55.37);
+    if (taItem) { var ta = addStill(comp, taItem, "Tennis A", 245, 312); place(ta, null, [960, 540], 71.43); keys(xf(ta).property("ADBE Scale"), [[245, [71.43, 71.43]], [312, [82.14, 82.14]]], true); }
+    if (tbItem) { var tb = addStill(comp, tbItem, "Tennis B", 245, 312); place(tb, null, [960, 540], 71.43); keys(xf(tb).property("ADBE Scale"), [[245, [71.43, 71.43]], [312, [82.14, 82.14]]], true);
+        keys(opacity(tb), [[245, 0], [259, 0], [263, 100], [278, 100], [282, 0], [298, 0], [302, 100]], true); tb.comment = "Ball: AE shape on 14-frame arcs between the rackets, hits at 10.8 / 11.6 / 12.4 s."; }
+    if (aerItem) { var a2 = addStill(comp, aerItem, "Aerial, whiteout", 312, 336); place(a2, null, [960, 540], 50); keys(xf(a2).property("ADBE Scale"), [[312, [50, 50]], [336, [27.5, 27.5]]], true); }
+    var wo = solid(comp, "White ramp (whiteout)", [255, 255, 255], 1920, 1080, 312, 336); keys(opacity(wo), [[312, 0], [336, 100]], true);
+    if (birdItem) { var bb = addStill(comp, birdItem, "Flamingo small (banking back)", 312, 336); place(bb, BIRD_ANCHOR, [1623, 381], 5.16);
+        keys(xf(bb).property("ADBE Position"), [[312, [1623, 381]], [336, [1463, 461]]], true); }
+    if (ldItem) { var ld = addClip(comp, ldItem, "S7 landing — ne_5_t1.mp4 (source f20 on f336, stretch 45 %)", 336, 372, 20, 45); keys(opacity(ld), [[366, 100], [371, 0]], true); }
+    log("Virgin script mark, small, lower right, f318-336: not in the assets (client file).");
+    log("Loop: f371 must equal f0.");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- Fifth Avenue
+def fifth_avenue() -> str:
+    body = film_header("The Fifth Avenue Hotel", 1920, 1080, 312, (255, 255, 255))
+    body += r"""
+    var shots = [["B1 hold", 0], ["B2 lockup", 58], ["B3 lockup out", 101], ["B4 reveal", 130], ["B5 walk (Kling FA-1)", 173], ["B6 whip", 274], ["B6b white", 282], ["B7 return", 288], ["B8 loop", 306]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    comp.motionBlur = true;
+    var parkItem  = importFootage("fa_park_couple_no_tortoise.png", null, folder);
+    var leashItem = importFootage("leash.png", null, folder);
+    var turtleItem = importFootage("turtle.png", null, folder);
+    var lockItem  = importFootage("Asset 1@2x.png", null, folder);
+    var walkItem  = importFootage("fa_1_t1.mp4", null, folder);
+    var PS = 44.19;
+
+    solid(comp, "White BG", [255, 255, 255], 1920, 1080, 0, 312);
+    var park = null;
+    if (parkItem) {
+        park = addStill(comp, parkItem, "Park (background + couple)", 130, 282);
+        place(park, null, [960, 540], 100);
+        keys(opacity(park), [[130, 0], [173, 100]], false);
+        keys(xf(park).property("ADBE Position"), [[274, [960, 540]], [282, [-960, 540]]], true);
+        park.motionBlur = true;
+        park.comment = "Whip: 2-frame ease-in, directional blur. Woman +12 px and man +15 px over the walk are on the PSD layers if they are used instead of this flattened plate.";
+    }
+    if (leashItem) {
+        var le = addStill(comp, leashItem, "Leash", 165, 282);
+        place(le, null, [923.6, 558.2], PS);
+        keys(opacity(le), [[165, 0], [173, 100]], true);
+        if (park) { le.parent = park; xf(le).property("ADBE Position").setValue([923.6, 558.2]); }
+        le.motionBlur = true;
+        le.comment = "Stretch the right end to follow the collar over the walk.";
+    }
+    if (walkItem) { var wk = addClip(comp, walkItem, "Kling walk — fa_1_t1.mp4 (optional; source f0-25 held over the beat)", 173, 274, 0, 404); wk.enabled = false;
+        wk.comment = "Final: figures retimed to 1/6 with optical flow, background at normal speed (or a second pass on the background alone)."; }
+    if (turtleItem) {
+        var tt = addStill(comp, turtleItem, "Tortoise", 0, 312);
+        place(tt, null, [1031, 413.5], PS);
+        keys(xf(tt).property("ADBE Position"), [[130, [1031, 413.5]], [168, [1178, 748.5]], [288, [1178, 748.5]], [306, [1031, 413.5]]], true);
+        tt.comment = "Optional +162 px in x over the walk (f173-274) then it stays for the whip. Specular sweep f10-50 as a masked light layer.";
+    }
+    if (lockItem) {
+        var lk = addStill(comp, lockItem, "Lockup (textured gold)", 58, 118);
+        place(lk, null, [960, 806], 16.66);
+        linearWipe(lk, [[58, 100], [82, 0]], 90, 60);
+        keys(opacity(lk), [[101, 100], [118, 0]], true);
+        keys(xf(lk).property("ADBE Scale"), [[101, [16.66, 16.66]], [118, [17.16, 17.16]]], true);
+    }
+    log("Audio: nothing placed; clock ticks, harp glisses and a carriage pass are in Drive (5th ave hotel NYC/audio).");
+    log("Loop: f311 must equal f0 (tortoise up-left on white).");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- Versailles
+def versailles() -> str:
+    body = film_header("Versailles", 1920, 1080, 374, (0, 0, 0))
+    body += r"""
+    var shots = [["S1 open", 0], ["S2 reveal", 53], ["S3 wordmark", 106], ["S4 morph", 149], ["S5 still", 211], ["S6 drop", 235], ["S7 served", 254], ["S8 return", 326]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var salonItem = importFootage("ve_1_t1.png", null, folder);
+    var markItem  = importFootage("ve_wordmark_gold_alpha.png", null, folder);
+    var gUpItem   = importFootage("ve_guillotine_up_alpha.png", null, folder);
+    var gDnItem   = importFootage("ve_guillotine_down_alpha.png", null, folder);
+    var cakeItem  = importFootage("ve_cake_table_alpha.png", null, folder);
+    var platItem  = importFootage("ve_plated_alpha.png", null, folder);
+    var chanItem  = importFootage("ve_chandelier_alpha.png", null, folder);
+
+    solid(comp, "Black BG", [0, 0, 0], 1920, 1080, 0, 374);
+    if (salonItem) {
+        var sa = addStill(comp, salonItem, "Clean salon", 53, 350);
+        place(sa, null, [960, 540], 114.8);
+        // radial reveal: an elliptical mask in layer px (layer is 1672x941), expansion keyed open then shut
+        var m = ellipseMask(sa, 836, 540, 174, 139, 260);
+        keys(m.property("ADBE Mask Offset"), [[53, 0], [86, 1300], [326, 1300], [350, -200]], true);
+        var ex = effect(sa, "ADBE Exposure2", "Grade (stops)");
+        keys(ex.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+        sa.comment = "If the Exposure effect's property index is off, the keyed property is Master Exposure: 0 / -1.5 / -0.5 / 0 stops.";
+    }
+    if (markItem) { var mk = addStill(comp, markItem, "Wordmark (gold-cream)", 106, 223); place(mk, null, [960, 997], 37.5); keys(opacity(mk), [[106, 0], [123, 100], [211, 100], [223, 0]], true); }
+    if (gUpItem) { var gu = addStill(comp, gUpItem, "Guillotine, blade up", 149, 370); place(gu, [388, 1040], [960, 1050], 100); keys(opacity(gu), [[149, 0], [200, 100], [350, 100], [370, 0]], true);
+        gu.comment = "Morph target: crystals -> uprights f149-180, boss -> blade f170-200, rope draws on f195-211."; }
+    if (gDnItem) { var gd = addStill(comp, gDnItem, "Guillotine, blade down (impact stand-in)", 238, 362); place(gd, [388, 1040], [960, 1050], 100); keys(opacity(gd), [[238, 0], [246, 100], [338, 100], [362, 0]], true);
+        gd.comment = "Final: cut the blade from this still and move it down over f238-246."; }
+    if (cakeItem) { var ck = addStill(comp, cakeItem, "Cake on table", 0, 374); place(ck, [231.5, 620], [960, 1042], 100); keys(opacity(ck), [[254, 100], [268, 0], [338, 0], [362, 100]], true); }
+    if (platItem) { var pt = addStill(comp, platItem, "Plated slices", 254, 362); place(pt, [350, 700], [960, 1072], 100); keys(opacity(pt), [[254, 0], [268, 100], [338, 100], [362, 0]], true);
+        pt.comment = "Final: separate slice cut-outs slide out over 0.6 s and back at 2x on the return."; }
+    if (chanItem) { var ch = addStill(comp, chanItem, "Chandelier", 0, 374); place(ch, [112, 0], [960, 8], 100); keys(opacity(ch), [[149, 100], [200, 0], [350, 0], [370, 100]], true); }
+    var gr = adjustment(comp, "Grade: elements (stops)", 149, 370);
+    var ex2 = effect(gr, "ADBE Exposure2", "Grade (stops)");
+    keys(ex2.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+    var fl = solid(comp, "Flash", [255, 255, 255], 1920, 1080, 246, 249); opacity(fl).setValue(35);
+    fl.comment = "Kick the whole comp (+4, -3) px at f246 settling by f254, 1 px jitter f235-238: a null parent on the element layers.";
+    log("Loop: f373 must equal f0 (cake + chandelier on black, grade 0).");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
+# --------------------------------------------------------------------------------------------- 22 Club
+def club22() -> str:
+    body = film_header("22 Club", 1920, 1080, 290, (0, 0, 0))
+    body += r"""
+    var shots = [["B1 hold (beat 1)", 0], ["B2 flip (beat 5)", 46], ["B3 decks (beat 10)", 105], ["B4 spotlight (beat 14)", 151], ["B5 flip back (beat 18)", 197], ["B6 return (beat 23)", 255], ["cut to black (beat 25)", 279]];
+    for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var lItem = importFootage("cl_mark_2L.png", null, folder);
+    var rItem = importFootage("cl_mark_2R.png", null, folder);
+    var cItem = importFootage("cl_mark_club.png", null, folder);
+    var platItem = importFootage("cl_1_t2.png", "platter + tonearm still", folder);
+    var vinItem  = importFootage("cl_2_t1.png", "vinyl top-down still", folder);
+    var bedItem  = importFootage("club22_rhythm_124bpm.wav", "placeholder bed", folder);
+    var HINGE = 642, LX = 775, RX = 1145;
+
+    solid(comp, "Black BG", [0, 0, 0], 1920, 1080, 0, 290);
+    // spotlight: cone + pool as white solids with masks, keyed opacity (geometry at the f180 state)
+    var cone = solid(comp, "Spotlight cone", [255, 240, 210], 1920, 1080, 151, 255);
+    polyMask(cone, [[-80, -160], [1425, 560], [495, 700]], 6);
+    keys(opacity(cone), [[151, 0], [158, 22], [197, 22], [255, 0]], true);
+    cone.comment = "Sweep: the pool grows from the left deck (f158) to both (f180). Add noise-driven dust. cl_3_t1.png is the lighting reference.";
+    var pool = solid(comp, "Spotlight pool", [255, 240, 210], 1920, 1080, 151, 255);
+    ellipseMask(pool, 960, 600, 465, 135, 40);
+    keys(opacity(pool), [[151, 0], [158, 35], [197, 35], [255, 0]], true);
+    var deckOp = [[105, 0], [129, 100], [197, 100], [216, 0]];
+    var cxs = [LX, RX];
+    for (var d = 0; d < 2; d++) {
+        if (platItem) { var pl = addStill(comp, platItem, "Platter " + (d ? "R" : "L"), 105, 216); place(pl, [940, 543], [cxs[d], 562], 19); pl.blendingMode = BlendingMode.SCREEN; keys(opacity(pl), deckOp, true);
+            pl.comment = "Screen over black; the still's platter content box is x 93-1787, y 191-895. Scale to a 320 px platter."; }
+        if (vinItem) { var vn = addStill(comp, vinItem, "Vinyl " + (d ? "R" : "L"), 105, 216); place(vn, [787.5, 763.5], [cxs[d], 562], 21); xf(vn).property("ADBE Scale").setValue([21, 10.5]);
+            vn.blendingMode = BlendingMode.SCREEN; keys(opacity(vn), deckOp, true);
+            keys(xf(vn).property("ADBE Rotate Z"), [[130, 0], [216, 720]], false); vn.comment = "33 1/3 rpm = 43 frames per rev from f130; squashed to the 30-degree view. One flash per rev."; }
+    }
+    // the digits as 3D layers hinged on their lowest ink row, seen from a camera 30 degrees above
+    var cam = comp.layers.addCamera("Camera 30 up", [960, HINGE]);
+    cam.property("ADBE Transform Group").property("ADBE Position").setValue([960, HINGE - 1333, -2309]);
+    cam.property("ADBE Transform Group").property("ADBE Anchor Point").setValue([960, HINGE, 0]);
+    function digit(item, name, homeX, drift, f0, f1) {
+        var L = addStill(comp, item, name, 0, 279);
+        L.threeDLayer = true;
+        xf(L).property("ADBE Anchor Point").setValue([74.5, 362, 0]);
+        xf(L).property("ADBE Position").setValue([homeX, HINGE, 0]);
+        keys(xf(L).property("ADBE Rotate X"), [[f0, 0], [f1, 90], [216, 90], [235, 0]], true);
+        keys(xf(L).property("ADBE Position"), [[f0, [homeX, HINGE, 0]], [f1, [homeX + drift, HINGE, 0]], [216, [homeX + drift, HINGE, 0]], [235, [homeX, HINGE, 0]]], true);
+        keys(opacity(L), [[105, 100], [129, 0], [197, 0], [216, 100]], false);
+        L.comment = "Rotate about an axis 2 px behind the face; small overshoot and settle on both flips.";
+        return L;
+    }
+    if (lItem) digit(lItem, "Digit 2 L", 882.5, -107, 46, 65);
+    if (rItem) digit(rItem, "Digit 2 R", 1034.5, 110, 54, 73);
+    if (cItem) { var cl = addStill(comp, cItem, "club script", 0, 279); place(cl, null, [960.5, 728.5], 100); keys(opacity(cl), [[151, 100], [158, 65], [197, 65], [255, 100]], true); }
+    if (bedItem) { var bed = comp.layers.add(bedItem); bed.name = "club22_rhythm_124bpm.wav (placeholder, -6 dB)"; bed.startTime = 0; span(bed, 0, 290); audioLevels(bed).setValue([-6, -6]); }
+    log("Seamless-loop deliverable: trim at f279 (f278 = f0). Full cut ends on black.");
+"""
+    return PRELUDE + body + EPILOGUE
+
+
 FILMS = {
     "giraffe_manor": giraffe_manor,
+    "north_island": north_island,
+    "passalacqua": passalacqua,
+    "miavana": miavana,
+    "necker_island": necker_island,
+    "fifth_avenue": fifth_avenue,
+    "versailles": versailles,
+    "club22": club22,
 }
 
 

@@ -118,119 +118,49 @@ function adjustment(comp, name, fin, fout) {
 }
 
 (function () {
-    var COMP_NAME = "Giraffe Manor";
+    var COMP_NAME = "Versailles";
     app.beginUndoGroup("Build " + COMP_NAME);
     var proj = app.project || app.newProject();
     var folder = proj.items.addFolder(COMP_NAME + " assets");
-    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 384 / FPS, FPS);
-    comp.bgColor = [1.0000, 1.0000, 0.9412];
+    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 374 / FPS, FPS);
+    comp.bgColor = [0.0000, 0.0000, 0.0000];
 
-    // ---- shot markers
-    var shots = [["S1 hold", 0], ["S2 logo", 48], ["S3 enter", 86], ["S4 reveal", 154], ["S5 pull-back", 178], ["S6 turn (Kling GM-2 t3)", 216],
-                 ["S7 windows (Kling GM-4)", 269], ["S8 payoff + mark", 322], ["S9 return", 351], ["S10 loop hold", 373]];
+    var shots = [["S1 open", 0], ["S2 reveal", 53], ["S3 wordmark", 106], ["S4 morph", 149], ["S5 still", 211], ["S6 drop", 235], ["S7 served", 254], ["S8 return", 326]];
     for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var salonItem = importFootage("ve_1_t1.png", null, folder);
+    var markItem  = importFootage("ve_wordmark_gold_alpha.png", null, folder);
+    var gUpItem   = importFootage("ve_guillotine_up_alpha.png", null, folder);
+    var gDnItem   = importFootage("ve_guillotine_down_alpha.png", null, folder);
+    var cakeItem  = importFootage("ve_cake_table_alpha.png", null, folder);
+    var platItem  = importFootage("ve_plated_alpha.png", null, folder);
+    var chanItem  = importFootage("ve_chandelier_alpha.png", null, folder);
 
-    // ---- footage
-    var heroItem  = importFootage("gm_hero_cutout_alpha.png", null, folder);
-    var plateItem = importFootage("gm_manor_plate_no_giraffes.png", null, folder);
-    var logoItem  = importFootage("giraffe_manor_wordmark.png", null, folder);
-    var walkItem  = importFootage("giraffe_walking.mov", "Drive: Giraffe Manor/upscaled, 327 MB ProRes 4444 alpha, 30 fps", folder);
-    var s6Item    = importFootage("gm_2_t3.mp4", null, folder);
-    var s7Item    = importFootage("gm_4_t1.mp4", null, folder);
-    var bedItem   = importFootage("birdsong01.wav", "Drive: Giraffe Manor/audio", folder);
-
-    var HERO_ANCHOR = [489.5, 1505];           // bottom-centre of the giraffe in the 1024x1536 cut-out
-    var HERO_SCALE = 53.8;                     // 800 px tall on the cream
-    var PLATE_ANCHOR = [2140, 1490];           // pivot in plate px
-    var PLATE_POS = [1497.5, 1047.7];
-    var S0 = 70.31;                            // plate at 100 % of the frame height = 70.31 % of 2752x1536
-    var Z = 2.65;
-
-    // 1 cream background
-    solid(comp, "Cream BG", [255, 255, 240], 1920, 1080, 0, 384);
-
-    // 2 hero on cream (the loop frame)
-    if (heroItem) {
-        var hero = addStill(comp, heroItem, "Hero on cream", 0, 384);
-        place(hero, HERO_ANCHOR, [760, 880], HERO_SCALE);
+    solid(comp, "Black BG", [0, 0, 0], 1920, 1080, 0, 374);
+    if (salonItem) {
+        var sa = addStill(comp, salonItem, "Clean salon", 53, 350);
+        place(sa, null, [960, 540], 114.8);
+        // radial reveal: an elliptical mask in layer px (layer is 1672x941), expansion keyed open then shut
+        var m = ellipseMask(sa, 836, 540, 174, 139, 260);
+        keys(m.property("ADBE Mask Offset"), [[53, 0], [86, 1300], [326, 1300], [350, -200]], true);
+        var ex = effect(sa, "ADBE Exposure2", "Grade (stops)");
+        keys(ex.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+        sa.comment = "If the Exposure effect's property index is off, the keyed property is Master Exposure: 0 / -1.5 / -0.5 / 0 stops.";
     }
-
-    // 3 walker on cream: enters from the right f86-154 and stops beside the hero
-    if (walkItem) {
-        var walker = addClip(comp, walkItem, "Walker on cream (giraffe_walking.mov)", 86, 154, 0, 100);
-        place(walker, null, [1945, 621], 50);
-        keys(xf(walker).property("ADBE Position"), [[86, [1945, 621]], [154, [1065, 621]]], true);
-        walker.comment = "Colour-match to the hero: the walker is warmer and darker (per-channel levels, gain <= 1.35).";
-    }
-
-    // 4 logo small under the hooves
-    if (logoItem) {
-        var logo = addStill(comp, logoItem, "Wordmark small", 48, 178);
-        place(logo, null, [760, 969], 16.2);
-        keys(xf(logo).property("ADBE Scale"), [[48, [15.5, 15.5]], [67, [16.2, 16.2]]], true);
-        keys(opacity(logo), [[48, 0], [67, 100], [120, 100], [154, 35], [178, 0]], true);
-    }
-
-    // 5 manor plate: dissolves in large and soft, rack focus, pull-back to 100 %
-    var plate = null;
-    if (plateItem) {
-        plate = addStill(comp, plateItem, "Manor plate", 154, 222);
-        place(plate, PLATE_ANCHOR, PLATE_POS, S0 * Z);
-        keys(xf(plate).property("ADBE Scale"), [[154, [S0 * Z, S0 * Z]], [188, [S0 * Z, S0 * Z]], [216, [S0, S0]]], true);
-        keys(opacity(plate), [[154, 0], [178, 100]], true);
-        var blur = effect(plate, "ADBE Gaussian Blur 2", "Rack focus");
-        keys(blur.property("ADBE Gaussian Blur 2-0001"), [[154, 20], [178, 20], [188, 0]], true);
-    }
-
-    // 6 hero on the plate (parented), feet at plate px (1744, 1400), 429 plate px tall
-    if (heroItem && plate) {
-        var heroP = addStill(comp, heroItem, "Hero on plate", 154, 222);
-        heroP.parent = plate;
-        place(heroP, HERO_ANCHOR, [1744, 1400], 28.85);
-        keys(opacity(heroP), [[154, 0], [178, 100]], true);
-    }
-
-    // 7 walker frozen on the plate (parented), source frame 85, feet at plate px (2050, 1400)
-    if (walkItem && plate) {
-        var walkP = addClip(comp, walkItem, "Walker on plate (frozen f85)", 154, 222, 0, 100);
-        freeze(walkP, 85);
-        walkP.parent = plate;
-        place(walkP, null, [1954, 1239], 27.8);
-        keys(opacity(walkP), [[154, 0], [178, 100]], true);
-        walkP.comment = "Placement approximates the animatic: feet centre (2050, 1400) plate px, 429 plate px tall. Nudge to taste.";
-    }
-
-    // 8 shot 6: the turn (Kling GM-2 take 3), 121 source frames into 63
-    if (s6Item) {
-        var s6 = addClip(comp, s6Item, "S6 turn — gm_2_t3.mp4 (stretch 52.07 %)", 216, 269, 0, 52.07);
-        keys(opacity(s6), [[216, 0], [222, 100]], true);
-        s6.comment = "No in-place turn in the clip: the giraffes travel to the steps and end rear-facing. Roto/retime candidate.";
-    }
-
-    // 9 shots 7-9: heads into the windows (Kling GM-4), plays on under the mark, dissolves out to the hero
-    if (s7Item) {
-        var s7 = addClip(comp, s7Item, "S7-9 windows — gm_4_t1.mp4", 269, 373, 0, 100);
-        keys(opacity(s7), [[351, 100], [373, 0]], true);
-    }
-
-    // 10-11 end card + mark, bottom-right
-    var card = solid(comp, "End card", [255, 255, 240], 444, 115, 322, 373);
-    place(card, null, [1638, 962.5], 100);
-    keys(opacity(card), [[322, 0], [334, 88], [351, 88], [373, 0]], true);
-    card.comment = "Round the corners 14 px (mask) if wanted.";
-    if (logoItem) {
-        var mark = addStill(comp, logoItem, "End mark", 322, 373);
-        place(mark, null, [1638, 962.5], 10.12);
-        keys(opacity(mark), [[322, 0], [334, 100], [351, 100], [373, 0]], true);
-    }
-
-    // 12 audio bed
-    if (bedItem) {
-        var bed = comp.layers.add(bedItem); bed.name = "birdsong01.wav (-14 dB)";
-        bed.startTime = 0; span(bed, 0, 384);
-        keys(audioLevels(bed), [[0, [-96, -96]], [12, [-14, -14]], [372, [-14, -14]], [384, [-96, -96]]], false);
-    }
-    log("Loop: f383 must equal f0 (hero on cream, nothing else).");
+    if (markItem) { var mk = addStill(comp, markItem, "Wordmark (gold-cream)", 106, 223); place(mk, null, [960, 997], 37.5); keys(opacity(mk), [[106, 0], [123, 100], [211, 100], [223, 0]], true); }
+    if (gUpItem) { var gu = addStill(comp, gUpItem, "Guillotine, blade up", 149, 370); place(gu, [388, 1040], [960, 1050], 100); keys(opacity(gu), [[149, 0], [200, 100], [350, 100], [370, 0]], true);
+        gu.comment = "Morph target: crystals -> uprights f149-180, boss -> blade f170-200, rope draws on f195-211."; }
+    if (gDnItem) { var gd = addStill(comp, gDnItem, "Guillotine, blade down (impact stand-in)", 238, 362); place(gd, [388, 1040], [960, 1050], 100); keys(opacity(gd), [[238, 0], [246, 100], [338, 100], [362, 0]], true);
+        gd.comment = "Final: cut the blade from this still and move it down over f238-246."; }
+    if (cakeItem) { var ck = addStill(comp, cakeItem, "Cake on table", 0, 374); place(ck, [231.5, 620], [960, 1042], 100); keys(opacity(ck), [[254, 100], [268, 0], [338, 0], [362, 100]], true); }
+    if (platItem) { var pt = addStill(comp, platItem, "Plated slices", 254, 362); place(pt, [350, 700], [960, 1072], 100); keys(opacity(pt), [[254, 0], [268, 100], [338, 100], [362, 0]], true);
+        pt.comment = "Final: separate slice cut-outs slide out over 0.6 s and back at 2x on the return."; }
+    if (chanItem) { var ch = addStill(comp, chanItem, "Chandelier", 0, 374); place(ch, [112, 0], [960, 8], 100); keys(opacity(ch), [[149, 100], [200, 0], [350, 0], [370, 100]], true); }
+    var gr = adjustment(comp, "Grade: elements (stops)", 149, 370);
+    var ex2 = effect(gr, "ADBE Exposure2", "Grade (stops)");
+    keys(ex2.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+    var fl = solid(comp, "Flash", [255, 255, 255], 1920, 1080, 246, 249); opacity(fl).setValue(35);
+    fl.comment = "Kick the whole comp (+4, -3) px at f246 settling by f254, 1 px jitter f235-238: a null parent on the element layers.";
+    log("Loop: f373 must equal f0 (cake + chandelier on black, grade 0).");
 
     try { app.project.timeDisplayType = TimeDisplayType.FRAMES; } catch (e) {}
     comp.openInViewer();

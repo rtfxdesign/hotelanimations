@@ -118,119 +118,44 @@ function adjustment(comp, name, fin, fout) {
 }
 
 (function () {
-    var COMP_NAME = "Giraffe Manor";
+    var COMP_NAME = "Necker Island";
     app.beginUndoGroup("Build " + COMP_NAME);
     var proj = app.project || app.newProject();
     var folder = proj.items.addFolder(COMP_NAME + " assets");
-    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 384 / FPS, FPS);
-    comp.bgColor = [1.0000, 1.0000, 0.9412];
+    var comp = proj.items.addComp(COMP_NAME, 1920, 1080, 1.0, 372 / FPS, FPS);
+    comp.bgColor = [1.0000, 1.0000, 1.0000];
 
-    // ---- shot markers
-    var shots = [["S1 hold", 0], ["S2 logo", 48], ["S3 enter", 86], ["S4 reveal", 154], ["S5 pull-back", 178], ["S6 turn (Kling GM-2 t3)", 216],
-                 ["S7 windows (Kling GM-4)", 269], ["S8 payoff + mark", 322], ["S9 return", 351], ["S10 loop hold", 373]];
+    var shots = [["S1 hold", 0], ["S2 takeoff (Kling NE-1)", 58], ["S3 pull-back", 110], ["S4 kite (Kling NE-3)", 178], ["S5 tennis", 245], ["S6 whiteout", 312], ["S7 landing (Kling NE-5)", 336]];
     for (var i = 0; i < shots.length; i++) marker(comp, shots[i][1], shots[i][0]);
+    var birdItem = importFootage("flamingo.png", null, folder);
+    var aerItem  = importFootage("ne_aerial_16x9_3840x2160.png", null, folder);
+    var tkItem   = importFootage("ne_1_t1.mp4", null, folder);
+    var kiteItem = importFootage("ne_3_t1.mp4", null, folder);
+    var taItem   = importFootage("ne_4a_t1.png", null, folder);
+    var tbItem   = importFootage("ne_4b_t1.png", null, folder);
+    var ldItem   = importFootage("ne_5_t1.mp4", null, folder);
+    var BIRD_ANCHOR = [457.5, 1666];
 
-    // ---- footage
-    var heroItem  = importFootage("gm_hero_cutout_alpha.png", null, folder);
-    var plateItem = importFootage("gm_manor_plate_no_giraffes.png", null, folder);
-    var logoItem  = importFootage("giraffe_manor_wordmark.png", null, folder);
-    var walkItem  = importFootage("giraffe_walking.mov", "Drive: Giraffe Manor/upscaled, 327 MB ProRes 4444 alpha, 30 fps", folder);
-    var s6Item    = importFootage("gm_2_t3.mp4", null, folder);
-    var s7Item    = importFootage("gm_4_t1.mp4", null, folder);
-    var bedItem   = importFootage("birdsong01.wav", "Drive: Giraffe Manor/audio", folder);
-
-    var HERO_ANCHOR = [489.5, 1505];           // bottom-centre of the giraffe in the 1024x1536 cut-out
-    var HERO_SCALE = 53.8;                     // 800 px tall on the cream
-    var PLATE_ANCHOR = [2140, 1490];           // pivot in plate px
-    var PLATE_POS = [1497.5, 1047.7];
-    var S0 = 70.31;                            // plate at 100 % of the frame height = 70.31 % of 2752x1536
-    var Z = 2.65;
-
-    // 1 cream background
-    solid(comp, "Cream BG", [255, 255, 240], 1920, 1080, 0, 384);
-
-    // 2 hero on cream (the loop frame)
-    if (heroItem) {
-        var hero = addStill(comp, heroItem, "Hero on cream", 0, 384);
-        place(hero, HERO_ANCHOR, [760, 880], HERO_SCALE);
-    }
-
-    // 3 walker on cream: enters from the right f86-154 and stops beside the hero
-    if (walkItem) {
-        var walker = addClip(comp, walkItem, "Walker on cream (giraffe_walking.mov)", 86, 154, 0, 100);
-        place(walker, null, [1945, 621], 50);
-        keys(xf(walker).property("ADBE Position"), [[86, [1945, 621]], [154, [1065, 621]]], true);
-        walker.comment = "Colour-match to the hero: the walker is warmer and darker (per-channel levels, gain <= 1.35).";
-    }
-
-    // 4 logo small under the hooves
-    if (logoItem) {
-        var logo = addStill(comp, logoItem, "Wordmark small", 48, 178);
-        place(logo, null, [760, 969], 16.2);
-        keys(xf(logo).property("ADBE Scale"), [[48, [15.5, 15.5]], [67, [16.2, 16.2]]], true);
-        keys(opacity(logo), [[48, 0], [67, 100], [120, 100], [154, 35], [178, 0]], true);
-    }
-
-    // 5 manor plate: dissolves in large and soft, rack focus, pull-back to 100 %
-    var plate = null;
-    if (plateItem) {
-        plate = addStill(comp, plateItem, "Manor plate", 154, 222);
-        place(plate, PLATE_ANCHOR, PLATE_POS, S0 * Z);
-        keys(xf(plate).property("ADBE Scale"), [[154, [S0 * Z, S0 * Z]], [188, [S0 * Z, S0 * Z]], [216, [S0, S0]]], true);
-        keys(opacity(plate), [[154, 0], [178, 100]], true);
-        var blur = effect(plate, "ADBE Gaussian Blur 2", "Rack focus");
-        keys(blur.property("ADBE Gaussian Blur 2-0001"), [[154, 20], [178, 20], [188, 0]], true);
-    }
-
-    // 6 hero on the plate (parented), feet at plate px (1744, 1400), 429 plate px tall
-    if (heroItem && plate) {
-        var heroP = addStill(comp, heroItem, "Hero on plate", 154, 222);
-        heroP.parent = plate;
-        place(heroP, HERO_ANCHOR, [1744, 1400], 28.85);
-        keys(opacity(heroP), [[154, 0], [178, 100]], true);
-    }
-
-    // 7 walker frozen on the plate (parented), source frame 85, feet at plate px (2050, 1400)
-    if (walkItem && plate) {
-        var walkP = addClip(comp, walkItem, "Walker on plate (frozen f85)", 154, 222, 0, 100);
-        freeze(walkP, 85);
-        walkP.parent = plate;
-        place(walkP, null, [1954, 1239], 27.8);
-        keys(opacity(walkP), [[154, 0], [178, 100]], true);
-        walkP.comment = "Placement approximates the animatic: feet centre (2050, 1400) plate px, 429 plate px tall. Nudge to taste.";
-    }
-
-    // 8 shot 6: the turn (Kling GM-2 take 3), 121 source frames into 63
-    if (s6Item) {
-        var s6 = addClip(comp, s6Item, "S6 turn — gm_2_t3.mp4 (stretch 52.07 %)", 216, 269, 0, 52.07);
-        keys(opacity(s6), [[216, 0], [222, 100]], true);
-        s6.comment = "No in-place turn in the clip: the giraffes travel to the steps and end rear-facing. Roto/retime candidate.";
-    }
-
-    // 9 shots 7-9: heads into the windows (Kling GM-4), plays on under the mark, dissolves out to the hero
-    if (s7Item) {
-        var s7 = addClip(comp, s7Item, "S7-9 windows — gm_4_t1.mp4", 269, 373, 0, 100);
-        keys(opacity(s7), [[351, 100], [373, 0]], true);
-    }
-
-    // 10-11 end card + mark, bottom-right
-    var card = solid(comp, "End card", [255, 255, 240], 444, 115, 322, 373);
-    place(card, null, [1638, 962.5], 100);
-    keys(opacity(card), [[322, 0], [334, 88], [351, 88], [373, 0]], true);
-    card.comment = "Round the corners 14 px (mask) if wanted.";
-    if (logoItem) {
-        var mark = addStill(comp, logoItem, "End mark", 322, 373);
-        place(mark, null, [1638, 962.5], 10.12);
-        keys(opacity(mark), [[322, 0], [334, 100], [351, 100], [373, 0]], true);
-    }
-
-    // 12 audio bed
-    if (bedItem) {
-        var bed = comp.layers.add(bedItem); bed.name = "birdsong01.wav (-14 dB)";
-        bed.startTime = 0; span(bed, 0, 384);
-        keys(audioLevels(bed), [[0, [-96, -96]], [12, [-14, -14]], [372, [-14, -14]], [384, [-96, -96]]], false);
-    }
-    log("Loop: f383 must equal f0 (hero on cream, nothing else).");
+    solid(comp, "White BG", [255, 255, 255], 1920, 1080, 0, 372);
+    if (birdItem) { var b1 = addStill(comp, birdItem, "Flamingo still", 0, 372); place(b1, BIRD_ANCHOR, [920, 940], 46.64);
+        keys(opacity(b1), [[0, 100], [62, 100], [63, 0], [365, 0], [366, 100]], false); }
+    if (tkItem) { var tk = addClip(comp, tkItem, "S2 takeoff — ne_1_t1.mp4 (stretch 43 %)", 58, 110, 0, 43); keys(opacity(tk), [[58, 0], [62, 100]], true);
+        tk.comment = "Background drifts light grey: key or lift to white."; }
+    if (aerItem) { var a1 = addStill(comp, aerItem, "Aerial, pull-back", 110, 178); place(a1, null, [960, 540], 110); keys(xf(a1).property("ADBE Scale"), [[110, [110, 110]], [178, [50, 50]]], true); }
+    var ramp = solid(comp, "White ramp (pull-back)", [255, 255, 255], 1920, 1080, 110, 140); keys(opacity(ramp), [[110, 85], [140, 0]], true);
+    if (birdItem) { var bs = addStill(comp, birdItem, "Flamingo small (stand-in flier)", 110, 178); place(bs, BIRD_ANCHOR, [1313, 461], 5.16);
+        keys(xf(bs).property("ADBE Position"), [[110, [1313, 461]], [178, [1623, 381]]], true); bs.comment = "Replace with a flight-pose crop (necker_flamingos_08.jpg in Drive) or a Kling flier."; }
+    if (kiteItem) addClip(comp, kiteItem, "S4 kite — ne_3_t1.mp4 (stretch 55.4 %)", 178, 245, 0, 55.37);
+    if (taItem) { var ta = addStill(comp, taItem, "Tennis A", 245, 312); place(ta, null, [960, 540], 71.43); keys(xf(ta).property("ADBE Scale"), [[245, [71.43, 71.43]], [312, [82.14, 82.14]]], true); }
+    if (tbItem) { var tb = addStill(comp, tbItem, "Tennis B", 245, 312); place(tb, null, [960, 540], 71.43); keys(xf(tb).property("ADBE Scale"), [[245, [71.43, 71.43]], [312, [82.14, 82.14]]], true);
+        keys(opacity(tb), [[245, 0], [259, 0], [263, 100], [278, 100], [282, 0], [298, 0], [302, 100]], true); tb.comment = "Ball: AE shape on 14-frame arcs between the rackets, hits at 10.8 / 11.6 / 12.4 s."; }
+    if (aerItem) { var a2 = addStill(comp, aerItem, "Aerial, whiteout", 312, 336); place(a2, null, [960, 540], 50); keys(xf(a2).property("ADBE Scale"), [[312, [50, 50]], [336, [27.5, 27.5]]], true); }
+    var wo = solid(comp, "White ramp (whiteout)", [255, 255, 255], 1920, 1080, 312, 336); keys(opacity(wo), [[312, 0], [336, 100]], true);
+    if (birdItem) { var bb = addStill(comp, birdItem, "Flamingo small (banking back)", 312, 336); place(bb, BIRD_ANCHOR, [1623, 381], 5.16);
+        keys(xf(bb).property("ADBE Position"), [[312, [1623, 381]], [336, [1463, 461]]], true); }
+    if (ldItem) { var ld = addClip(comp, ldItem, "S7 landing — ne_5_t1.mp4 (source f20 on f336, stretch 45 %)", 336, 372, 20, 45); keys(opacity(ld), [[366, 100], [371, 0]], true); }
+    log("Virgin script mark, small, lower right, f318-336: not in the assets (client file).");
+    log("Loop: f371 must equal f0.");
 
     try { app.project.timeDisplayType = TimeDisplayType.FRAMES; } catch (e) {}
     comp.openInViewer();

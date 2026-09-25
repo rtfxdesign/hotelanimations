@@ -18,3 +18,15 @@ Built by `build_animatic.py` from the v2 storyboard staging. Shots 6 (the turn) 
 | 10 loop hold | 373–384 | = frame 0 |
 
 Rebuild: `python giraffe_manor/animatic/build_animatic.py PULL_ROOT WALK_FRAMES_DIR OUT_DIR` (add `--no-burnin` for a clean pass).
+
+## v0.2 (2026-09-25, after Sol round 1)
+
+`giraffe_manor_animatic_v0.2.mp4` — same 384-frame structure. Shots 6–9 now use generated material:
+
+| Shot | Frames | Source |
+|---|---|---|
+| S6 turn | 206–269 | `generation_kit/output/01_giraffe_manor/gm_2_t3.mp4` (Kling 3, first+last frame), all 121 frames retimed 2× into 63; 6-frame dissolve from the staged plate at f216. No in-place turn yet: the giraffes travel to the steps and end rear-facing. Roto/retime candidate. |
+| S7 windows | 269–322 | hard cut to `gm_3b_t1.png` (in-place edit of the plate crop), still with a 4 % push. GM-4 (necks rise) pending. |
+| S8, S9 | 322–373 | same plate; mark and return as v0.1 |
+
+Build: `GM_S6_FRAMES=<dir of clip PNGs> GM_S7_PLATE=<gm_3b_t1.png> python3 build_animatic.py PULL_ROOT WALK_FRAMES_DIR OUT_DIR`. Without the two variables the v0.1 placeholders render.

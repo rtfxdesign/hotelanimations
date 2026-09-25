@@ -62,6 +62,11 @@ def main():
     out_md, out_html = ROOT / "docs" / f"STORYBOARDS_{day}.md", ROOT / "docs" / f"STORYBOARDS_{day}.html"
     md_parts = [f"# Theria Hotel Animations — Storyboards for review\nBoarded {day} · RTFX Design · one section per film, frames built from the real assets.\n"]
     html_parts = []
+    intro = ROOT / "docs" / "storyboards_intro.md"
+    if intro.exists():
+        itxt = intro.read_text(encoding="utf-8")
+        md_parts.append(itxt)
+        html_parts.append("<div class=intro>" + markdown.markdown(itxt, extensions=["tables", "sane_lists"]) + "</div>")
     missing = []
     for num, title, d in FILMS:
         sb = ROOT / d / "storyboard" / "STORYBOARD.md"

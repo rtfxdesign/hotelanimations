@@ -1,8 +1,12 @@
 {
- "_provisional": "proposed by Claude round 0 review, awaiting Allen",
+ "_provisional": "proposed by Claude, rounds 0-1; awaiting Allen. GM-2 take 3 used from source f58 to f120.",
  "FA-1": 1,
  "PA-1": 1,
  "VE-1": 1,
  "MI-4": 1,
- "CL-2": 1
+ "CL-2": 1,
+ "GM-2": 3,
+ "GM-3b": 1,
+ "MI-4b": 1,
+ "CL-1": 2
 }

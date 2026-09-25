@@ -59,7 +59,7 @@
     "cfg_scale": 0.5
    },
    "prompt": "Both giraffes turn away from the camera together, slowly, and walk straight up the centre steps toward the ivy-covered stone house, seen from behind and getting smaller until they match the final frame. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
-   "note": "Round 1: first frame = kit start, last frame = gm_2_rear_end.png (Sol, round 0). Kling O3 first-last-frame or Kling 3 with last_image_url. Round-0 takes 1 and 2 rejected: no turn, sideways travel."
+   "note": "Round 1 takes 3 and 4 (first+last frame) land the giraffes on the centre steps from behind by f58; f0-58 is lateral travel. Take 3 f58-120 is cut into animatic v0.2. Retry only if Allen wants a true in-place turn."
   },
   {
    "id": "GM-3",
@@ -105,22 +105,43 @@
    "note": "Round 1 replacement for GM-3 (round 0 rebuilt the house). If the edit model cannot hold the plate, generate the two giraffes isolated on green in this pose instead and Claude comps them."
   },
   {
+   "id": "GM-3c",
+   "film": "01_giraffe_manor",
+   "phase": "B",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "out:GM-3b"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Edit this image in place: keep everything identical, but lower both giraffes' necks so their heads are level with the tops of the ground-floor windows, looking up at the open first-floor windows, mouths closed. Same house, same ivy, same windows, same people, same light.",
+   "note": "Start frame for GM-4. GM-3b is the end frame."
+  },
+  {
    "id": "GM-4",
    "film": "01_giraffe_manor",
    "phase": "B",
    "endpoint": "kling-video/v3.0/pro/image-to-video",
    "takes": 1,
    "inputs": {
-    "image_url": "out:GM-2:last_frame",
-    "last_image_url": "out:GM-3"
+    "image_url": "out:GM-3c",
+    "last_image_url": "out:GM-3b"
    },
    "args": {
     "duration": 5,
     "sound": "off",
     "cfg_scale": 0.5
    },
-   "prompt": "The two giraffes raise their necks and push their heads gently through the upstairs windows. Slow and calm. The house does not change. Camera locked off, no camera movement, no zoom.",
-   "note": "first frame = last frame of the chosen GM-2 take; last frame = GM-3 plate"
+   "prompt": "The two giraffes slowly raise their necks and push their heads gently in through the open upstairs windows, ending exactly on the final frame. Calm, slow. The house, ivy, terrace and people do not change. Camera locked off, no camera movement, no zoom.",
+   "note": "Kling first-last: GM-3c (necks lowered) to GM-3b (heads in the windows). Replaces the earlier plan of chaining from GM-2."
   },
   {
    "id": "FA-1",
@@ -647,7 +668,7 @@
     "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
    },
    "prompt": "Only a turntable platter and tonearm, no deck body, no plinth, no buttons, no dials: a round brushed-aluminium platter with a black rubber slipmat and chrome centre spindle, and a matte black tonearm with counterweight resting on its rest beside it, from a low three-quarter angle, isolated on pure black with one soft key light from upper left and warm specular highlights. Product photography. No text, no branding, no lettering of any kind, no record.",
-   "note": "Round 1 rerun; round 0 produced a whole branded deck."
+   "note": "Round 1 take 2 accepted: isolated platter, no lettering. Cartridge sits on the slipmat; tonearm is roto-lifted in comp."
   },
   {
    "id": "CL-2",

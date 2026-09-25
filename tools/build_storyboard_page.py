@@ -38,7 +38,7 @@ body{font-family:"Space Grotesk",system-ui,sans-serif;font-size:14px;line-height
 h1,h2,h3{font-family:"Martian Mono",monospace;letter-spacing:-.01em;line-height:1.2}
 h1{font-size:24px;border-left:6px solid var(--accent);padding-left:12px}
 h2{font-size:20px;margin-top:2.4em;border-bottom:1px solid var(--rule);padding-bottom:4px;page-break-before:always}
-h2.first{page-break-before:auto}
+h2.first,.intro h2{page-break-before:auto}
 h3{font-size:14px;margin-top:1.4em}
 table{border-collapse:collapse;width:100%;font-size:12px;margin:12px 0}
 th,td{border:1px solid var(--rule);padding:4px 6px;vertical-align:top;text-align:left}

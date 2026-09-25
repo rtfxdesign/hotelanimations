@@ -104,7 +104,11 @@ class Scene:
         key = round(z, 3)
         if key not in self._az:
             im = self.aerial.resize((round(W * z), round(H * z)), Image.LANCZOS)
-            self._az = {key: im.crop(((im.width - W) // 2, (im.height - H) // 2, (im.width - W) // 2 + W, (im.height - H) // 2 + H))}
+            if z >= 1:
+                im = im.crop(((im.width - W) // 2, (im.height - H) // 2, (im.width - W) // 2 + W, (im.height - H) // 2 + H))
+            else:                                   # smaller than frame: centred on white
+                canvas = self.white.copy(); canvas.alpha_composite(im, ((W - im.width) // 2, (H - im.height) // 2)); im = canvas
+            self._az = {key: im}
         return self._az[key]
 
     def court(self, f, which):

@@ -21,6 +21,6 @@ The animatic is the reference: it was built from the same numbers, so if a layer
 
 Wordmarks come only from the `*_wordmark.png` files (RGBA, rendered from the client vectors). Never key a logo from a white-background image. Never scale a logo up with AI tools.
 
-What is not in the folders: the Giraffe Manor walk cycle (`giraffe_walking.mov`, 327 MB ProRes 4444 with alpha) lives in the Drive folder Giraffe Manor/upscaled. Everything else is here.
+What is not in the zips: the Giraffe Manor walk cycle (`giraffe_walking.mov`, 327 MB ProRes 4444 with alpha, Drive: Giraffe Manor/upscaled), the Fifth Avenue walkers PSD (`turtlewalkers.psd`, 93 MB, Drive: 5th ave hotel NYC/upscaled; its layers are in the zip as PNGs) and the audio beds (Drive, per film). Everything else is here.
 
 Questions go to Allen. Built by RTFX Design, 2026-09-25.

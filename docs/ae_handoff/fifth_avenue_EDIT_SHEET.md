@@ -2,7 +2,7 @@
 
 Comp 1920×1080, 24 fps, 312 frames (13.0 s). Background white. Reference: `fifth_avenue_animatic_v0.1.mp4`.
 
-The park is `turtlewalkers.psd` (4346×2444) with four layers: woman, man, leash, turtle. PSD pixels map to HD at 44.19 % (height fits; 1 px cropped on the right). The plate tortoise is the hero throughout: it is the same sprite at the same scale on white in beats 1–3 and on the park in beats 4–7. All positions are top-left corners of layers at 44.19 %.
+The park is `turtlewalkers.psd` (4346×2444, 93 MB, in Drive under 5th ave hotel NYC/upscaled, not in the zips) with four layers: woman, man, leash, turtle. PSD pixels map to HD at 44.19 % (height fits; 1 px cropped on the right). The plate tortoise is the hero throughout: it is the same sprite at the same scale on white in beats 1–3 and on the park in beats 4–7. All positions are top-left corners of layers at 44.19 %.
 
 ## Shots
 

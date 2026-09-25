@@ -66,6 +66,19 @@ class Clip:
         return self.cache[i]
 
 
+def push_out(im, shift, blur=160, samples=16):
+    """Push-whip with horizontal motion blur; shifts clamped to the frame (the storyboard helper is not)."""
+    src = np.asarray(im.convert("RGB")).astype(np.float32)
+    acc = np.zeros_like(src)
+    for i in range(samples):
+        s = int(max(0, min(W, shift + round((i / (samples - 1) - 0.5) * blur))))
+        canvas = np.full_like(src, 255.0)
+        if s < W:
+            canvas[:, :W - s] = src[:, s:]
+        acc += canvas
+    return Image.fromarray((acc / samples).astype(np.uint8), "RGB").convert("RGBA")
+
+
 def wipe_lr(layer, t, soft=60):
     """Reveal a layer left -> right: alpha multiplied by a soft horizontal ramp at fraction t."""
     m = Image.new("L", (layer.width, 1)); px = m.load()
@@ -109,7 +122,7 @@ class Scene:
         if f not in self.whip_cache:
             t = (f - 274) / 8
             t = t * t if t < 0.25 else t                    # 2 f ease-in
-            self.whip_cache[f] = B.push_out(self.park_end, round(W * min(1.0, t)))
+            self.whip_cache[f] = push_out(self.park_end, round(W * min(1.0, t)))
         return self.whip_cache[f]
 
     def render(self, f, burnin=True):
@@ -166,7 +179,10 @@ def main():
     S.park.convert("RGB").save(out / "fa_park_couple_no_tortoise.png")
     S.park_leash.convert("RGB").save(out / "fa_park_couple_leash.png")
     S.hero.save(out / "fa_tortoise_hd_alpha.png")
+    resume = "--resume" in sys.argv
     for f in range(TOTAL):
+        if resume and (frames / f"fa_{f:04d}.png").exists():
+            continue
         S.render(f, burnin).save(frames / f"fa_{f:04d}.png", compress_level=1)
         if f % 48 == 0:
             print(f"frame {f}/{TOTAL}  {shot_name(f)}", flush=True)

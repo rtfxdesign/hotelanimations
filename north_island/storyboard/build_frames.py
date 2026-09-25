@@ -68,15 +68,20 @@ def fit_cover(im, w=W, h=H, top=None):
     return im.crop((x, y, x + w, y + h))
 
 
+TAG_MAX_W = 1180   # keeps tags clear of the top-right turtle (x >= 1200 on the lock-up plates)
+
+
 def tag(im, text, colour=(255, 176, 32), line=0):
-    """Corner tag. `line` stacks a second/third tag under the first."""
+    """Corner tag, top-left. `line` stacks a second/third tag under the first;
+    three lines end at y=196, just above the small top-left turtle (y~180+)."""
+    assert line <= 2, "max three tag lines (would cover the small turtle)"
     d = ImageDraw.Draw(im)
-    f = font(30)
+    f = font(26)
     tw = d.textlength(text, font=f)
-    assert 24 + tw + 28 <= im.width - 24, f"tag overflows frame ({int(tw)} px): {text}"
+    assert 24 + tw + 28 <= TAG_MAX_W, f"tag too wide ({int(tw)} px, max text ~{TAG_MAX_W - 52}): {text}"
     y = 24 + line * 60
     d.rectangle((24, y, 24 + tw + 28, y + 52), fill=(0, 0, 0, 220))
-    d.text((38, y + 8), text, font=f, fill=colour)
+    d.text((38, y + 10), text, font=f, fill=colour)
 
 
 def blend(a, b, t):
@@ -101,14 +106,14 @@ def main():
     beach = fit_cover(load(BEACH), top=CROP_TOP["beach"])
     assert (ni / MARK).exists(), f"house mark {MARK} missing from pull"
 
-    CROP_TAG = "3:2 COVER-CROP clips top-right turtle + big turtle flippers (~60 px) — outpaint to 16:9 (NBP)"
-    WM_TAG = "WORDMARK IS BURNED INTO THE PLATE — regenerate clean (NBP), wordmark as AE layer"
+    CROP_TAG = "3:2 COVER-CROP clips top-right + big turtle ~60 px — outpaint 16:9"
+    WM_TAG = "WORDMARK BURNED IN — regenerate clean (NBP), wordmark = AE layer"
 
     frames = []
 
     # 01 — Shot 1 (f0-53): the lock-up on white, dead still. b261916d exactly.
     f = white.copy()
-    tag(f, "READY — b261916d as shot; only a shell highlight sweep f24-48 (AE)")
+    tag(f, "READY — b261916d as shot; shell highlight sweep f24-48 in AE")
     tag(f, WM_TAG, line=1)
     tag(f, CROP_TAG, line=2)
     frames.append(("01_hold", f))
@@ -116,42 +121,43 @@ def main():
     # 02 — Shot 2 (f53-96): white becomes water. Shown as a 50 % blend of the
     # two lock-up plates; the real move is a bottom-up flood over 1.2 s.
     f = blend(white, water, 0.5)
-    tag(f, "COMP (AE) — turquoise floods bottom-up 1.2 s; shown: 50% blend b261916d/7e26a98a")
-    tag(f, "Turtles + wordmark must stay pixel-locked between the two plates (they do)", line=1)
+    tag(f, "COMP (AE) — water floods bottom-up 1.2 s; 50% b261916d/7e26a98a")
+    tag(f, "PLATES NOT PIXEL-LOCKED — turtles/type drift 5-11 px; comp as layers", line=1)
     frames.append(("02_flood_COMP", f))
 
     # 03 — Shot 3 (f96-168): they start to swim. Kling from 7e26a98a.
     f = water.copy()
-    tag(f, "TO GENERATE (KLING) — flippers, drift right ~15% of frame; shown: 7e26a98a start frame")
-    tag(f, "WORDMARK will not survive Kling — fade it as an AE layer from f150 (needs clean plate)", line=1)
+    tag(f, "TO GENERATE (KLING) — flippers, drift right ~15%; start 7e26a98a")
+    tag(f, "Kling will eat the burned-in wordmark — fade it as AE layer f150", line=1)
     frames.append(("03_swim_TOGEN", f))
 
     # 04 — Shot 4a (f168-197): water shallows out to sand, beach fades up.
     f = blend(water, beach, 0.5)
-    tag(f, "COMP + KLING — turquoise ramps to sand 1.2 s, island fades up; shown: 50% blend 7e26a98a/0873e031")
-    tag(f, "NOTE: 5 turtles in the water plate, 3 on the beach plate — positions do not match", line=1)
+    tag(f, "COMP + KLING — turquoise to sand 1.2 s; 50% 7e26a98a/0873e031")
+    tag(f, "5 turtles in the water plate, 3 on the beach — positions differ", line=1)
     frames.append(("04_landfall_COMP", f))
 
     # 05 — Shot 4b (f197-226): landed. 0873e031 exactly.
     f = beach.copy()
-    tag(f, "TO GENERATE (KLING) — flipper cycle changes to a heavy crawl f190; shown: 0873e031 landing plate")
-    tag(f, "3:2 PLATE COVER-CROPPED — crop biased down, loses 115 px of sky only", line=1)
+    tag(f, "TO GENERATE (KLING) — swim to heavy crawl f190; plate 0873e031")
+    tag(f, "3:2 COVER-CROP biased down — loses 115 px of sky only", line=1)
     frames.append(("05_sand", f))
 
     # 06 — Shot 5 (f226-274): turn and return. Beach dissolving back to water.
     f = blend(beach, water, 0.5)
-    tag(f, "TO GENERATE (KLING) + COMP — turtles turn back, sand to turquoise; 50% blend 0873e031/7e26a98a")
-    tag(f, "Turtles must arrive back in their 7e26a98a positions for the loop", line=1)
+    tag(f, "TO GENERATE (KLING) + COMP — turn back, sand to turquoise")
+    tag(f, "shown 50% 0873e031/7e26a98a; end in 7e26a98a positions for loop", line=1)
     frames.append(("06_return_COMP", f))
 
     # 07 — Shot 6a (f274-298): back to blue, back to white. Water drains to white top-down.
     f = blend(water, white, 0.5)
-    tag(f, "COMP (AE) — water to white top-down 1.0 s, wordmark fades back up; 50% blend 7e26a98a/b261916d")
+    tag(f, "COMP (AE) — water to white top-down 1.0 s, wordmark fades up")
+    tag(f, "shown 50% 7e26a98a/b261916d", line=1)
     frames.append(("07_whiteout_COMP", f))
 
     # 08 — Shot 6b (f312): final frame = frame 0. Same pixels as 01.
     f = white.copy()
-    tag(f, "LOOP POINT — final frame f312 = frame 0 (identical pixels to 01_hold)")
+    tag(f, "LOOP POINT — final frame f312 = frame 0 (same pixels as 01_hold)")
     frames.append(("08_loop", f))
 
     for name, im in frames:

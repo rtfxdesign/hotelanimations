@@ -50,15 +50,16 @@
    "endpoint": "kling-video/v3.0/pro/image-to-video",
    "takes": 2,
    "inputs": {
-    "image_url": "01_giraffe_manor/gm_shot6_START_both_on_lawn.png"
+    "image_url": "01_giraffe_manor/gm_shot6_START_both_on_lawn.png",
+    "last_image_url": "output/01_giraffe_manor/gm_2_rear_end.png"
    },
    "args": {
     "duration": 5,
     "sound": "off",
     "cfg_scale": 0.5
    },
-   "prompt": "Both giraffes turn away from the camera together, slowly, and walk up the lawn toward the ivy-covered stone house, getting smaller as they go. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
-   "note": "the risk shot; over-generate"
+   "prompt": "Both giraffes turn away from the camera together, slowly, and walk straight up the centre steps toward the ivy-covered stone house, seen from behind and getting smaller until they match the final frame. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
+   "note": "Round 1: first frame = kit start, last frame = gm_2_rear_end.png (Sol, round 0). Kling O3 first-last-frame or Kling 3 with last_image_url. Round-0 takes 1 and 2 rejected: no turn, sideways travel."
   },
   {
    "id": "GM-3",
@@ -80,6 +81,28 @@
     "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
    },
    "prompt": "Using the first image as the target composition and the second image for the exact stone, ivy and window style of the house: two giraffes standing at the ivy-covered stone wall of the old manor house, seen from behind and slightly below, necks raised, both heads reaching into the open upstairs windows. Warm late-afternoon light, stone mullioned windows, dense ivy. Photoreal, the giraffes fill the centre of frame. Same pale sandy giraffes as the manor's animals."
+  },
+  {
+   "id": "GM-3b",
+   "film": "01_giraffe_manor",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "01_giraffe_manor/gm_shot7_EDIT_plate_crop_16x9.png",
+     "01_giraffe_manor/gm_shot7_ref_client_photo_heads_in_windows.jpg"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Edit the first image in place. Add two pale sandy reticulated giraffes standing on the lawn in front of the house, seen from behind and slightly below, necks raised so their heads reach into the two open first-floor windows either side of the centre ivy column, as in the second image. Change nothing else: same house, same ivy, same windows, same terrace, same guests, same light. Photoreal.",
+   "note": "Round 1 replacement for GM-3 (round 0 rebuilt the house). If the edit model cannot hold the plate, generate the two giraffes isolated on green in this pose instead and Claude comps them."
   },
   {
    "id": "GM-4",
@@ -473,6 +496,27 @@
    "prompt": "Using the second image as the clean plate: place two ring-tailed lemurs in the crowns of the tall palms exactly at the two positions marked in the first image, one seated, one hanging by its feet, lit by the same dusk light as the plate. Nothing else in the plate changes; remove the position markers."
   },
   {
+   "id": "MI-4b",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "06_miavana/mi_ref_lemur_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Two separate photoreal ring-tailed lemurs matching the reference animal, side by side on a flat chroma green background (RGB 0,177,64), dusk light from the left: the left one seated on a palm frond with its tail hanging, the right one hanging upside down by its feet from a palm frond, arms free. Nothing else in frame, no text.",
+   "note": "For comp onto the 4988 px resort plate at the lettering positions; round-0 MI-4 is only 1672 px."
+  },
+  {
    "id": "NE-1",
    "film": "07_necker_island",
    "phase": "A",
@@ -602,7 +646,8 @@
     "enable_thinking": false,
     "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
    },
-   "prompt": "Single vintage direct-drive turntable platter from a low three-quarter angle, brushed aluminium rim, black rubber slipmat, chrome centre spindle, matte black tonearm with counterweight resting at the side. Studio product photography on pure black, single soft key from upper left, warm specular highlights on the metal. No text, no branding, no record on the platter."
+   "prompt": "Only a turntable platter and tonearm, no deck body, no plinth, no buttons, no dials: a round brushed-aluminium platter with a black rubber slipmat and chrome centre spindle, and a matte black tonearm with counterweight resting on its rest beside it, from a low three-quarter angle, isolated on pure black with one soft key light from upper left and warm specular highlights. Product photography. No text, no branding, no lettering of any kind, no record.",
+   "note": "Round 1 rerun; round 0 produced a whole branded deck."
   },
   {
    "id": "CL-2",
@@ -636,5 +681,6 @@
    },
    "prompt": "A hard-edged theatrical spotlight beam descending from upper left into total darkness, volumetric shaft heavy with drifting dust, landing as a sharp bright ellipse on a dark polished floor. Nothing else in frame, deep blacks, no lens flare."
   }
- ]
+ ],
+ "_model_policy": "Endpoints are recommendations. Sol may substitute any Higgsfield model that serves the shot better (Kling O3 first-last-frame, Seedance, Wan, GPT Image, FLUX, Qwen) and records the endpoint actually used in the ledger. Compositing with rotoscoping in After Effects is acceptable, so clean separable elements beat perfect in-plate integration."
 }

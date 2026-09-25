@@ -1,0 +1,21 @@
+{
+  "jobs": [
+    {
+      "index": 2,
+      "job_id": "7851df98-0aa7-4e9c-a378-22c3105384ba",
+      "status": "completed",
+      "type": "video",
+      "model": "kling3_0",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/hf_20260925_114849_7851df98-0aa7-4e9c-a378-22c3105384ba.mp4",
+      "thumbnail_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_37MwAiIQ3AeH4Wf8ctCLXFtCNT1/2e774aad-f83a-4fd3-9d2e-89d13dc76dac.png"
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "completed": 1,
+    "failed": 0,
+    "active": 0,
+    "errors": 0
+  },
+  "all_terminal": true
+}

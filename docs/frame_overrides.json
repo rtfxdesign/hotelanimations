@@ -1,0 +1,86 @@
+{
+ "giraffe_manor/07_turn_TOGEN": {
+  "file": "docs/frame_overrides/giraffe_manor__07_turn_TOGEN.jpg",
+  "note": "generated clip GM-2 take 3, last frame"
+ },
+ "giraffe_manor/08_window_TOGEN": {
+  "file": "docs/frame_overrides/giraffe_manor__08_window_TOGEN.jpg",
+  "note": "generated clip GM-4, heads in the windows"
+ },
+ "passalacqua/04_alive_TOGEN": {
+  "file": "docs/frame_overrides/passalacqua__04_alive_TOGEN.jpg",
+  "note": "generated clip PA-2"
+ },
+ "passalacqua/05_lake_TOGEN": {
+  "file": "docs/frame_overrides/passalacqua__05_lake_TOGEN.jpg",
+  "note": "generated clip PA-3, first drop"
+ },
+ "passalacqua/06_leap_TOGEN": {
+  "file": "docs/frame_overrides/passalacqua__06_leap_TOGEN.jpg",
+  "note": "generated clip PA-4, first leap"
+ },
+ "north_island/02_flood_COMP": {
+  "file": "docs/frame_overrides/north_island__02_flood_COMP.jpg",
+  "note": "source plate extended to 16:9 (comp)"
+ },
+ "north_island/03_swim_TOGEN": {
+  "file": "docs/frame_overrides/north_island__03_swim_TOGEN.jpg",
+  "note": "generated clip NI-2"
+ },
+ "north_island/05_sand": {
+  "file": "docs/frame_overrides/north_island__05_sand.jpg",
+  "note": "generated clip NI-3"
+ },
+ "north_island/06_return_COMP": {
+  "file": "docs/frame_overrides/north_island__06_return_COMP.jpg",
+  "note": "generated clip NI-4"
+ },
+ "miavana/02_windup_TOGEN": {
+  "file": "docs/frame_overrides/miavana__02_windup_TOGEN.jpg",
+  "note": "generated clip MI-2"
+ },
+ "miavana/04_catch_TOGEN": {
+  "file": "docs/frame_overrides/miavana__04_catch_TOGEN.jpg",
+  "note": "generated clip MI-3"
+ },
+ "necker_island/02_takeoff_TOGEN": {
+  "file": "docs/frame_overrides/necker_island__02_takeoff_TOGEN.jpg",
+  "note": "generated clip NE-1"
+ },
+ "necker_island/04_kitesurfer_RIDER_TBR": {
+  "file": "docs/frame_overrides/necker_island__04_kitesurfer_RIDER_TBR.jpg",
+  "note": "generated clip NE-3, generic rider"
+ },
+ "necker_island/05_lemur_tennis_TOGEN": {
+  "file": "docs/frame_overrides/necker_island__05_lemur_tennis_TOGEN.jpg",
+  "note": "generated still NE-4a"
+ },
+ "necker_island/07_return_landing_TOGEN": {
+  "file": "docs/frame_overrides/necker_island__07_return_landing_TOGEN.jpg",
+  "note": "generated clip NE-5"
+ },
+ "fifth_avenue/06_walk_end_TOGEN": {
+  "file": "docs/frame_overrides/fifth_avenue__06_walk_end_TOGEN.jpg",
+  "note": "generated clip, take 1, last frame"
+ },
+ "passalacqua/07_pullback_TOGEN": {
+  "file": "docs/frame_overrides/passalacqua__07_pullback_TOGEN.jpg",
+  "note": "generated clean lake plate, round 0"
+ },
+ "versailles/02b_salon": {
+  "file": "docs/frame_overrides/versailles__02b_salon.jpg",
+  "note": "generated clean salon plate + real cake cut-out"
+ },
+ "miavana/06_palms_TOGEN": {
+  "file": "docs/frame_overrides/miavana__06_palms_TOGEN.jpg",
+  "note": "generated lemurs keyed and comped on the 5k plate"
+ },
+ "club22/03_decks_TOGEN": {
+  "file": "docs/frame_overrides/club22__03_decks_TOGEN.jpg",
+  "note": "generated vinyl, comp draft"
+ },
+ "club22/04_spotlight_COMP": {
+  "file": "docs/frame_overrides/club22__04_spotlight_COMP.jpg",
+  "note": "generated vinyl, comp draft"
+ }
+}

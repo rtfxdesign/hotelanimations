@@ -1,0 +1,726 @@
+{
+ "_about": "Theria generation kit, Higgsfield job manifest. Run with tools/higgsfield_run.py. Phase A jobs take kit frames; phase B jobs take phase-A outputs (out:JOB[:first_frame|last_frame]). Takes default 1 for the first QC pass; raise with --takes.",
+ "_models": {
+  "video": "kling-video/v3.0/pro/image-to-video",
+  "edit": "alibaba/qwen-image-3/edit",
+  "t2i": "alibaba/qwen-image-3/text-to-image"
+ },
+ "jobs": [
+  {
+   "id": "GM-1s",
+   "film": "01_giraffe_manor",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "01_giraffe_manor/gm_ref_hero_cutout_alpha.png",
+     "01_giraffe_manor/gm_ref_hero_on_cream.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Using the reference giraffe exactly (same pale sandy coat, same soft tan patch pattern, same animal), generate a single adult reticulated giraffe mid-stride walking left, full body including all four hooves, isolated on a flat ivory field (RGB 255,255,240), soft even studio light, only a faint contact shadow. Photoreal wildlife photography."
+  },
+  {
+   "id": "GM-1v",
+   "film": "01_giraffe_manor",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "out:GM-1s"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The giraffe walks calmly from right to left at a natural walking pace, four full strides, head level, tail swaying slightly. Flat ivory background throughout. Nothing else in frame. No morphing, no flicker, no extra animals. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "GM-2",
+   "film": "01_giraffe_manor",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 2,
+   "inputs": {
+    "image_url": "01_giraffe_manor/gm_shot6_START_both_on_lawn.png",
+    "last_image_url": "output/01_giraffe_manor/gm_2_rear_end.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "Both giraffes turn away from the camera together, slowly, and walk straight up the centre steps toward the ivy-covered stone house, seen from behind and getting smaller until they match the final frame. Natural giraffe walking gait, necks swaying. The people on the terrace stay still. The house and terrace do not change. No morphing, no extra animals. Camera locked off, no camera movement, no zoom.",
+   "note": "Round 1 takes 3 and 4 (first+last frame) land the giraffes on the centre steps from behind by f58; f0-58 is lateral travel. Take 3 f58-120 is cut into animatic v0.2. Retry only if Allen wants a true in-place turn."
+  },
+  {
+   "id": "GM-3",
+   "film": "01_giraffe_manor",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "01_giraffe_manor/gm_shot7_ref_client_photo_heads_in_windows.jpg",
+     "01_giraffe_manor/gm_ref_manor_plate_no_giraffes.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Using the first image as the target composition and the second image for the exact stone, ivy and window style of the house: two giraffes standing at the ivy-covered stone wall of the old manor house, seen from behind and slightly below, necks raised, both heads reaching into the open upstairs windows. Warm late-afternoon light, stone mullioned windows, dense ivy. Photoreal, the giraffes fill the centre of frame. Same pale sandy giraffes as the manor's animals."
+  },
+  {
+   "id": "GM-3b",
+   "film": "01_giraffe_manor",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "01_giraffe_manor/gm_shot7_EDIT_plate_crop_16x9.png",
+     "01_giraffe_manor/gm_shot7_ref_client_photo_heads_in_windows.jpg"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Edit the first image in place. Add two pale sandy reticulated giraffes standing on the lawn in front of the house, seen from behind and slightly below, necks raised so their heads reach into the two open first-floor windows either side of the centre ivy column, as in the second image. Change nothing else: same house, same ivy, same windows, same terrace, same guests, same light. Photoreal.",
+   "note": "Round 1 replacement for GM-3 (round 0 rebuilt the house). If the edit model cannot hold the plate, generate the two giraffes isolated on green in this pose instead and Claude comps them."
+  },
+  {
+   "id": "GM-3c",
+   "film": "01_giraffe_manor",
+   "phase": "B",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "out:GM-3b"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Edit this image in place: keep everything identical, but lower both giraffes' necks so their heads are level with the tops of the ground-floor windows, looking up at the open first-floor windows, mouths closed. Same house, same ivy, same windows, same people, same light.",
+   "note": "Start frame for GM-4. GM-3b is the end frame."
+  },
+  {
+   "id": "GM-4",
+   "film": "01_giraffe_manor",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "out:GM-3c",
+    "last_image_url": "out:GM-3b"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The two giraffes slowly raise their necks and push their heads gently in through the open upstairs windows, ending exactly on the final frame. Calm, slow. The house, ivy, terrace and people do not change. Camera locked off, no camera movement, no zoom.",
+   "note": "Kling first-last: GM-3c (necks lowered) to GM-3b. Run GM-3c first, then GM-4 with its output, in the same round."
+  },
+  {
+   "id": "FA-1",
+   "film": "02_fifth_avenue",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 2,
+   "inputs": {
+    "image_url": "02_fifth_avenue/fa_shot5_START_walk.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "A Gilded Age couple in period dress, the woman with a lace parasol, walk slowly forward beside a golden tortoise on a leash through a sunlit park. Painterly, oil-painting texture preserved throughout. Normal walking speed, natural gait, the parasol turns slightly, the leash sways. Leaves and light move naturally. No style change. Camera locked off, no camera movement, no zoom.",
+   "note": "normal speed; figures retimed to 1/6 in the NLE"
+  },
+  {
+   "id": "PA-1",
+   "film": "03_passalacqua",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "03_passalacqua/pa_ref_lake_villa_with_fish.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Remove the three gold fish completely and fill the water where they were with the same still lake surface and soft reflections. Keep the villa, the wooded promontory, the mountains, the morning light and the colours exactly as they are. No fish, no boats, no people. Open water across the lower third."
+  },
+  {
+   "id": "PA-2",
+   "film": "03_passalacqua",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "03_passalacqua/pa_shot4_START_gold_fish_on_white.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "Three solid gold fish sculptures, standing vertically side by side on white, come alive: they rotate slightly toward the viewer, gain a soft cast shadow, and take their first tail beat, each a beat apart. Pure white background throughout. The fish stay gold. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "PA-3",
+   "film": "03_passalacqua",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "output/03_passalacqua/pa_3_START_comp.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The three golden fish drop straight down into the lake one after another, centre first, then left, then right, each landing with a small splash and ripple rings, and disappear under the surface. The villa, mountains and light do not change. Camera locked off, no camera movement, no zoom.",
+   "note": "Start frame = clean lake (PA-1) with the three gold fish comped hovering over the water."
+  },
+  {
+   "id": "PA-4",
+   "film": "03_passalacqua",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "out:PA-1"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "Three golden fish leap out of the lake one after another in high arcs, centre first, then left, then right, water sheeting off their bodies, droplets catching the light. Slow pull-back of about ten percent to reveal the villa on the shoreline. Three fish only, gold, never in sync."
+  },
+  {
+   "id": "VE-1",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_salon_cake_chandelier_portrait.png",
+     "04_versailles/ve_ref_salon_cake_guillotine_portrait.png",
+     "04_versailles/ve_shot2_letterboxed_16x9_reference.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Using the two room photographs for the exact gilded boiserie panelling, parquet floor, tall windows and warm afternoon window light, and the third image only for the 16:9 framing: an empty eighteenth-century French salon with no furniture in the centre of the room, no people, no chandelier, no table, no cake, no guillotine. Photoreal interior photography, camera at table height looking straight down the room, clear floor in the centre."
+  },
+  {
+   "id": "VE-2a",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_salon_cake_guillotine_portrait.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "3:4",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people",
+    "seed": 4101
+   },
+   "prompt": "The same tall wooden guillotine as in the reference, with its angled steel blade raised to the very top, rope and pulley, photographed straight on, isolated on pure white, soft studio light, one contact shadow. Nothing else in frame, no room, no cake."
+  },
+  {
+   "id": "VE-2b",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_salon_cake_guillotine_portrait.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "3:4",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people",
+    "seed": 4101
+   },
+   "prompt": "The same tall wooden guillotine as in the reference, identical framing, with its angled steel blade dropped to the very bottom of the frame, rope slack, photographed straight on, isolated on pure white, soft studio light, one contact shadow. Nothing else in frame, no room, no cake."
+  },
+  {
+   "id": "VE-3a",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_cake_chandelier_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "3:4",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Only the tiered pale-blue cake with gold cameo medallions on its gilt console table, identical to the reference, isolated on pure white with one soft contact shadow. Remove the chandelier completely. Nothing else in frame."
+  },
+  {
+   "id": "VE-3b",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_cake_chandelier_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "3:4",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Only the crystal chandelier with lit candles, identical to the reference, isolated on pure white. Remove the cake and the table completely. Nothing else in frame."
+  },
+  {
+   "id": "VE-4",
+   "film": "04_versailles",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "04_versailles/ve_ref_cake_sliced_plated_portrait.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "The same cake as the reference cut into sixteen neat slices arranged on small porcelain plates in a ring around the gilt table, on pure white, soft studio light, one contact shadow. Nothing else in frame."
+  },
+  {
+   "id": "NI-1",
+   "film": "05_north_island",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "05_north_island/ni_ref_water_lockup_3x2_to_extend.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Extend this image to a wider 16:9 frame by continuing the turquoise shallow water with sun caustics to the left and right edges at the same scale. Do not change, move, add or remove any turtles or any lettering; keep the centre of the image pixel-for-pixel as it is.",
+   "note": "Round 2 output rejected; superseded by output/05_north_island/ni_1_comp.png (Pillow mirror-extension). Do not rerun."
+  },
+  {
+   "id": "NI-2",
+   "film": "05_north_island",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "output/05_north_island/ni_1_comp.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The five golden turtles begin to swim, front flippers stroking one after another, drifting slowly to the right by about a tenth of the frame. Sun caustics move across their shells and the sand. The lettering does not move. Seen from directly above. Five turtles only. Camera locked off, no camera movement, no zoom.",
+   "note": "Start = Claude mirror-extended 16:9 plate (ni_1_comp.png). Round-2 NI-1 model output rejected (rebuilt the centre)."
+  },
+  {
+   "id": "NI-3",
+   "film": "05_north_island",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "05_north_island/ni_shot5_START_crawl_on_sand.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "Golden turtles crawl slowly up the white sand beach from the water's edge, heavy deliberate flipper movement, leaving faint drag tracks. Palms and green hillside behind stay still. Five turtles only, same gold. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "NI-4",
+   "film": "05_north_island",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "out:NI-3:last_frame",
+    "last_image_url": "out:NI-3:first_frame"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The golden turtles turn around one after another and crawl back down the beach into the shallow turquoise water. Five turtles only, same gold. Camera locked off, no camera movement, no zoom.",
+   "note": "first = last frame of NI-3, last = first frame of NI-3 so the beach beat loops. NI-3 turtle count drifts (3-5); accept for the animatic."
+  },
+  {
+   "id": "MI-1a",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/text-to-image",
+   "takes": 1,
+   "inputs": {},
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "A single ripe mango, blushed red-orange fading to yellow-green, slight natural bloom on the skin, one small stem scar, photographed at eye level on pure white, soft even studio light, one contact shadow. Sharp, photoreal, natural fruit colour, no gloss."
+  },
+  {
+   "id": "MI-1b",
+   "film": "06_miavana",
+   "phase": "B",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "out:MI-1a"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "The same mango, now held in a ring-tailed lemur's hand with a slight finger indentation in the skin, on pure white, same light. Only the hand and mango in frame."
+  },
+  {
+   "id": "MI-1c",
+   "film": "06_miavana",
+   "phase": "B",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "out:MI-1a"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "The same mango mid-air, tumbling, with slight motion blur, on pure white, same light. Nothing else in frame."
+  },
+  {
+   "id": "MI-2",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "06_miavana/mi_shot1_START_lockup.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The ring-tailed lemur hanging by its feet from the last letter frees one arm, weighs a mango in its hand and draws the arm back to throw. Half a second of stillness before the movement. Flat sage-green background; the white lettering and the seated lemur do not move. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "MI-3",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "06_miavana/mi_shot1_START_lockup.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The ring-tailed lemur seated on the first letter reaches out one hand and catches a mango arriving from the right, its head tracking it; the body otherwise still. Flat sage-green background; the lettering and the hanging lemur do not move. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "MI-4",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "06_miavana/mi_shot4_START_palms_positions.png",
+     "06_miavana/mi_ref_resort_16x9.png",
+     "06_miavana/mi_ref_lemur_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Using the second image as the clean plate: place two ring-tailed lemurs in the crowns of the tall palms exactly at the two positions marked in the first image, one seated, one hanging by its feet, lit by the same dusk light as the plate. Nothing else in the plate changes; remove the position markers."
+  },
+  {
+   "id": "MI-4b",
+   "film": "06_miavana",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "06_miavana/mi_ref_lemur_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Two separate photoreal ring-tailed lemurs matching the reference animal, side by side on a flat chroma green background (RGB 0,177,64), dusk light from the left: the left one seated on a palm frond with its tail hanging, the right one hanging upside down by its feet from a palm frond, arms free. Nothing else in frame, no text.",
+   "note": "For comp onto the 4988 px resort plate at the lettering positions; round-0 MI-4 is only 1672 px."
+  },
+  {
+   "id": "NE-1",
+   "film": "07_necker_island",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "07_necker_island/ne_shot1_START_flamingo_on_white.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The flamingo with the black bow tie crouches, then launches into flight with three strong wingbeats, climbing toward the upper right and exiting frame top-right. Pure white background throughout. The bow tie stays on. Same drawn cut-out look. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "NE-5",
+   "film": "07_necker_island",
+   "phase": "A",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "aux:white_16x9.png",
+    "last_image_url": "07_necker_island/ne_shot1_START_flamingo_on_white.png"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "A pink flamingo with a black bow tie glides in from the upper left, flares its wings, lands on one leg and settles into a standing profile pose, ending exactly on the final frame. Pure white background throughout. Camera locked off, no camera movement, no zoom.",
+   "note": "starts on an empty white frame, ends on the cut-out pose"
+  },
+  {
+   "id": "NE-2",
+   "film": "07_necker_island",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "07_necker_island/ne_shot4_EDIT_kite_plate_4k.jpg"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon"
+   },
+   "prompt": "Replace the kite-surfer with a different person: a blonde man, small in frame, seen from behind, no face visible, riding the same board across the bay from left to right with the same spray. Bring the kite into frame above him. Keep the beach, sea, light and sun flare exactly as they are."
+  },
+  {
+   "id": "NE-3",
+   "film": "07_necker_island",
+   "phase": "B",
+   "endpoint": "kling-video/v3.0/pro/image-to-video",
+   "takes": 1,
+   "inputs": {
+    "image_url": "out:NE-2"
+   },
+   "args": {
+    "duration": 5,
+    "sound": "off",
+    "cfg_scale": 0.5
+   },
+   "prompt": "The kite-surfer crosses the bay from left to right throwing spray, the kite arcing above him. A flamingo flies across the upper third from right to left. The beach and light do not change. Camera locked off, no camera movement, no zoom."
+  },
+  {
+   "id": "NE-4a",
+   "film": "07_necker_island",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "07_necker_island/ne_shot5_EDIT_tennis_court_4k.jpg",
+     "07_necker_island/ne_ref_lemur_01_4k.jpg",
+     "06_miavana/mi_ref_lemur_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people",
+    "seed": 7701
+   },
+   "prompt": "Remove the tennis player completely. Then place two ring-tailed lemurs (the species in the second and third images) on opposite sides of the net, each holding a wooden tennis racket, mid-rally: the left lemur crouched ready to receive, the right lemur just having hit. Natural lemur anatomy, no clothing, no cartoon styling. Same court, same light."
+  },
+  {
+   "id": "NE-4b",
+   "film": "07_necker_island",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/edit",
+   "takes": 1,
+   "inputs": {
+    "image_urls": [
+     "07_necker_island/ne_shot5_EDIT_tennis_court_4k.jpg",
+     "07_necker_island/ne_ref_lemur_01_4k.jpg",
+     "06_miavana/mi_ref_lemur_cutout_alpha.png"
+    ]
+   },
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people",
+    "seed": 7701
+   },
+   "prompt": "Remove the tennis player completely. Then place two ring-tailed lemurs (the species in the second and third images) on opposite sides of the net, each holding a wooden tennis racket, mid-rally: the right lemur following through after its swing, the left lemur watching the ball. Natural lemur anatomy, no clothing, no cartoon styling. Same court, same light."
+  },
+  {
+   "id": "CL-1",
+   "film": "08_club22",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/text-to-image",
+   "takes": 1,
+   "inputs": {},
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "Only a turntable platter and tonearm, no deck body, no plinth, no buttons, no dials: a round brushed-aluminium platter with a black rubber slipmat and chrome centre spindle, and a matte black tonearm with counterweight resting on its rest beside it, from a low three-quarter angle, isolated on pure black with one soft key light from upper left and warm specular highlights. Product photography. No text, no branding, no lettering of any kind, no record.",
+   "note": "Round 1 take 2 accepted: isolated platter, no lettering. Cartridge sits on the slipmat; tonearm is roto-lifted in comp."
+  },
+  {
+   "id": "CL-2",
+   "film": "08_club22",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/text-to-image",
+   "takes": 1,
+   "inputs": {},
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "1:1",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "A single black 12-inch vinyl record perfectly top-down, deep matte black grooves catching a narrow crescent of warm light, plain deep-red centre label with no text, tiny dust motes. Pure black background, no reflection."
+  },
+  {
+   "id": "CL-3",
+   "film": "08_club22",
+   "phase": "A",
+   "endpoint": "alibaba/qwen-image-3/text-to-image",
+   "takes": 1,
+   "inputs": {},
+   "args": {
+    "resolution": "2k",
+    "aspect_ratio": "16:9",
+    "prompt_extend": false,
+    "enable_thinking": false,
+    "negative_prompt": "text, letters, watermark, signature, logo, extra limbs, deformed anatomy, plastic, CGI look, oversaturated, harsh flash, tilted horizon, people"
+   },
+   "prompt": "A hard-edged theatrical spotlight beam descending from upper left into total darkness, volumetric shaft heavy with drifting dust, landing as a sharp bright ellipse on a dark polished floor. Nothing else in frame, deep blacks, no lens flare."
+  }
+ ],
+ "_model_policy": "Endpoints are recommendations. Sol may substitute any Higgsfield model that serves the shot better (Kling O3 first-last-frame, Seedance, Wan, GPT Image, FLUX, Qwen) and records the endpoint actually used in the ledger. Compositing with rotoscoping in After Effects is acceptable, so clean separable elements beat perfect in-plate integration."
+}

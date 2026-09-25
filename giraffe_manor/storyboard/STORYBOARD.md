@@ -1,55 +1,69 @@
-# Giraffe Manor — Storyboard v1 for review
-Film 01 of 8 · Theria hospitality slate · boarded 2026-09-25 from the client brief (`Sample Hotel Animations_.docx`) and the real assets in the Drive folder.
+# Giraffe Manor — Storyboard v2 for review
+Film 01 of 8 · Theria hospitality slate · v2 boarded 2026-09-25 from the client brief (`Sample Hotel Animations_.docx`), Allen's decisions on v1, and the new assets in the Drive folder (vector wordmark, two Kling hero takes, birdsong ambience).
 
 | | |
 |---|---|
 | Client brief | Start with image of the giraffe → the Giraffe Manor logo appears under its feet → another giraffe walks into frame → the logo disappears but the manor in the background appears → both giraffes turn and walk towards the manor and put their heads in the window |
-| TRT | **14.0 s / 336 frames @ 24 fps** (timing doc v1). The earlier storyboard page ran it at 12.0 s; see open question 1 |
-| Master | 16:9, 1920×1080 (HD confirmed 2026-09-25). The storyboard page also lists 1:1 and 9:16 masters; see open question 2 |
-| Frames | `frames/01_hold.png` … `frames/09_endcard.png` (11 frames incl. `06b_zoomout` and the `08b` alternate), contact sheet `frames/contact_sheet.jpg`. Built by `build_frames.py` from the pulled assets; nothing AI-enlarged |
+| TRT | **16.0 s / 384 frames @ 24 fps** (f0–f383). v1's 14.0 s of picture is unchanged; 2.0 s added at the tail for the loop return |
+| Master | One master: 16:9, 1920×1080, 24 fps |
+| Loop | **The last frame equals the first.** f383 is pixel-identical to f0 (hero alone on cream, clean still, no logo). The film can be played on repeat with no cut |
+| Frames | `frames/01_hold.png` … `frames/11_loop.png` (12 frames incl. `06b_zoomout`), contact sheet `frames/contact_sheet.jpg`. Built by `build_frames.py` from the pulled assets and `assets/wordmarks/giraffe_manor_wordmark.png`; nothing AI-enlarged; no placeholders remain |
 | Status key | READY = built from an existing asset · COMP = After Effects / NLE work on existing assets · TO GENERATE = needs a Higgsfield pass (model named) |
+
+## Decisions taken
+
+From Allen (applied as given):
+
+1. One master, 16:9 HD, 24 fps. The 30 fps Kling walk is conformed to 24 with optical flow.
+2. Run time: v1 timings kept for beats 1–7 (14.0 s). Extended only for the loop: +1.2 s payoff hold with the mark, +0.9 s return dissolve, +0.5 s loop tail = **16.0 s**.
+3. Loop rule: last frame = first frame. Implemented as a return dissolve (Beat 9) landing on the Shot 1 clean still, then a 12-frame hold that is pixel-identical to f0. `build_frames.py` asserts `11_loop == 01_hold`.
+4. Vector wordmark is the approved mark (`assets/wordmarks/giraffe_manor_wordmark.png`, 3952×703 RGBA, "Giraffe Manor / Nairobi" with the patch block). It is now on every logo frame; the 288 px webp code path is gone.
+
+Made on this board (state, not ask):
+
+5. **Two giraffes, one colour.** The Kling walker is a darker, more saturated animal than the hero (mean RGB 153/96/60 vs 192/156/125). Plan: regenerate the walk with the hero still as the image reference (NBP for a matching side view, then Kling image-to-video). For the board the walker is colour-matched to the hero with a per-channel levels adjust in Pillow (mean and spread of the opaque pixels, gain capped at 1.35) and tagged **WALKER COLOUR-MATCHED FOR BOARD** on frames 03, 04, 06, 07. The match is board-only; it is not a grade for the film.
+6. **Window payoff = exterior upstairs windows** (client reference `images-2.jpg`). The interior breakfast-window alternate is off the board.
+7. **Guests stay in the manor plate.** `manor01_background.png` is used as is; no clean plate.
+8. **End card folded into the return.** No separate black end. The small mark (400 px, bottom-right, on a translucent cream card so the brown mark reads over brick and ivy) fades up over the payoff hold and dissolves out with the payoff in the return.
+9. **Shot 1 micro-life = Kling take2.** `kling_hero_blink_take2.mp4` (1920×1080, 24 fps, 4.04 s) is byte-identical to `frame1_to_frame2.mp4` (same md5): hero alone on cream with subtle life. Use frames 0–48 for Shot 1. `kling_hero_blink_take3.mp4` (4.0 s) is the hero with a Kling-drawn wordmark rising in from below, "Giraffe Manor" first then "Nairobi" and the patch: its pixels are not used (AI-drawn mark), but its timing is the reference for the Beat 2 logo build.
+10. **Shot 1 push-in dropped.** v1 had a 1.5 % push over Shot 1; with the loop, any scale change across Shot 1 would have to be undone in the return. Shot 1 is locked off; life comes from take2.
+11. **Loop frame is the clean still.** Take2's micro-life starts after f0, so f0 (and f383) is the hero before any blink or ear twitch. The Beat 2 logo, when it fades up, does not touch this frame.
+12. **Ambience = birdsong.** `audio/birdsong01.wav` (179.3 s) and `birdsong02.wav` (49.8 s), both 44.1 kHz stereo PCM, are the Shot 1 ambience bed. 01 is the main bed (long enough to pick a clean 16 s section); 02 is the alternate. The bed loops with the picture: crossfade tail to head (0.5 s) across the loop point.
+13. **3D wordmark noted, not used.** `upscaled/wordmark3d.obj` / `.usdz` (extrusion of the mark, with `.mtl`) is available for a dimensional logo reveal. The brief says the logo appears under the giraffe's feet; a flat mark does that, so the board keeps it flat. `upscaled/wordmark.psd` is the same mark flat on cream (reference only; the raster PNG with alpha is what the comp uses).
 
 ## Beats
 
 | # | Brief line | IN – OUT (frames) | Frame | On screen | Motion / camera | Transition | Assets used | Status |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Start with image of the giraffe | 00.0 – 02.0 (f0–48) | `01_hold` | Hero giraffe alone on the cream field, centre-left, full body, facing camera-left | Locked off. Micro-life only: ear twitch f12, tail flick f30, one slow blink f40. 1.5 % push-in over the shot | — | `upscaled/ea5d5cfc-….png` (1024×1536 RGBA, opaque 881×1487) scaled to 800 px tall; cream (255,255,240) sampled from the Kling test frames | COMP (still + micro-life) or Kling Shot 1 prompt from pipeline doc §6 |
-| 2 | The Giraffe Manor logo appears under its feet | 02.0 – 03.6 (f48–86) | `02_logo` | Wordmark fades up on the ground line directly under the hooves | Scale 96 → 100 % ease-out, opacity 0 → 100 over 0.8 s, hold 0.8 s | fade | `orig/Giraffe-Manor-Logo-46px.webp` (288×46) at 2× as a **placeholder**. The AI-drawn `giraffemanor_wordmark_alpha.png` is not used: wrong typeface and case | COMP (AE layer) — **blocked on vector logo** |
-| 3a | Another giraffe walks into frame | 03.6 – 05.0 (f86–120) | `03_enter` | Second giraffe enters from frame right at full walk | Walk cycle, ~1.4 s per stride pair. Logo stays put; newcomer walks behind it | — | `upscaled/giraffe_walking.mov` (ProRes 4444 with alpha, 4K/30) conformed to 24 and scaled 50 %; frame at t=0.0 | READY (existing Kling clip) — conform 30→24 with optical flow |
+| 1 | Start with image of the giraffe | 00.0 – 02.0 (f0–48) | `01_hold` | Hero giraffe alone on the cream field, centre-left, full body, facing camera-left. **f0 is the loop frame** | Locked off, no push-in. Micro-life from take2: ear, tail, one slow blink, none of it before f12 | — (f0 = f383) | `upscaled/kling_hero_blink_take2.mp4` frames 0–48, conformed to the board staging (hero 800 px tall, hooves y=880, centre x=760; take2 frames the hero a little more central, so reposition the clip in AE). Board frame built from `upscaled/ea5d5cfc-….png` (1024×1536 RGBA). Cream (255,255,240) | READY (Kling take2) — conform position in AE |
+| 2 | The Giraffe Manor logo appears under its feet | 02.0 – 03.6 (f48–86) | `02_logo` | Vector wordmark, 640 px wide, on the ground line under the hooves | Rise-and-fade per take3's timing: "Giraffe Manor" first (opacity 0 → 100, y +24 → 0 px over 0.6 s), "Nairobi" and the patch block follow 0.3 s later. Hold 0.7 s | fade | `assets/wordmarks/giraffe_manor_wordmark.png` (3952×703 RGBA, from `upscaled/wordmark.ai`). Timing ref: `kling_hero_blink_take3.mp4` | COMP (AE layer over the vector) |
+| 3a | Another giraffe walks into frame | 03.6 – 05.0 (f86–120) | `03_enter` | Second giraffe enters from frame right at full walk, same colouring as the hero | Walk cycle, ~1.4 s per stride pair. Logo stays put; newcomer walks behind it | — | `upscaled/giraffe_walking.mov` (ProRes 4444 with alpha, 4K/30) conformed to 24 and scaled 50 %; frame at t=0.0. Board: colour-matched | READY (existing Kling clip, colour-matched for board) → **regenerate from hero ref** (NBP side view → Kling i2v) |
 | 3b | (same) | 05.0 – 06.4 (f120–154) | `04_stop` | Newcomer stops with its shoulder just clear of the hero's rump. Logo eases to 35 % | Walk decelerates to a stop over the last 4 strides | — | same clip, frame at t=2.8; stop position bbox-left x=1060 | READY / COMP — the clip does not itself stop: freeze or ease the last cycle in the NLE |
-| 4 | The logo disappears but the manor in the background appears | 06.4 – 07.4 (f154–178) | `05_reveal` | Logo out; cream dissolves to the manor **at scale**: the plate arrives at 2.65× its cover size, so the terrace, steps and ground floor fill the frame behind the giraffes and they read as standing at the foot of the house, not towering over it | Logo opacity → 0 over 0.6 s. Background arrives at ~10 px blur. Giraffes hold at their Shot 3 size and position | cross-dissolve | `upscaled/manor01_background.png` (2752×1536, giraffes painted out) at 2.65× cover, pivot chosen so the hooves stay on y=880 | COMP (AE). The 2.65× enlargement is only on screen during the dissolve and the first frames of the pull-back |
-| 5 | (same) | 07.4 – 08.6 (f178–206) | `06_manor` → `06b_zoomout` | Manor resolves sharp, then the camera **zooms out**. Giraffes are locked to the plate and shrink with it | Rack focus soft → sharp over 0.4 s, then a continuous pull-back from 2.65× toward 1.0× (ease-in-out). Both giraffes scale down from 800 px to ~300 px tall as the whole house comes into view | continuous | same plate; giraffes placed in plate pixels (hero hooves at plate 1744,1400; walker at 2050,1400) so the pull-back is one transform | COMP (AE): one camera move on a pre-comp |
-| 6 | Both giraffes turn and walk towards the manor | 08.6 – 11.2 (f206–269) | `07_turn_TOGEN` | Pull-back lands on the full plate: both giraffes on the lawn where the plate's own giraffes stood. From here they turn away and walk up to the house | The risk shot: a 180° turn. If the pull-back is still finishing, overlap it 0.4 s into this shot | — | `07_turn_TOGEN.png` is the actual composite (plate 1.0× + both giraffes at plate scale), not a reference | **TO GENERATE (Kling)** — start frame = `07_turn_TOGEN.png`, prompt in pipeline doc §6 Shot 6. Over-generate; fallback is the whip-pan cheat |
-| 7 | …and put their heads in the window | 11.2 – 13.4 (f269–322) | `08_window_TOGEN` (exterior) · `08b_window_interior_ALT` | Necks rise, both heads enter the windows. Land on the reference composition | Slow and calm | — | Placeholders show the client reference photos `images-2.jpg` (exterior, 678 px) and `images.jpg` (interior breakfast room, 547 px) | **TO GENERATE (Kling)**, end plate first (Seedream), see open question 3 |
-| 8 | (end card, not in brief) | 13.4 – 14.0 (f322–336) | `09_endcard` | Wordmark small, bottom-right, 60 % of Shot 2 size, over the payoff frame darkened; hold to black | fade to black f336 | fade | logo placeholder as above | COMP (AE) |
+| 4 | The logo disappears but the manor in the background appears | 06.4 – 07.4 (f154–178) | `05_reveal` | Logo out; cream dissolves to the manor **at scale**: the plate arrives at 2.65× its cover size, so the terrace, steps and ground floor fill the frame behind the giraffes and they read as standing at the foot of the house | Logo opacity → 0 over 0.6 s. Background arrives at ~10 px blur. Giraffes hold at their Shot 3 size and position | cross-dissolve | `upscaled/manor01_background.png` (2752×1536, giraffes painted out, guests kept) at 2.65× cover, pivot chosen so the hooves stay on y=880 | COMP (AE). Approved staging; the 2.65× enlargement is only on screen during the dissolve and the first frames of the pull-back |
+| 5 | (same) | 07.4 – 08.6 (f178–206) | `06_manor` → `06b_zoomout` | Manor resolves sharp, then the camera **zooms out**. Giraffes are locked to the plate and shrink with it | Rack focus soft → sharp over 0.4 s, then a continuous pull-back from 2.65× toward 1.0× (ease-in-out). Both giraffes scale from 800 px to ~300 px tall as the whole house comes into view | continuous | same plate; giraffes placed in plate pixels (hero hooves at plate 1744,1400; walker at 2050,1400) so the pull-back is one transform | COMP (AE): one camera move on a pre-comp |
+| 6 | Both giraffes turn and walk towards the manor | 08.6 – 11.2 (f206–269) | `07_turn_TOGEN` | Pull-back lands on the full plate: both giraffes on the lawn where the plate's own giraffes stood. From here they turn away and walk up to the house | The risk shot: a 180° turn. If the pull-back is still finishing, overlap it 0.4 s into this shot | — | `07_turn_TOGEN.png` is the actual composite (plate 1.0× + both giraffes at plate scale), not a reference | **TO GENERATE (Kling)** — start frame = `07_turn_TOGEN.png` (rebuild it once the walker is regenerated), prompt in pipeline doc §6 Shot 6. Over-generate; fallback is the whip-pan cheat |
+| 7 | …and put their heads in the window | 11.2 – 13.4 (f269–322) | `08_window_TOGEN` | Necks rise, both heads enter the upstairs windows. Land on the reference composition | Slow and calm | — | Shown: client reference `images-2.jpg` (exterior, 678 px). The end plate is generated to match it | **TO GENERATE**: end plate first (Seedream, same house, upstairs windows, both giraffes in the hero's colouring), then Kling start→end from Shot 6's last frame |
+| 8 | (payoff hold + mark) | 13.4 – 14.6 (f322–350) | `09_payoff_mark` | Hold on the payoff. Wordmark small, bottom-right (400 px on a cream card), fades up | Mark opacity 0 → 100 over 0.4 s, hold | — | Shot 7 last frame + vector wordmark | COMP (AE) |
+| 9 | (loop return) | 14.6 – 15.5 (f350–372) | `10_return_COMP` (shown at 50 %) | Payoff and mark dissolve back to the cream field with the hero alone, in her Shot 1 position | Payoff lifts toward cream first (exposure +0.6 over the first 8 frames) so the dissolve is not a hard brick-to-cream jump, then a cross-dissolve to the Shot 1 clean still. Mark rides the payoff layer and goes with it | cross-dissolve, 0.9 s | Shot 7 last frame; `01_hold` (= take2 f0) | COMP (AE) |
+| 10 | (loop tail) | 15.5 – 16.0 (f372–384) | `11_loop` | Hero alone on cream. **f383 is pixel-identical to f0** | Nothing moves | cut to f0 on loop | same still as Beat 1 | READY (`build_frames.py` asserts the identity) |
 
-**Audio** (timing doc): Kenyan highland ambience from 00.0; one low woodwind swell 06.4 → 08.6 under the reveal; ambience alone from 13.4. Not sourced.
+**Audio.** Birdsong ambience (`audio/birdsong01.wav`, 179.3 s, main; `birdsong02.wav`, 49.8 s, alternate; both 44.1 kHz stereo) from 00.0 under Shot 1 and throughout; one low woodwind swell 06.4 → 08.6 under the reveal (not sourced); ambience alone from 13.4. The bed loops with the picture: 16.0 s section, 0.5 s crossfade tail → head at the loop point. Kling audio tracks are muted.
 
-## Review notes (what to look at)
+## Risks (two, with the decision taken)
 
-1. **Giraffe identity.** The Kling walker (`giraffe_walking.mov`) is a darker, more orange animal than the pale hero still. Frames 04–06 show them side by side. Either regenerate the walk from the hero as reference (NBP for consistency, then Kling) or accept two different giraffes.
-2. **Staging scale, frames 05–07 (revised after Allen's note).** The manor now fades in at scale and the camera pulls back, so the giraffes never appear oversized against the house. Cost: the plate is enlarged 2.65× at the reveal, so it is soft for about a second while blurred anyway. If that bothers you, the fix is a second manor plate shot from the foot of the steps (Seedream, same house) for the reveal, cross-dissolving to the wide during the pull-back. Also visible at 2.65×: guests and staff on the terrace behind the giraffes.
-3. **Logo.** Every wordmark on the board is the 288 px web mark at 2×. It is legible on the board and unusable in the film. Nothing else in the folder is the real mark.
-4. **Guests in the plate.** `manor01_background.png` still has staff and guests at the tables. The earlier storyboard page asked for a clean plate; the brief does not. Decide.
-
-## Open questions for Allen
-
-1. TRT 14.0 s (timing doc) or 12.0 s (storyboard page)? The board is cut at 14.0.
-2. One master (16:9 HD) or three (1:1, 9:16, 16:9)? Frames 01–04 survive a 1:1 crop; frame 06 does not.
-3. Payoff: exterior upstairs windows (`images-2.jpg`, timing doc) or interior breakfast window (`images.jpg`, storyboard page)? Both are boarded as 08 / 08b.
-4. Guests in the manor plate: keep or regenerate clean?
-5. Frame rate 24 (board) or 30 (Kling walk native)?
+1. **The return dissolve is a big tonal jump** (dark brick and ivy → flat cream). Decision: the payoff lifts toward cream for 8 frames before the 0.9 s cross-dissolve, and the mark goes out with the payoff layer rather than on its own. If it still reads as a hard cut in the animatic, lengthen the dissolve to 1.2 s and take the 0.3 s from the Beat 8 hold; the TRT stays 16.0 s.
+2. **The loop frame depends on Shot 1's source.** If Shot 1 is take2, f0 must be take2's first frame after it is repositioned to the board staging, and the return must land on that exact frame, not on the upscaled still. Decision: the AE comp uses take2 f0 (frozen) as both the Beat 10 hold and the return's landing frame, so the identity holds by construction. The board's `01_hold`/`11_loop` stand for that frame.
 
 ## Assets still needed
 
-- Vector Giraffe Manor wordmark (AI/EPS/SVG) — blocks Beats 2 and 8.
-- Shot 6 Kling clip (turn and walk away), from `06_manor` as start frame.
-- Shot 7 end plate (heads in windows, matching the chosen reference) then the Kling clip.
-- Optional: clean manor plate without guests; a walker regenerated to match the hero's colouring.
+- Walker regenerated to match the hero (NBP side-view reference from `ea5d5cfc-….png` → Kling i2v walk, right-to-left, alpha via the same matte pass as `giraffe_walking.mov`). Replaces the board's colour-matched stand-in on frames 03–07.
+- Shot 6 Kling clip (turn and walk away), from `07_turn_TOGEN.png` as start frame (rebuild after the walker regen).
+- Shot 7 end plate (both heads in the upstairs windows, matching `images-2.jpg`; Seedream), then the Kling clip.
+- Woodwind swell for the reveal (not sourced; birdsong is in hand).
 
 ## What this board does not cover
 
-- No motion was rendered; frames are stills. The animatic is the next step once the questions above are answered.
-- Audio not sourced.
-- 1:1 and 9:16 reframes not drawn.
-- Shot 1 micro-life and Shot 2 logo animation are described, not shown.
+- No motion was rendered; frames are stills. The animatic (24 fps, 16.0 s, looping) is the next step.
+- Shot 1 micro-life and the Beat 2 logo rise are described from the Kling takes, not drawn.
+- The return dissolve is shown as a single 50 % blend; its exposure lift is described only.
+- The colour of the regenerated walker is not shown; the board's walker is a levels match, not a grade.

@@ -22,11 +22,11 @@ Written 2026-09-25 by the cloud session on branch `claude/wizardly-edison-00x4h8
 
 1. Run one cheap image job first (CL-2) to confirm the MCP, then the rest of phase A.
 2. Takes: 1 each on the first pass, 2 for GM-2 and FA-1 (the risk shots). Do not raise takes without Allen's OK; spend is his call.
-3. Save outputs as `generation_kit/output/<film>/<jobid lowercase, hyphen to underscore>_t<take>.<mp4|png>` and append to `generation_kit/output/ledger.json` (`{"JOB#take": {job, take, film, endpoint, request_id, status, url, file}}`). The cloud session's animatic tooling reads these paths.
+3. Save outputs as `generation_kit/output/<film>/<jobid lowercase, hyphen to underscore>_t<take>.<mp4|png>` (committed to git, see PAIRING.md) and append to `generation_kit/output/ledger.json` (`{"JOB#take": {job, take, film, endpoint, request_id, status, url, file}}`). The cloud session's animatic tooling reads these paths.
 4. Phase B after Allen picks takes: GM-1v (from GM-1s), GM-4 (first = last frame of chosen GM-2 take, last = GM-3), PA-4 (from PA-1), NI-2 (from NI-1), NI-4 (first = last frame of NI-3, last = first frame of NI-3), MI-1b/MI-1c (from MI-1a), NE-3 (from NE-2). Pull frames with `ffmpeg -sseof -0.2 -i in.mp4 -update 1 -frames:v 1 last.png`.
 5. Not runnable by prompt alone: PA-3 (comp the three gold fish from `passalacqua.png` onto the PA-1 plate first). Logos never go through a model.
 6. Inputs with alpha: flatten onto white before upload. `mi_ref_resort_16x9.png` is 4988 px and 26 MB; downscale to 4096 wide if the MCP rejects it.
-7. When done: contact sheet of all outputs, list of failed or NSFW-flagged jobs, and commit `output/ledger.json` only (outputs stay out of git, `generation_kit/*/` is ignored). Upload outputs to the Drive folder `Theria` > `generated` only if Allen says so.
+7. When done: contact sheet of all outputs, list of failed or NSFW-flagged jobs, and commit `output/` (ledger and outputs; files over 90 MB stay out). Upload outputs to the Drive folder `Theria` > `generated` only if Allen says so.
 
 ## Rules carried over
 

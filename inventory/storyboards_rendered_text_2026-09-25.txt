@@ -1,0 +1,504 @@
+THÈRIA · AR ANIMATION PROGRAMME · HOSPITALITY SLATE
+EIGHT HOTELS, EIGHT AWAKENINGS
+
+Beat-by-beat storyboards for eight scan-to-animate films, 10–15 seconds each. Every film opens on a still the guest already sees — a crest, a sculpture, a mark — and ends back where it began, so the loop is seamless and the artwork is never left behind. Frames below are composited from supplied reference; anything marked to source still needs art.
+
+8 FILMS
+10–15 SEC · SEAMLESS LOOP
+TRIGGER: PRINTED MARK / QR
+MASTERS: 1:1 + 9:16 + 16:9
+01
+GIRAFFE MANOR
+NAIROBI, KENYA · THE HOUSE THAT COMES TO THE WINDOW
+TRT 12.0S
+6 BEATS
+
+Sound: dawn birdsong, a single hoof-fall on wet grass, porcelain touching porcelain on the last beat. No music sting until 0:08.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+The Sentinel
+
+Single giraffe on flat ivory, dead centre, full body. Nothing else in frame. He blinks once and the ear flicks — the only proof this is a film.
+
+↳ Rise 14px + fade 700ms on entry, then hold. Camera locked.
+
+GIRAFFE MANOR
+0:02 – 0:04
+BEAT 02 · REVEAL
+Mark of the House
+
+The Giraffe Manor wordmark resolves on the ground line, directly under his hooves — as though he is standing on the name.
+
+↳ Letter-spacing eases from .55em to .34em over 900ms; rule draws out from centre.
+
+GIRAFFE MANOR
+0:04 – 0:06
+BEAT 03 · ENTRANCE
+Second Arrival
+
+A second giraffe walks in from frame right, slightly smaller, facing back toward the first. Four unhurried strides. The wordmark begins to give way.
+
+↳ Walk cycle at 0.6× real speed; wordmark to 35% opacity by 0:06.
+
+0:06 – 0:08
+BEAT 04 · WORLD-BUILD
+The House Appears
+
+The wordmark clears and the ivory dissolves into lawn: the ivy-clad manor rises behind them, soft-focus at first, then settling to full clarity.
+
+↳ Cross-dissolve 800ms + 6→0px blur ramp. Giraffes stay pin-sharp throughout.
+
+0:08 – 0:10
+BEAT 05 · TURN
+Both Turn Away
+
+In unison, both giraffes rotate away from camera and walk toward the house, necks swinging. We follow at their shoulder.
+
+↳ Slow 8% push-in on the manor; giraffes scale down 12% as they recede.
+
+GIRAFFE MANOR
+0:10 – 0:12
+BEAT 06 · PAYOFF
+Heads Through the Window
+
+Cut inside: two heads lean through the breakfast window over a laid table. Hold two seconds. The wordmark re-stamps in ivory over the scrim, and the film cuts back to Beat 01.
+
+↳ Loop point: match-cut on the wordmark, not the image.
+
+TO SOURCE
+Vector or high-res Giraffe Manor wordmark (supplied file is 46px), a second giraffe cut-out at a different pose, and a clean manor plate without guests for the Beat 04 reveal.
+02
+THE FIFTH AVENUE HOTEL
+NEW YORK · GILDED PATIENCE
+TRT 11.0S
+6 BEATS
+
+Sound: a parlour clock, a distant carriage, one struck harp string. Everything in this film moves slower than the viewer expects — that is the joke and the luxury.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+Gold Tortoise
+
+The gilded tortoise in profile on white, object-lit. A slow specular travels across the shell so the gold reads as metal, not paint.
+
+↳ Highlight sweep 1.6s, left to right. No other movement.
+
+THE
+FIFTH AVENUE
+0:02 – 0:04
+BEAT 02 · REVEAL
+Gold Lockup, No Disc
+
+The hotel lockup appears under its feet in foil gold — no navy roundel, no container. Type only, matched to the tortoise's own gold.
+
+↳ Foil-shimmer wipe across the letterforms as they arrive, 600ms.
+
+FIFTH AVENUE
+0:04 – 0:05.5
+BEAT 03 · CLEAR
+The Mark Withdraws
+
+The lockup fades. The white ground warms and takes on a faint park-light gradient — the room is about to become outdoors.
+
+↳ Type out 500ms; ground temperature shift begins under it.
+
+0:05.5 – 0:07.5
+BEAT 04 · WORLD-BUILD
+The Walkers Arrive
+
+A Gilded Age couple materialises behind the leash — parasol, top hat, painterly park. They arrive as a painting arrives: brushwork resolving, not a cut.
+
+↳ 1.2s dissolve; the tortoise's original lighting is preserved so it never looks pasted in.
+
+0:07.5 – 0:10
+BEAT 05 · MOTION
+Slower Than Life
+
+The procession crosses frame left at a crawl: one step per second, parasol turning, the leash slack then taut. The tortoise leads; the humans wait on him.
+
+↳ Playback ≈15% of natural walk speed. Leaves and light move at normal speed for contrast.
+
+THE FIFTH AVENUE HOTEL
+0:10 – 0:11
+BEAT 06 · SIGN-OFF
+Gold on the Green
+
+They exit frame; the park holds empty for a half-beat and the gold lockup returns bottom-centre. Loop back to the white.
+
+↳ Whip the park to white over 300ms on the out — the fastest move in the film.
+
+TO SOURCE
+Gold-on-transparent version of the Fifth Avenue lockup (supplied file is the navy roundel), and the walking couple as separated layers so the tortoise can be re-timed independently.
+03
+PASSALACQUA
+LAGO DI COMO · THREE FISH LEAVE THE CREST
+TRT 12.5S
+6 BEATS
+
+Sound: room tone, then a single water drop at the moment of colouring, then lake — wind, hull, splash. Strings enter only on the jump.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+Three Outlines
+
+Open on the three fish as line only — hairline engraving on white, the wave rule beneath them. Empty, waiting to be filled.
+
+↳ Draw-on: paths write in left to right, 1.1s, then hold.
+
+0:02 – 0:04
+BEAT 02 · REVEAL
+Passalacqua, Lago di Como
+
+The wordmark sets beneath the wave rule, full crest assembled. Two beats of stillness — this is the frame that must read as the printed mark.
+
+↳ Fade + 8px rise; no tracking animation on this one, the crest is fixed artwork.
+
+0:04 – 0:06
+BEAT 03 · TRANSFORM
+Gold Floods the Line
+
+The wordmark dissolves upward and out. Gold pours into the three outlines from the tails up, scales catching light as they fill.
+
+↳ Fill wipe 900ms per fish, staggered 120ms; type out beneath it.
+
+0:06 – 0:08
+BEAT 04 · ANIMATE
+The Fish Take Breath
+
+Heraldry becomes creature: gills work, fins flutter, bodies flex out of their rigid vertical. The wave rule below thickens into actual water.
+
+↳ Offset the three by 150ms so they never move in lockstep.
+
+0:08 – 0:11
+BEAT 05 · WORLD-BUILD
+Como, and the Jump
+
+The lake floods in behind them — mountains, cypress, the villa on its terrace. All three break the surface together, water sheeting off gold.
+
+↳ Jump peaks at 0:09.6; 240fps water sim retimed to 0.5× at apex.
+
+PASSALACQUA
+LAGO DI COMO
+0:11 – 0:12.5
+BEAT 06 · SIGN-OFF
+Back into the Crest
+
+They fall; the splash rings settle; the ripple pattern resolves into the wave rule of the crest and the wordmark re-forms in the white.
+
+↳ Loop point: the ripple-to-rule match. This is the film's signature move — board it in detail.
+
+TO SOURCE
+Vector crest with the three fish and wave rule on separate paths (needed for the draw-on and the gold fill), plus a clean plate of the villa and lake without the composited fish.
+04
+AIRELLES · LE GRAND CONTRÔLE
+CHÂTEAU DE VERSAILLES · LET THEM EAT CAKE
+TRT 14.0S
+7 BEATS
+
+Sound: harpsichord, unhurried — it keeps playing through the blade drop without flinching. One rope creak. The cut itself is almost silent; the plates arriving are not.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+Cake and Chandelier
+
+Two objects floating on white: the tiered cake on its gilt table, the crystal chandelier hanging directly above. Candles alight.
+
+↳ Candle flicker only; chandelier sways 1.5° on a slow sine.
+
+0:02 – 0:04
+BEAT 02 · WORLD-BUILD
+The Salon Assembles
+
+Boiserie, gilding, parquet and the long afternoon light build in around the two objects, panel by panel, until the room is whole.
+
+↳ Build in three passes — floor, walls, light — 400ms apart. Cast shadows arrive last.
+
+AIRELLES · LE GRAND CONTRÔLE
+0:04 – 0:06
+BEAT 03 · REVEAL
+The Mark Beneath the Table
+
+The hotel lockup sets on the parquet under the table, gold, as if inlaid into the floor.
+
+↳ Perspective-matched to the floor plane, not screen-flat.
+
+0:06 – 0:09
+BEAT 04 · TURN
+Crystal Becomes Timber
+
+The chandelier transforms in place: arms straighten into uprights, drops become rope, candles gutter out, the crystal dish flattens into a blade. Nobody in the room reacts.
+
+↳ 2.4s morph, ease-in-out. Keep the chandelier's chain — it becomes the hoist rope. Light in the room cools 400K.
+
+AIRELLES · LE GRAND CONTRÔLE
+0:09 – 0:10.5
+BEAT 05 · TENSION
+The Mark Withdraws
+
+The lockup fades from the floor. The blade rises the last few inches. A full second of nothing — the longest hold in the slate.
+
+↳ Drop all sound but the harpsichord and one rope creak at 0:10.3.
+
+0:10.5 – 0:11.2
+BEAT 06 · IMPACT
+The Drop
+
+Four frames of blade. It passes clean through all three tiers; the cake stands a moment before it knows it has been cut, then parts.
+
+↳ Motion-blurred blade, no gore-physics. Crumb and sugar-dust burst on the second frame after contact.
+
+0:11.2 – 0:14
+BEAT 07 · PAYOFF
+Served, Sixteen Ways
+
+Slices appear on porcelain around the table in a spiral, one plate at a time, as if by invisible staff. Hold on the full table, then whip back to white.
+
+↳ Plates pop in on 3-frame intervals, spiralling out from the cake. Loop back on the whip.
+
+TO SOURCE
+Airelles / Le Grand Contrôle logo files, and a clean salon plate with no cake or chandelier so the two objects can be re-composited and morphed on their own layers.
+05
+NORTH ISLAND
+SEYCHELLES · WHITE, BLUE, WHITE
+TRT 13.0S
+6 BEATS
+
+Sound: underwater pressure on the blue beats, surf and shell on the sand beat, then silence on the return to white. The whole film is one held breath.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+Gold on White
+
+The full mark: four gold turtles scattered around the north island wordmark, dead still on white. Reads as an engraved plaque.
+
+↳ Two seconds of absolute stillness. Sell it as a photograph before it moves.
+
+0:02 – 0:04
+BEAT 02 · TRANSFORM
+The White Becomes Water
+
+Caustics creep in from the edges of frame until the white ground is turquoise shallows. The turtles and the wordmark do not move — the world moves under them.
+
+↳ Radial wipe from the four corners, 1.4s. Add refraction distortion to the wordmark as the water passes over it.
+
+0:04 – 0:07
+BEAT 03 · ANIMATE
+They Begin to Swim
+
+Front flippers sweep; the four turtles drift out of their logo positions and into a loose formation, the big one leading. Wakes trail behind them.
+
+↳ Break formation gradually — the shape of the logo should survive to about 0:05.5.
+
+0:07 – 0:10
+BEAT 04 · LANDFALL
+Onto the Sand
+
+Camera surfaces and swings level: the bay, the granite, the lodge under the palms. The turtles haul up onto white sand, leaving drag tracks.
+
+↳ Water-line crossing needs real weight — slow each turtle 30% as it takes the sand.
+
+0:10 – 0:12
+BEAT 05 · RETURN
+Back to Sea
+
+They turn and go back down the beach into the shallows. The tracks stay behind them in the sand for a beat, then a wave takes them.
+
+↳ Mirror the plate so the exit reads opposite the entrance.
+
+0:12 – 0:13
+BEAT 06 · SIGN-OFF
+Blue, Then White
+
+Blue drains out of frame the way it came in; the four turtles settle back into their exact logo positions as the ground returns to white. Frame 1 and last frame are identical.
+
+↳ Match-frame check required — this loop has to be invisible.
+
+TO SOURCE
+Each gold turtle as its own layer (or the 3D source), and a clean beach plate without turtles for the landfall composite.
+06
+MIAVANA
+NOSY ANKAO, MADAGASCAR · A MANGO, THROWN
+TRT 12.0S
+6 BEATS
+
+Sound: lemur chatter, palm rustle, one soft catch. The only comic film in the slate — keep it dry, never cartoonish.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+Two Lemurs, Re-staged
+
+The sage lockup, but the lemurs are repositioned for the gag: left one perched on the M, right one hanging by its feet from the final A, both facing centre so the throw reads across the word.
+
+↳ Tail sway and a single head-turn. Nothing else.
+
+0:02 – 0:04
+BEAT 02 · SETUP
+The Mango
+
+The hanging lemur produces a mango from nowhere, weighs it, and cocks its arm. A beat of deliberation.
+
+↳ Anticipation hold of 12 frames before the throw — all the comedy is in the pause.
+
+0:04 – 0:05.5
+BEAT 03 · ACTION
+Across the Wordmark
+
+The mango arcs over the letterforms and is caught one-handed by the lemur on the M, which does not otherwise move.
+
+↳ The arc must clear the cap-height and pass in front of the type, never behind it.
+
+0:05.5 – 0:08
+BEAT 04 · WORLD-BUILD
+The Sanctuary Behind
+
+The sage field deepens into a real horizon: the villas, the pools, the sandbar at low sun. The wordmark fades as the place takes over.
+
+↳ Colour-match the plate's greens back toward the sage brand ground so the change feels like focus, not a cut.
+
+0:08 – 0:10
+BEAT 05 · PAYOFF
+Up in the Palms
+
+The lemurs are now in the palms above the resort, still passing the mango, the throw continuing uninterrupted through the change of world.
+
+↳ Inset shows the lemur reference for the palm pose. Keep the throw rhythm identical to Beat 03.
+
+0:10 – 0:12
+BEAT 06 · SIGN-OFF
+Back to the Mark
+
+The resort dissolves back to flat sage; the palms become letterforms again and the two lemurs settle into their opening positions. The mango is gone. Nobody mentions it.
+
+↳ Loop point. Consider one frame of the mango still mid-air as an easter egg on the third pass.
+
+TO SOURCE
+Lemur cut-outs in throw and catch poses (supplied stills are static), a mango asset, and the Miavana wordmark as vector so the lemurs can be re-positioned on the letterforms.
+07
+NECKER ISLAND
+BRITISH VIRGIN ISLANDS · FLAMINGO'S-EYE VIEW
+TRT 13.0S
+6 BEATS
+
+Sound: wingbeat, then wind and altitude, then the tick of a tennis rally arriving from far below. Art for this film is not in the supplied folder — every frame below is a placeholder pending the flamingo artwork.
+
+ART TO SOURCE
+FLAMINGO, STANDING, ON WHITE
+0:00 – 0:02
+BEAT 01 · HOLD
+The Flamingo
+
+A single flamingo on white, one leg tucked, in profile. It preens once and lifts its head.
+
+↳ Same open-on-white grammar as Films 01, 02 and 05 — this is the slate's house rule.
+
+ART TO SOURCE
+FLAMINGO, WINGS OPEN, TAKE-OFF
+0:02 – 0:04.5
+BEAT 02 · ACTION
+Take Flight
+
+It runs three steps and opens — wings filling the frame, pink against nothing. The camera stays with it as the white falls away.
+
+↳ Two full wingbeats before any background exists.
+
+ART TO SOURCE
+NECKER AERIAL · ISLAND IN BLUE WATER
+0:04.5 – 0:07
+BEAT 03 · WORLD-BUILD
+The Island Comes Into View
+
+Pull back and up: the bird shrinks, the ocean arrives underneath, and Necker resolves in the middle distance — Great House on the ridge, reef line, sailboats.
+
+↳ One continuous move, no cuts. Bird holds screen-left third throughout.
+
+ART TO SOURCE
+BLONDE KITESURFER CROSSING THE BAY
+0:07 – 0:09.5
+BEAT 04 · DETAIL
+Kite Across the Bay
+
+A kitesurfer carves the water below and jumps as the flamingo passes overhead. Rider is a blonde man, generic — not a likeness.
+
+↳ Per brief: change the photo so no real individual is depicted. Keep the kite, lose the identity.
+
+ART TO SOURCE
+TWO LEMURS RALLYING ON THE TENNIS COURT
+0:09.5 – 0:11.5
+BEAT 05 · GAG
+Lemurs at Match Point
+
+The flight passes over the tennis court, where two lemurs are mid-rally, playing perfectly straight — proper form, no mugging to camera.
+
+↳ Rally audio establishes one beat before the court enters frame. Reference inset from the Miavana folder.
+
+0:11.5 – 0:13
+BEAT 06 · SIGN-OFF
+The Mark Lands
+
+The flamingo drops out of frame bottom-left; the island holds a half-beat, whites out, and the Virgin Limited Edition / Necker mark settles in the centre.
+
+↳ Confirm which mark signs off — Necker Island lockup or Virgin Limited Edition.
+
+TO SOURCE
+Everything: flamingo artwork (standing + flight), a Necker aerial plate, kitesurfer footage or art with a non-identifiable rider, lemur tennis poses, and the Necker Island lockup. Only the Virgin mark was supplied.
+08
+22 CLUB
+THE NUMERALS BECOME THE DECKS
+TRT 12.0S
+6 BEATS
+
+Sound: low, slow, sexy techno — one bar in, one bar out. The beat drops on the spotlight (Beat 04) and everything before it is filtered.
+
+0:00 – 0:02
+BEAT 01 · HOLD
+The Mark, Cold
+
+The red 22 club mark on ivory, centred, static. Filtered music already running under it, as if heard through a door.
+
+↳ No movement at all for two seconds. The stillness sets up the flip.
+
+0:02 – 0:04
+BEAT 02 · TURN
+The 22 Lies Down
+
+Both numerals rotate onto their backs — a slow 90° fall, as if tipped. The "club" script stays upright and slides down out of the way.
+
+↳ Ease-out with a small overshoot and settle. Ground goes to ink as they land.
+
+0:04 – 0:06
+BEAT 03 · TRANSFORM
+Twin Decks
+
+The two fallen numerals become platters: each curl of the 2 unrolls into a record, red label at centre, tonearm swinging in from the right. Both start spinning.
+
+↳ Spin locks to the track's BPM. One deck runs a half-beat behind the other.
+
+0:06 – 0:09
+BEAT 04 · DROP
+Spotlight
+
+A hard spot snaps on from above, throwing a cone of haze across both decks. It sweeps left to right and back, catching the grooves.
+
+↳ Snap on with the beat — one frame, no fade. Specular streak travels the vinyl on each pass.
+
+0:09 – 0:11
+BEAT 05 · RETURN
+Upright Again
+
+The records slow, the grooves flatten back into strokes, and the numerals rotate upright — still lit, still red, still moving slightly.
+
+↳ Reverse the Beat 02 curve exactly, 20% faster. Track filters back down as they rise.
+
+0:11 – 0:12
+BEAT 06 · SIGN-OFF
+Lights Out
+
+Spotlight cuts, the ink ground lifts back to ivory, and the mark sits exactly as it began. The music keeps going one bar past the picture.
+
+↳ Loop point. Audio tail is the only thing that breaks the seam — intentional.
+
+TO SOURCE
+Vector 22 club mark with the numerals and script on separate paths, a turntable/vinyl reference for the platter build, and the licensed techno bed.
+Grammar shared across the slate: open on the still mark, name it, let the mark step aside, let the world arrive, return to the mark. Every film loops on its own first frame.
+CLOSE YOUR EYES AND SEE

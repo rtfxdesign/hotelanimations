@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Theria Inventory 2026-09-25</title>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--fg:#111;--muted:#555;--accent:#FFB020;--rule:#ddd;--code:#f3f3f3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--fg:#eee;--muted:#aaa;--rule:#333;--code:#151515}}
+:root[data-theme="dark"]{--bg:#000;--fg:#eee;--muted:#aaa;--rule:#333;--code:#151515}
+html,body{background:var(--bg);color:var(--fg);margin:0}
+body{font-family:"Space Grotesk",system-ui,sans-serif;font-size:15px;line-height:1.5;padding:32px 16px;max-width:1100px;margin:0 auto}
+h1,h2,h3{font-family:"Martian Mono",monospace;letter-spacing:-.01em;line-height:1.2}
+h1{font-size:24px;border-left:6px solid var(--accent);padding-left:12px}
+h2{font-size:18px;margin-top:2.2em;border-bottom:1px solid var(--rule);padding-bottom:4px}
+h3{font-size:15px;margin-top:1.6em}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0}
+th,td{border:1px solid var(--rule);padding:5px 7px;vertical-align:top;text-align:left}
+th{background:var(--code);font-family:"Martian Mono",monospace;font-weight:600;font-size:12px}
+code{font-family:"Martian Mono",monospace;font-size:12px;background:var(--code);padding:1px 4px}
+pre{background:var(--code);padding:10px;overflow:auto;font-size:12px}
+strong{font-weight:600} a{color:inherit;text-decoration-color:var(--accent)}
+.meta{color:var(--muted);font-size:13px}
+@media print{body{padding:0;font-size:11px;max-width:none} h1{font-size:18px} h2{font-size:14px} table{font-size:9.5px;page-break-inside:auto} tr{page-break-inside:avoid} :root{--bg:#fff;--fg:#000;--rule:#bbb;--code:#f0f0f0}}
+</style></head><body>
+<h1>Theria Hotel Animations — Measured Inventory and Drive Connection</h1>
+<p>Written 2026-09-25 by Claude Code (cloud session) for Allen Grabo / RTFX Design. Companion to <code>HANDOFF_claude_code.md</code>; this document supersedes its "Inventory" and "First commands to run" sections. Everything below was measured by running code on the actual files, except where marked <strong>untested</strong> or <strong>probed remotely</strong>.</p>
+<h2>1. The answer</h2>
+<ul>
+<li><strong>The Drive folder is connected two ways.</strong> The claude.ai Google Drive connector can list and read it (it is owned by allen.grabo@gmail.com and shared to rtfxdesign@gmail.com). Separately, the folder is shared as <em>anyone with the link: writer</em>, so plain HTTPS downloads work from any machine with no OAuth. <code>tools/drive_pull.py</code> uses that to mirror the whole tree from <code>drive/manifest.json</code> (121 files, 2.45 GB, every file's Drive id and byte size).</li>
+<li><strong>Everything was pulled and measured.</strong> 111 files downloaded and hashed; 95 images/videos measured (pixel dims, mode, alpha extent, fps, codec, frames). The two 681 MB stock items were probed over HTTPS without downloading. Results: <code>inventory/measurements_2026-09-25.json</code> and <code>.md</code>, <code>inventory/psd_layers_2026-09-25.md</code>.</li>
+<li><strong>Cloudflare R2 was not possible from this session.</strong> The Cloudflare connector needs authorising in claude.ai connector settings, and there are no R2 keys in the environment. <code>tools/r2_upload.py</code> is written and compiles, but is <strong>untested</strong> against a real bucket. To let a future session upload, add four variables to the cloud environment (Edit environment → API credentials / environment variables): <code>R2_ACCOUNT_ID</code>, <code>R2_ACCESS_KEY_ID</code>, <code>R2_SECRET_ACCESS_KEY</code>, <code>R2_BUCKET</code>. Do not paste them into chat.</li>
+<li><strong>The storyboards HTML was rendered</strong> (headless Chromium) and its full text is in <code>inventory/storyboards_rendered_text_2026-09-25.txt</code>. It answers some open questions and raises two new ones (§3).</li>
+</ul>
+<h2>2. Corrections to the handoff, from measurement</h2>
+<table>
+<thead>
+<tr>
+<th>Handoff said</th>
+<th>Measured</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Source plates are 1536×1024</td>
+<td>The <strong>orig</strong> plates are (5th Ave tortoise 1536×1024, North Island ×3, Passalacqua villa). But the <strong>working</strong> plates are larger: <code>manor01.png/.psd</code> 2752×1536, <code>turtlewalkers.psd</code> 4346×2444, <code>miavana.psd</code> 2508×1411, <code>fadein.png</code> 6048×2592</td>
+<td>For HD 1920×1080 nothing in <code>upscaled/</code> needs enlarging. The 2752×1536 manor plate is 143 % of HD width; the pipeline doc's "re-render at 4K" is dead for these</td>
+</tr>
+<tr>
+<td><code>giraffe_walking.mov</code> 327 MB, "ProRes?" and open question 5 "which is the master"</td>
+<td><strong>ProRes 4444, 3840×2160, 30.00 fps, 300 frames, 10.0 s, <code>yuva444p12le</code> with a real alpha channel</strong> (alpha min 0 / max 255; the opaque region is ≈1070×1540 px, i.e. an isolated giraffe on transparency). <code>giraffe_walking.mp4</code> is the same clip as H.264 4:2:0, no alpha, on a cream field</td>
+<td><strong>The .mov is the master. Keep it.</strong> The mp4 is a proxy. Kling handed back 4K/30, not 1080p</td>
+</tr>
+<tr>
+<td>"Kling native output (typically 1080p) is delivery-res"</td>
+<td>Three different Kling outputs in the folder: 3840×2160 @ 30 (giraffe walk), 1920×1080 @ 24 (<code>frame1_to_frame2.mp4</code>, 97 frames, 4.04 s), <strong>720×1280 @ 24</strong> (both Miavana lemur clips, 144 frames, 6.0 s)</td>
+<td>Kling resolution/fps depends on the mode used. The Miavana clips are portrait and below HD; usable only as comped elements at ≤ 84 % scale, and they carry backgrounds (forest, grey) that need keying</td>
+</tr>
+<tr>
+<td><code>manor01_giraffe0*.png</code> at 129 / 397 KB "check they're full-res, not thumbnails"</td>
+<td>178×290 and 332×486, RGBA, cropped to bounds. Positions in the PSD: giraffe01 at (1262, 869), giraffe02 at (1578, 1049) on the 2752×1536 canvas</td>
+<td>They are full plate resolution, not thumbnails. They are small because the giraffes are small in the plate (19 % and 32 % of frame height). Fine as background figures; not usable as a hero</td>
+</tr>
+<tr>
+<td><code>giraffemanor_wordmark_alpha.png</code> "origin unknown"</td>
+<td>2346×432 RGBA, opaque area 2224×245. Letterforms are a mixed-case serif <strong>"Giraffe Manor / Nairobi"</strong> with wood-grain texture inside the strokes. It is cut from <code>hf_20260909_034918_86df0845….png</code> (6048×2592, a Higgsfield render of that wordmark on cream)</td>
+<td><strong>It is an AI-drawn wordmark, not the client's mark.</strong> The client mark (<code>orig/Giraffe-Manor-Logo-46px.webp</code>, 288×46) is small-caps <strong>GIRAFFEMANOR</strong> with a lowercase "nairobi" and a giraffe-patch block. Different typeface, different case, different lock-up. Unusable as a brand asset. Same wordmark is baked into <code>frame02.png</code></td>
+</tr>
+<tr>
+<td><code>hf_…86df0845….ai</code> 703 bytes "flag"</td>
+<td>Opened as text: Photoshop "Pen Path Export 7.0", bounding box 0 0 6048 2592, <strong>no path data at all</strong> between setup and trailer</td>
+<td>Empty. Delete or ignore. There is no vector logo anywhere in the folder</td>
+</tr>
+<tr>
+<td><code>fifthave_text.png</code> / <code>fifthavenue.png</code> "raster; same vector caveat"</td>
+<td>603×422 and 894×894. <code>fifthavenue.png</code> is exactly 2× the 447×447 <code>orig/images.jpg</code> roundel; at 100 % the gold letterforms are soft with invented texture</td>
+<td>AI-enlarged from a web thumbnail. Unusable for an HD title card. Vector needed</td>
+</tr>
+<tr>
+<td><code>fadein.png</code> "?"</td>
+<td>6048×2592 (2.33:1), Seedream/NBP render: the manor with a giraffe eating leaves in the foreground and <strong>guests at tables</strong>. <code>fadein - resized….png</code> is the same at 3999×1714</td>
+<td>It is the Shot 4/5 reveal plate. The storyboards page asks for "a clean manor plate without guests" — this is not that</td>
+</tr>
+<tr>
+<td><code>resort.png</code> "presumably outpainted/enlarged"</td>
+<td>3600×4802 <strong>portrait</strong>, exactly 2.0× the licensed <code>Miavana_©_Dylane_Cabano_001-scaled.jpg</code> (1800×2401). Not outpainted</td>
+<td>Still needs a 16:9 solution (outpaint or crop to 3600×2025). It is a licensed photo; outpainting it is a rights question</td>
+</tr>
+<tr>
+<td>Miavana lemur positions "first A and last A"</td>
+<td><code>miavana.psd</code> has the seated lemur on the <strong>M</strong> (x 44–270) and the hanging lemur on the <strong>final A</strong> (x 2208–2364). The storyboards page also says M and final A</td>
+<td>Handoff and timing doc say first A; PSD and storyboards say M. Pick one (§3)</td>
+</tr>
+<tr>
+<td>Storyboards HTML "not read"</td>
+<td>Rendered. Bundled single-page app, 16.2 MB (51 images as blobs), title "THÈRIA · AR ANIMATION PROGRAMME · HOSPITALITY SLATE / EIGHT HOTELS, EIGHT AWAKENINGS". The 3.3 MB copy in <code>Giraffe Manor/</code> has identical text, images at half size</td>
+<td>See §3. The page's run times differ from the timing doc</td>
+</tr>
+</tbody>
+</table>
+<p>Other measured facts worth knowing:</p>
+<ul>
+<li><strong>Byte-identical duplicates</strong> (sha256): <code>Giraffe Manor/upscaled/manor01.png</code> = <code>Giraffe Manor/hf_20260909_025934_a3e0463c….png</code>; the two <code>hf_…86df0845….png</code>; the two <code>273559596_…n.jpg</code> (320×320 Facebook thumbnails); the two <code>Versali/cfb72e66….png</code>.</li>
+<li><code>Miavana/upscaled/miavana_text - crop 2026-09-25 00-56-17.png</code> is a <strong>JPEG</strong> with a .png extension (2508×1260, no alpha).</li>
+<li><code>manor01_background.png</code> differs from <code>manor01.png</code> across the whole frame, not just where the giraffes were: it was re-encoded or re-rendered, not masked. Harmless, but do not expect a pixel match outside the fill.</li>
+<li><code>turtlewalkers.png</code> (2896×2172, 4:3) is not a flatten of <code>turtlewalkers.psd</code> (4346×2444, 16:9). The PSD is the 16:9 version with the canvas widened and the couple/tortoise/leash separated.</li>
+<li><code>frame1_to_frame2.mp4</code>: start frame matches <code>frame01.png</code> (mean diff 1.5/255); end frame matches <code>frame01</code> better than <code>frame02</code> in the wordmark band (7.9 vs 22.1). <strong>Kling did not render the wordmark that was in the end frame.</strong> This is the pipeline doc's §4 point demonstrated: logos must be AE layers, never in the generated frames.</li>
+<li>Miavana Kling clips: the mango throw is a lemur seated on a branch <strong>in a forest</strong> (not on sage); it produces a mango and tosses it up-right, arms follow through. The sway clip is the upside-down lemur on a <strong>light grey</strong> field. Neither is on alpha or sage; both need keying, and at 720 px wide both are soft.</li>
+<li>The 681 MB <code>836ec439….mov</code> (extracted from the zip) probed remotely: 4096×2160, 24 fps, 57 s, H.264 (yuvj420p). The zip is the same file compressed; keep one.</li>
+</ul>
+<h2>3. What the storyboards page says that the docs don't</h2>
+<p>Source: <code>inventory/storyboards_rendered_text_2026-09-25.txt</code> and <code>../inventory/previews/storyboards_page_part0–3.jpg</code>.</p>
+<ol>
+<li><strong>Masters: 1:1 + 9:16 + 16:9.</strong> The page header states three master aspects and "TRIGGER: PRINTED MARK / QR" (scan-to-animate AR). The handoff says HD 1920×1080 is settled. If the page is current, 16:9 HD is one of three deliverables and every layout note in the timing doc needs checking against 1:1 and 9:16 crops (the timing doc's "logo-safe area = centre 80 %" was written for exactly this). <strong>Needs a decision.</strong></li>
+<li><strong>Run times differ from the timing doc.</strong> Storyboards → timing doc: Giraffe Manor 12.0 → 14.0 s; Fifth Avenue 11.0 → 12.0; Passalacqua 12.5 → 13.0; Versailles 14.0 → 15.0; North Island 13.0 = 13.0; Miavana 12.0 = 12.0; Necker 13.0 → 14.0; 22 Club 12.0 → 12.1. The handoff names the timing doc as source of truth for cuts. Confirm that still holds.</li>
+<li><strong>Giraffe Manor beat 6 is "cut inside"</strong>: two heads through the breakfast window over a laid table (matches <code>orig</code> <code>images.jpg</code>, 547×365). The timing doc's Shot 7 lands on the exterior <code>images-2.jpg</code>. Different payoff frame.</li>
+<li><strong>Miavana lemurs are on the M and the final A</strong> (page and PSD agree). The mango "arcs over the letterforms… in front of the type, never behind it" and the catch is by the lemur on the M.</li>
+<li><strong>"TO SOURCE" lists per film</strong> (the page's own asset gaps): Giraffe Manor — vector wordmark, second giraffe cut-out in a different pose, clean manor plate without guests. Fifth Avenue — gold-on-transparent lockup, walking couple as separated layers (now done in <code>turtlewalkers.psd</code>). Passalacqua — vector crest with fish on separate paths, clean villa/lake plate. Versailles — logo files, clean salon plate without cake or chandelier. North Island — each turtle as its own layer (or 3D source), clean beach plate. Miavana — lemur cut-outs in throw/catch poses, mango, wordmark as vector. Necker — everything. 22 Club — vector mark with numerals and script on separate paths, turntable reference, licensed techno bed.</li>
+<li>Necker sign-off: "confirm which mark signs off — Necker Island lockup or Virgin Limited Edition."</li>
+</ol>
+<h2>4. Measured inventory, per hotel</h2>
+<p>Full table with every file, hash and alpha bbox: <code>inventory/measurements_2026-09-25.md</code>. Below is the curated view. "Use" is my read; verify before relying on it.</p>
+<h3>Giraffe Manor</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Dims</th>
+<th>Type</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>upscaled/giraffe_walking.mov</code></td>
+<td>3840×2160, 30 fps, 10.0 s</td>
+<td>ProRes 4444 <strong>with alpha</strong></td>
+<td><strong>Master</strong> walk cycle, isolated giraffe entering frame right, walking left (Shot 3)</td>
+</tr>
+<tr>
+<td><code>upscaled/giraffe_walking.mp4</code></td>
+<td>3840×2160, 30 fps, 10.0 s</td>
+<td>H.264, no alpha, cream bg</td>
+<td>proxy of the above</td>
+</tr>
+<tr>
+<td><code>upscaled/frame1_to_frame2.mp4</code></td>
+<td>1920×1080, 24 fps, 4.04 s</td>
+<td>H.264</td>
+<td>Kling start/end test, hero giraffe; end frame lacks the wordmark</td>
+</tr>
+<tr>
+<td><code>upscaled/frame01.png</code> / <code>frame02.png</code></td>
+<td>2844×1600</td>
+<td>RGB</td>
+<td>Kling keyframe pair; frame02 has the AI wordmark baked in</td>
+</tr>
+<tr>
+<td><code>upscaled/ea5d5cfc….png</code></td>
+<td>1024×1536, opaque 881×1487</td>
+<td>RGBA</td>
+<td>original hero giraffe on alpha, portrait</td>
+</tr>
+<tr>
+<td><code>upscaled/manor01.psd</code></td>
+<td>2752×1536</td>
+<td>3 layers</td>
+<td>plate + two giraffe cut-outs (positions in <code>psd_layers</code>)</td>
+</tr>
+<tr>
+<td><code>upscaled/manor01.png</code> / <code>manor01_background.png</code></td>
+<td>2752×1536</td>
+<td>RGB / RGBA (fully opaque)</td>
+<td>plate with / without giraffes; guests and staff in frame</td>
+</tr>
+<tr>
+<td><code>upscaled/fadein.png</code></td>
+<td>6048×2592</td>
+<td>RGB</td>
+<td>reveal plate, giraffe head eating leaves, guests in frame</td>
+</tr>
+<tr>
+<td><code>upscaled/giraffemanor_wordmark_alpha.png</code></td>
+<td>2346×432</td>
+<td>RGBA</td>
+<td>AI-drawn wordmark; <strong>not the brand</strong></td>
+</tr>
+<tr>
+<td><code>upscaled/hf_…86df0845….ai</code></td>
+<td>703 B</td>
+<td>empty PS path export</td>
+<td>discard</td>
+</tr>
+<tr>
+<td><code>hf_20260909_030041….png</code></td>
+<td>5504×3072</td>
+<td>RGB</td>
+<td>Higgsfield render (not inspected further)</td>
+</tr>
+<tr>
+<td><code>hf_20260909_025953….png</code></td>
+<td>3504×2336</td>
+<td>RGB</td>
+<td>Higgsfield render</td>
+</tr>
+<tr>
+<td><code>hf_20260909_025923….png</code></td>
+<td>2752×1536</td>
+<td>RGB</td>
+<td>Higgsfield render, sibling of manor01</td>
+</tr>
+<tr>
+<td><code>hf_20260909_043233….png</code></td>
+<td>1280×720</td>
+<td>RGB</td>
+<td>small render</td>
+</tr>
+<tr>
+<td><code>closeup-shot-of-a-giraffe….jpeg</code>, <code>striking-giraffe-profile….jpg</code></td>
+<td>6000×4000, 5600×3719</td>
+<td>JPEG</td>
+<td>licensed stock stills</td>
+</tr>
+<tr>
+<td><code>orig/Giraffe-Manor-Logo-46px.webp</code></td>
+<td>288×46</td>
+<td>WEBP RGBA</td>
+<td>the only real brand mark; web thumbnail</td>
+</tr>
+<tr>
+<td><code>images.jpg</code>, <code>images-1.jpg</code>, <code>images-2.jpg</code></td>
+<td>547×365, 666×460, 678×452</td>
+<td>JPEG</td>
+<td>web reference (interior window heads, lawn, exterior windows)</td>
+</tr>
+</tbody>
+</table>
+<h3>5th Avenue Hotel</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Dims</th>
+<th>Type</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>upscaled/turtlewalkers.psd</code></td>
+<td>4346×2444 (16:9)</td>
+<td>5 layers: background, man, turtle, leash, woman</td>
+<td><strong>Master comp</strong>, layers separated, zero motion</td>
+</tr>
+<tr>
+<td><code>upscaled/man.png</code> <code>woman.png</code> <code>turtle.png</code> <code>leash.png</code></td>
+<td>666×1579, 1131×1804, 1463×844, 582×336</td>
+<td>RGBA, crop-to-bounds</td>
+<td>layer exports; origins in <code>psd_layers</code></td>
+</tr>
+<tr>
+<td><code>upscaled/turtlewalkers.png</code></td>
+<td>2896×2172 (4:3)</td>
+<td>RGB</td>
+<td>2× of the original painterly plate, pre-widening</td>
+</tr>
+<tr>
+<td><code>upscaled/turtle.psd</code> / <code>turtle02.png</code></td>
+<td>3072×2048 canvas / 2803×1298</td>
+<td>RGBA</td>
+<td>isolated gold tortoise, Shot 1 start frame</td>
+</tr>
+<tr>
+<td><code>upscaled/fifthave.psd</code> <code>fifthavenue.png</code> <code>fifthave_text.png</code></td>
+<td>894×894, 894×894, 603×422</td>
+<td>RGBA</td>
+<td>2× of a 447 px roundel; soft; <strong>not HD-usable</strong></td>
+</tr>
+<tr>
+<td><code>orig/47da2bff….png</code>, <code>orig/d9bdfd2c….png</code>, <code>orig/images.jpg</code></td>
+<td>1536×1024, 1448×1086, 447×447</td>
+<td></td>
+<td>originals, unchanged</td>
+</tr>
+</tbody>
+</table>
+<h3>Miavana</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Dims</th>
+<th>Type</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>upscaled/miavana.psd</code></td>
+<td>2508×1411</td>
+<td>6 layers</td>
+<td><strong>lock-up master</strong>: sage bg, MIAVANA, ISLAND SANCTUARY, BY TIME+TIDE, left lemur (on M), right lemur (on final A)</td>
+</tr>
+<tr>
+<td><code>upscaled/miavana_000N_*.png</code></td>
+<td>226×632 … 2508×1411</td>
+<td>RGBA</td>
+<td>the six layer exports; wordmark letterforms are clean</td>
+</tr>
+<tr>
+<td><code>upscaled/miavana copy.png</code></td>
+<td>2508×1411</td>
+<td>RGB</td>
+<td>flatten of the PSD</td>
+</tr>
+<tr>
+<td><code>upscaled/miavana_text.png</code></td>
+<td>2508×2508</td>
+<td>RGB</td>
+<td>square render of the lock-up (source of the crop)</td>
+</tr>
+<tr>
+<td><code>upscaled/…mango, throws it up and to the right.mp4</code></td>
+<td>720×1280, 24 fps, 6.0 s</td>
+<td>H.264, forest bg</td>
+<td><strong>the throw exists</strong>, but low-res, portrait, not on sage</td>
+</tr>
+<tr>
+<td><code>upscaled/…natural motion, slow sway.mp4</code></td>
+<td>720×1280, 24 fps, 6.0 s</td>
+<td>H.264, grey bg</td>
+<td>hanging lemur sway</td>
+</tr>
+<tr>
+<td><code>upscaled/a ring-tailed lemur hanging upside-down… (2).png</code></td>
+<td>3072×5504</td>
+<td>RGB</td>
+<td>large render of the hanging lemur</td>
+</tr>
+<tr>
+<td><code>upscaled/…hanging upside-down….png</code>, <code>(1).png</code></td>
+<td>768×1376</td>
+<td>RGB</td>
+<td>small renders (Kling start frames?)</td>
+</tr>
+<tr>
+<td><code>upscaled/lemur.png</code> <code>lemur2.png</code> <code>lemur3.png</code></td>
+<td>1796×3192 (opaque 1129×2932), 1035×2717, 1068×2689</td>
+<td>RGBA</td>
+<td>large lemur cut-outs; these are the ones to re-stage onto the letterforms</td>
+</tr>
+<tr>
+<td><code>upscaled/Firefly_remove background 477817*.png</code></td>
+<td>1535×2752, 768×1376</td>
+<td>RGBA</td>
+<td>Firefly cut-outs of the hanging lemur</td>
+</tr>
+<tr>
+<td><code>upscaled/resort.png</code></td>
+<td>3600×4802 portrait</td>
+<td>RGB</td>
+<td>2× of the licensed aerial; needs 16:9</td>
+</tr>
+<tr>
+<td><code>upscaled/playful-ringtailed-lemurs….mov</code></td>
+<td>3840×2160, 30 fps, 10 s</td>
+<td>H.264</td>
+<td>licensed stock</td>
+</tr>
+<tr>
+<td><code>upscaled/ring-tailed-lemur-grazing….mp4</code></td>
+<td>1920×1080, 25 fps, 32.8 s</td>
+<td>H.264</td>
+<td>licensed stock</td>
+</tr>
+<tr>
+<td><code>upscaled/ringtail-lemur-looking-around….mov</code></td>
+<td>3840×2160, 29.97 fps, 6.0 s</td>
+<td>H.264</td>
+<td>licensed stock</td>
+</tr>
+<tr>
+<td><code>upscaled/ring-tailed-lemurs-perched….zip</code> and <code>…/836ec439….mov</code></td>
+<td>4096×2160, 24 fps, 57 s (probed remotely)</td>
+<td>H.264</td>
+<td>licensed stock, twice (681 MB each)</td>
+</tr>
+<tr>
+<td>root: three <code>ring-tailed-lemur-…-utc.jpg</code></td>
+<td>4500×3000, 6000×4000, 2222×3332</td>
+<td>JPEG</td>
+<td>licensed stock stills</td>
+</tr>
+<tr>
+<td><code>195288a0….png</code>, <code>Miavana_©_Dylane_Cabano_001-scaled.jpg</code></td>
+<td>1254×1254, 1800×2401</td>
+<td></td>
+<td>originals</td>
+</tr>
+</tbody>
+</table>
+<h3>Untouched hotels (originals only, as the handoff says)</h3>
+<ul>
+<li><strong>Versali</strong>: three portrait plates 1023×1537 / 1024×1536 (cake+chandelier, cake+guillotine ×2 identical, cake sliced), <code>fd1e32ee</code> 1024×1536 elements on black, Hall of Mirrors webp 1170×780, wordmark jpgs 554×554 and 447×447.</li>
+<li><strong>Passalaqua</strong>: <code>b74514e7</code> villa 1536×1024, <code>46e10c0f</code> fish leap 1421×1107, mark jpgs 410×319 and 275×183.</li>
+<li><strong>North Island</strong>: three plates 1536×1024 (two with the wordmark burned in), <code>download.jpg</code> mark 225×121.</li>
+<li><strong>Necker Island</strong>: Virgin mark jpg 1320×1240, five docx (speeches, itinerary, questions, <code>Animation Virgin.docx</code>), two PDFs (schedule 6 MB, "Iconic Leadership Summit 26" 62 MB). No flamingo, no island plate.</li>
+<li><strong>22 club</strong>: <code>images.png</code> 364×549 palette PNG. Nothing else.</li>
+</ul>
+<h2>5. Open questions — updated</h2>
+<p>Answered by measurement:
+- <strong>Q5 (which giraffe file is the master):</strong> the <code>.mov</code>. It is ProRes 4444 with alpha. The mp4 is a proxy.</p>
+<p>Still open, carried forward:
+1. <strong>Frame rate.</strong> Timing doc assumes 24. Kling gave 30 for the giraffe and 24 for the others. Delivery fps decides whether the 4K/30 walk gets conformed with optical flow.
+2. <strong>Assembly tool.</strong> AE or Resolve. Not stated anywhere in the folder.
+3. <strong>Vector logos.</strong> None exist in the folder for any of the eight hotels. Every wordmark currently on disk is a raster ≤ 554 px or an AI redraw. Has the ask gone to the clients?
+4. <strong>Which Necker concept</strong> — flamingo brief or <code>Animation Virgin.docx</code> (the latter is a Virgin brand-history piece ending on Necker; different film).</p>
+<p>New from this pass:
+5. <strong>Master aspects.</strong> Storyboards page says 1:1 + 9:16 + 16:9. Handoff says HD 16:9 settled. Which?
+6. <strong>Run-time source of truth.</strong> Storyboards page (12.0 / 11.0 / 12.5 / 14.0 / 13.0 / 12.0 / 13.0 / 12.0 s) or timing doc (14.0 / 12.0 / 13.0 / 15.0 / 13.0 / 12.0 / 14.0 / 12.1 s)?
+7. <strong>Giraffe Manor payoff.</strong> Interior breakfast window (storyboards) or exterior upstairs windows (timing doc Shot 7)?
+8. <strong>Miavana lemur positions.</strong> M + final A (PSD, storyboards) or first A + final A (handoff, timing doc)?
+9. <strong><code>resort.png</code> outpaint.</strong> It is a licensed photograph. Are the rights clear for generative extension, or should it be cropped to 3600×2025?</p>
+<h2>6. Recommended next steps</h2>
+<ol>
+<li><strong>Decide §5 items 5–8 first.</strong> They change the Giraffe Manor end plate, the Miavana composition, and whether three masters are being cut.</li>
+<li><strong>Giraffe Manor.</strong> The walk (Shot 3) is done and on alpha. Next generation targets are Shot 6 (the turn, over-generate) and Shot 7. Use <code>manor01_background.png</code> as the Shot 4/5 plate only if guests in frame are acceptable; otherwise generate the clean plate the storyboards ask for. Stop using the AI wordmark; comp the real mark as an AE layer once vector arrives.</li>
+<li><strong>Fifth Avenue.</strong> Comp is ready in <code>turtlewalkers.psd</code>. Generate Shot 5 figure motion from the separated layers at normal speed, retime in the NLE. Title card waits on vector.</li>
+<li><strong>Miavana.</strong> Rebuild the lock-up with the large cut-outs (<code>lemur.png</code>, <code>lemur2.png</code>, <code>lemur3.png</code>) instead of the 600 px lemurs currently in <code>miavana.psd</code>. Regenerate the throw and the sway <strong>on sage, landscape, at the highest Kling resolution available</strong>; the existing 720×1280 clips prove the motion but will not hold up at HD. Then Shot 3, the letters-to-palms dissolve, from two NBP end plates built from the same composition.</li>
+<li><strong>Housekeeping (ask before doing):</strong> delete the four duplicate files, the empty <code>.ai</code>, one of the two 681 MB stock copies; rename the mislabelled JPEG.</li>
+</ol>
+<h2>7. How to use what was added to the repo</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>drive/manifest.json</code></td>
+<td>every file in the Drive folder: path, id, bytes, modified time; folder ids</td>
+</tr>
+<tr>
+<td><code>tools/drive_pull.py DEST [--max-mb N] [--only SUBSTR] [--dry-run]</code></td>
+<td>mirror the folder locally over the public link; stdlib only; skips files already present at the right size. Ran here: 111 downloaded, 0 failed</td>
+</tr>
+<tr>
+<td><code>tools/measure.py ROOT -o out.json --md out.md</code></td>
+<td>dims / alpha bbox / video probe / sha256 for a tree. Needs Pillow; ffprobe for video. Ran here on the pull</td>
+</tr>
+<tr>
+<td><code>tools/r2_upload.py ROOT [--prefix P] [--dry-run]</code></td>
+<td>mirror a local tree into R2 via boto3 using the four <code>R2_*</code> env vars. <strong>Untested</strong> against R2</td>
+</tr>
+<tr>
+<td><code>inventory/measurements_2026-09-25.{json,md}</code></td>
+<td>the measurements</td>
+</tr>
+<tr>
+<td><code>inventory/psd_layers_2026-09-25.md</code></td>
+<td>layer names, bboxes, sizes for all five PSDs</td>
+</tr>
+<tr>
+<td><code>inventory/storyboards_rendered_text_2026-09-25.txt</code></td>
+<td>full text of the storyboards page</td>
+</tr>
+<tr>
+<td><code>../inventory/previews/</code></td>
+<td>100 % crops of the logo rasters, frame grabs from the four generated clips, plate thumbnails, storyboards page screenshots</td>
+</tr>
+<tr>
+<td><code>docs/INVENTORY_2026-09-25.html</code>, <code>.pdf</code></td>
+<td>this document</td>
+</tr>
+</tbody>
+</table>
+<p>Works on Windows, macOS and Linux; paths are relative; nothing is hardcoded. Python 3.9+.</p>
+<h2>8. What was left out, and why</h2>
+<ul>
+<li><strong>No R2 upload happened.</strong> No credentials in this session and the Cloudflare connector is unauthorised. Script provided, untested.</li>
+<li><strong>The 681 MB zip was not downloaded</strong>; its extracted <code>.mov</code> sibling was probed over HTTPS instead. Everything else was downloaded in full.</li>
+<li><strong>Nothing in the Drive folder was modified, renamed or deleted.</strong> Duplicates and the empty <code>.ai</code> are listed, not removed.</li>
+<li><strong>The five Necker docx files and the two PDFs were downloaded but only <code>Animation Virgin.docx</code> and the client brief were read.</strong> The speeches, itinerary and the 62 MB summit PDF look unrelated to the animation.</li>
+<li><strong>No generation, no comp, no retime was done.</strong> This is measurement and reading only.</li>
+<li><strong>The <code>hf_20260909_*</code> renders in the Giraffe Manor root were measured but not inspected visually</strong> beyond <code>86df0845</code> (the wordmark) and <code>025934</code> (= manor01).</li>
+<li><strong>PSD layer reads are bounding boxes only.</strong> Blend modes, layer effects and smart-object contents were not checked (none appeared to exist, but psd-tools warned about an unknown <code>caiM</code> metadata key, which is Content Credentials, not layer data).</li>
+<li><strong>Storyboards page images were not extracted individually.</strong> They are blob URLs inside the bundle; the four page screenshots cover them.</li>
+</ul>
+<p class="meta">Generated from INVENTORY_2026-09-25.md · RTFX Design · Artifex Machina</p>
+</body></html>

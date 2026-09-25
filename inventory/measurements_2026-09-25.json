@@ -1,0 +1,1545 @@
+[
+ {
+  "path": "22 club/images.png",
+  "bytes": 5567,
+  "sha256": "81eb5c4b62f211c285539a9d7f1c364674f1e16dac75a028c5c2a0f0cb55b502",
+  "format": "PNG",
+  "width": 364,
+  "height": 549,
+  "mode": "P",
+  "alpha": false
+ },
+ {
+  "path": "5th ave hotel NYC/orig/47da2bff-cdd3-4463-a32e-4320ffb9b8b0.png",
+  "bytes": 2108653,
+  "sha256": "870056539f13dbee18a0c3787ef4747617e92de4b4fa9b8f2dd342a46c85a544",
+  "format": "PNG",
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "5th ave hotel NYC/orig/d9bdfd2c-6330-4844-8746-264dc6b88791.png",
+  "bytes": 2822549,
+  "sha256": "2983c4f80cc5c933663e2edddb57c40d65ec3ff6922806d7335726b6436bf332",
+  "format": "PNG",
+  "width": 1448,
+  "height": 1086,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "5th ave hotel NYC/orig/images.jpg",
+  "bytes": 19424,
+  "sha256": "ad8d35fd3c11e58210f0ae7b23578c6c57fafe547b9d66db84138f472aac80c8",
+  "format": "JPEG",
+  "width": 447,
+  "height": 447,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/fifthave.psd",
+  "bytes": 11529031,
+  "sha256": "3616a964addbfb83da3d4845d8c47fe200860754034e11cd6ca0293a1966c623",
+  "format": "PSD",
+  "width": 894,
+  "height": 894,
+  "mode": "RGBA",
+  "psd_layers": 0,
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   894,
+   894
+  ],
+  "opaque_w": 894,
+  "opaque_h": 894,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/fifthave_text.png",
+  "bytes": 439512,
+  "sha256": "cf04126d9492e55f3615b0c295db9ffd24e1acbfaf79cce7b10ff5070322ec2d",
+  "format": "PNG",
+  "width": 603,
+  "height": 422,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   603,
+   422
+  ],
+  "opaque_w": 603,
+  "opaque_h": 422,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/fifthavenue.png",
+  "bytes": 987191,
+  "sha256": "d7d82253727a213247e0dcc339c22182c8ea56003b532d6dcc6a1169fd594672",
+  "format": "PNG",
+  "width": 894,
+  "height": 894,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   894,
+   894
+  ],
+  "opaque_w": 894,
+  "opaque_h": 894,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/leash.png",
+  "bytes": 158325,
+  "sha256": "be12217b6bf4aabf0a2e547875b36c5f593a6f615631e5ccd1297d7c4991a352",
+  "format": "PNG",
+  "width": 582,
+  "height": 336,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   582,
+   336
+  ],
+  "opaque_w": 582,
+  "opaque_h": 336,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/man.png",
+  "bytes": 1058411,
+  "sha256": "dc4f2842b9d3d20a3836d26119ea72e76ae08613f339295376bcd3d521f28b32",
+  "format": "PNG",
+  "width": 666,
+  "height": 1579,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   666,
+   1579
+  ],
+  "opaque_w": 666,
+  "opaque_h": 1579,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/turtle.png",
+  "bytes": 2815412,
+  "sha256": "015d755be92f006e7697b6bd52bf1bbb1ff9bbbddd4b057ec9ae1cce98b39457",
+  "format": "PNG",
+  "width": 1463,
+  "height": 844,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   1463,
+   844
+  ],
+  "opaque_w": 1463,
+  "opaque_h": 844,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/turtle.psd",
+  "bytes": 16531946,
+  "sha256": "10802860cbf615de2a2278503888ddd5add15a2386714191e635ca03b4019466",
+  "format": "PSD",
+  "width": 3072,
+  "height": 2048,
+  "mode": "RGBA",
+  "psd_layers": 1,
+  "alpha": true,
+  "alpha_bbox": [
+   144,
+   363,
+   2947,
+   1661
+  ],
+  "opaque_w": 2803,
+  "opaque_h": 1298,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/turtle02.png",
+  "bytes": 6151890,
+  "sha256": "7e36e800e557d36ebf73f3c51a519046108e1115c6317e1c3f179325d91bcefd",
+  "format": "PNG",
+  "width": 2803,
+  "height": 1298,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   2803,
+   1298
+  ],
+  "opaque_w": 2803,
+  "opaque_h": 1298,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/turtlewalkers.png",
+  "bytes": 12328960,
+  "sha256": "ecf62fba87dd67c28af01586a0b020fb9718bc082e6e983e35e789ebd6715190",
+  "format": "PNG",
+  "width": 2896,
+  "height": 2172,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/turtlewalkers.psd",
+  "bytes": 93379838,
+  "sha256": "c8ecc539331849d5a28d7741b53f63b9de38726857e198bb2eec11940d61b231",
+  "format": "PSD",
+  "width": 4346,
+  "height": 2444,
+  "mode": "RGB",
+  "psd_layers": 5,
+  "alpha": false
+ },
+ {
+  "path": "5th ave hotel NYC/upscaled/woman.png",
+  "bytes": 4917961,
+  "sha256": "3ef824f9a4a0f78c44cabd44eb591d8a97a7cfc8c7aa61383f599c9a334cc730",
+  "format": "PNG",
+  "width": 1131,
+  "height": 1804,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   1131,
+   1804
+  ],
+  "opaque_w": 1131,
+  "opaque_h": 1804,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/273559596_1045086856047464_1159676720267062280_n (1).jpg",
+  "bytes": 13269,
+  "sha256": "b8f6cf3351821513feebf52956bcbab6510f518d837caedb9ccc8c3355e2292f",
+  "format": "JPEG",
+  "width": 320,
+  "height": 320,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/273559596_1045086856047464_1159676720267062280_n.jpg",
+  "bytes": 13269,
+  "sha256": "b8f6cf3351821513feebf52956bcbab6510f518d837caedb9ccc8c3355e2292f",
+  "format": "JPEG",
+  "width": 320,
+  "height": 320,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/Hotel Animation Storyboards-selection.png",
+  "bytes": 64224,
+  "sha256": "d4993b397aff7d8a2bc135845305c9ebe0896aa0ab6d4bd6619233f59b557307",
+  "format": "PNG",
+  "width": 592,
+  "height": 334,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   592,
+   334
+  ],
+  "opaque_w": 592,
+  "opaque_h": 334,
+  "alpha_min_max": [
+   255,
+   255
+  ]
+ },
+ {
+  "path": "Giraffe Manor/closeup-shot-of-a-giraffe-grazing-in-a-jungle-capt-2026-03-18-09-33-46-utc.jpeg",
+  "bytes": 15255951,
+  "sha256": "efbc4f14b3f0ebc0164177ee81d78fada6cbdc733f8a62fd0ac965ec25a89ebe",
+  "format": "JPEG",
+  "width": 6000,
+  "height": 4000,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   240,
+   240
+  ]
+ },
+ {
+  "path": "Giraffe Manor/fadein - resized 2026-09-08 23-11-29.png",
+  "bytes": 9722583,
+  "sha256": "7c7a7d40315a1d455273562018ad6bce18e26318a3ce7b1bf2a96c7c0de9e510",
+  "format": "PNG",
+  "width": 3999,
+  "height": 1714,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_025923_e6bb23a3-d590-4dca-8fc6-2e3cb4ddf894.png",
+  "bytes": 11044037,
+  "sha256": "691efd59ffc32609ec6f5d6df57efd8befbd2a86fbea7c4f28783bc8bc07a6a1",
+  "format": "PNG",
+  "width": 2752,
+  "height": 1536,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_025934_a3e0463c-82b5-4ba3-8001-f5b612c4804e.png",
+  "bytes": 10986462,
+  "sha256": "aa1318be88bea5beff5f69b74c436a603d457f7198a91e025d80cfaff6b37c9f",
+  "format": "PNG",
+  "width": 2752,
+  "height": 1536,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_025953_6c702bdd-8a48-40d7-b943-85ab209fc751.png",
+  "bytes": 17941811,
+  "sha256": "e9849935646a0a9c230b392385dc4eb76541c343d9bcfcb90f10c0b0177c34c0",
+  "format": "PNG",
+  "width": 3504,
+  "height": 2336,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_030041_7125b785-cd6f-422b-94f6-273874677766.png",
+  "bytes": 41745867,
+  "sha256": "ff7782efff9fe64e6c08499c96c5008c8a378296b14b0029dd3253a504ad9aab",
+  "format": "PNG",
+  "width": 5504,
+  "height": 3072,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_034918_86df0845-0253-447e-a504-a68278de68fb (1).png",
+  "bytes": 6186329,
+  "sha256": "633803002cccbba70202f36dc47c2a1a57bfd2369e17d2196f6d7cb04ffb01ee",
+  "format": "PNG",
+  "width": 6048,
+  "height": 2592,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_034918_86df0845-0253-447e-a504-a68278de68fb.png",
+  "bytes": 6186329,
+  "sha256": "633803002cccbba70202f36dc47c2a1a57bfd2369e17d2196f6d7cb04ffb01ee",
+  "format": "PNG",
+  "width": 6048,
+  "height": 2592,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/hf_20260909_043233_7758f8f1-3968-4c83-b867-dd8c67540626.png",
+  "bytes": 302508,
+  "sha256": "5b916947f47fe1c58f0700acfe36edd478608ca557c36326e6ccb827c4cb7d38",
+  "format": "PNG",
+  "width": 1280,
+  "height": 720,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/images-1.jpg",
+  "bytes": 78010,
+  "sha256": "901517d174549124ab2731fc7204b207415a277f801d38ad1c0123c713a38658",
+  "format": "JPEG",
+  "width": 666,
+  "height": 460,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/images-2.jpg",
+  "bytes": 75647,
+  "sha256": "50fa6a2a3335177931f577e4498ee0706b62772e4e276ff4516acf9c858cd8f0",
+  "format": "JPEG",
+  "width": 678,
+  "height": 452,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/images.jpg",
+  "bytes": 39313,
+  "sha256": "0665b9cb2720b496a42639db648306c65ab7dc8f8ee3e3ce595fa9f4d7e6b3ce",
+  "format": "JPEG",
+  "width": 547,
+  "height": 365,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/orig/Giraffe-Manor-Logo-46px.webp",
+  "bytes": 3534,
+  "sha256": "06eb863b642ae0e6d54e6cc607a64632b78e36f1f155fb9db3c3a3f03173066f",
+  "format": "WEBP",
+  "width": 288,
+  "height": 46,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   2,
+   0,
+   286,
+   46
+  ],
+  "opaque_w": 284,
+  "opaque_h": 46,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Giraffe Manor/striking-giraffe-profile-against-neutral-sky-backd-2026-03-25-06-44-06-utc.jpg",
+  "bytes": 3092253,
+  "sha256": "f0051bdcf98a4f15a4d83407e80277d828e14ce2b59a88c9e48f8db07940c141",
+  "format": "JPEG",
+  "width": 5600,
+  "height": 3719,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   300,
+   300
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/ea5d5cfc-e93b-4d86-acf6-81bba6e7bd70.png",
+  "bytes": 1760563,
+  "sha256": "3834a12a91c407224cd6687897b78579d9d8ca0d0107a2e936393b2faafe3a39",
+  "format": "PNG",
+  "width": 1024,
+  "height": 1536,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   49,
+   18,
+   930,
+   1505
+  ],
+  "opaque_w": 881,
+  "opaque_h": 1487,
+  "alpha_min_max": [
+   0,
+   254
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/fadein.png",
+  "bytes": 36462965,
+  "sha256": "7ad1762b60b7cad2a6d15d5183689972aab91634331d04a34e233c4f04186a26",
+  "format": "PNG",
+  "width": 6048,
+  "height": 2592,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/frame01.png",
+  "bytes": 575360,
+  "sha256": "bc317f8f02bbd9b43e09a6ad3cad37dcf4a063e9ac4649fbdbc396f2ccc224b3",
+  "format": "PNG",
+  "width": 2844,
+  "height": 1600,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/frame02.png",
+  "bytes": 694032,
+  "sha256": "462dc68b5d69f01114a5a7fe2e76de2cc7177ff99fa2f3e4cf440fcb9c53ea6e",
+  "format": "PNG",
+  "width": 2844,
+  "height": 1600,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/frame1_to_frame2.mp4",
+  "bytes": 2380447,
+  "sha256": "37db4ea811144519d174357b9b0d9a3bb9c60b24a7baa3b53ca12eec8665645d",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 1920,
+    "height": 1080,
+    "fps": 24.0,
+    "frames": 97,
+    "pix_fmt": "yuv420p",
+    "profile": "Main",
+    "bit_rate": "4706965"
+   }
+  ],
+  "duration_s": 4.042,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Giraffe Manor/upscaled/giraffe_walking.mov",
+  "bytes": 327265140,
+  "sha256": "8b671a6746a7b94ecd679d0c4767081e6b8fecd646ee1d05ca7eddc77e2bd0a1",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "prores",
+    "width": 3840,
+    "height": 2160,
+    "fps": 30.0,
+    "frames": 300,
+    "pix_fmt": "yuva444p12le",
+    "profile": "4444",
+    "bit_rate": "260973248"
+   },
+   {
+    "type": "data",
+    "codec": null
+   }
+  ],
+  "duration_s": 10.0,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Giraffe Manor/upscaled/giraffe_walking.mp4",
+  "bytes": 18304431,
+  "sha256": "1ccdafb2105021d3afaf3e1123c18353c585f2d44d93f525730c19f375222411",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 3840,
+    "height": 2160,
+    "fps": 30.0,
+    "frames": 300,
+    "pix_fmt": "yuv420p",
+    "profile": "Main",
+    "bit_rate": "14633486"
+   }
+  ],
+  "duration_s": 10.0,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Giraffe Manor/upscaled/giraffemanor_wordmark_alpha.png",
+  "bytes": 596186,
+  "sha256": "0aa09f68934b36b3d1dbe9e426bd4d2a95088d9644a5bcf3d48683dbb2813edf",
+  "format": "PNG",
+  "width": 2346,
+  "height": 432,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   63,
+   91,
+   2287,
+   336
+  ],
+  "opaque_w": 2224,
+  "opaque_h": 245,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/manor01.png",
+  "bytes": 10986462,
+  "sha256": "aa1318be88bea5beff5f69b74c436a603d457f7198a91e025d80cfaff6b37c9f",
+  "format": "PNG",
+  "width": 2752,
+  "height": 1536,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/manor01.psd",
+  "bytes": 26309404,
+  "sha256": "2884ec05be57523f7031d9b74a76752f5c427f3696720bef94877d842ddeac6b",
+  "format": "PSD",
+  "width": 2752,
+  "height": 1536,
+  "mode": "RGB",
+  "psd_layers": 3,
+  "alpha": false
+ },
+ {
+  "path": "Giraffe Manor/upscaled/manor01_background.png",
+  "bytes": 9978127,
+  "sha256": "1388d34e0ad715c8ff96c61e4b5bae4dd12d059401e639a9581de49b756d5661",
+  "format": "PNG",
+  "width": 2752,
+  "height": 1536,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   2752,
+   1536
+  ],
+  "opaque_w": 2752,
+  "opaque_h": 1536,
+  "alpha_min_max": [
+   255,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/manor01_giraffe01.png",
+  "bytes": 128601,
+  "sha256": "8395dfc1ca77a9842ed4756e66227e712ff49c17ef3374154f02a55585886e39",
+  "format": "PNG",
+  "width": 178,
+  "height": 290,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   178,
+   290
+  ],
+  "opaque_w": 178,
+  "opaque_h": 290,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Giraffe Manor/upscaled/manor01_giraffe02.png",
+  "bytes": 396916,
+  "sha256": "e777eeb9c516ee0cf354db3dc546a015b2c5fc572a543cf4db21d6e561ae2570",
+  "format": "PNG",
+  "width": 332,
+  "height": 486,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   332,
+   486
+  ],
+  "opaque_w": 332,
+  "opaque_h": 486,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Miavana/195288a0-e882-405e-9a5e-5748bbc791bd.png",
+  "bytes": 1031422,
+  "sha256": "c640d901874ed5477d59c5a0c6185404d4c7b1ba511242acdd7ed77c17c607bf",
+  "format": "PNG",
+  "width": 1254,
+  "height": 1254,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/Miavana_\u00a9_Dylane_Cabano_001-scaled.jpg",
+  "bytes": 472139,
+  "sha256": "2c3c4720d43f84f823ce7e0588c08e67adc06c05f7e0d9331b280f51e71a853a",
+  "format": "JPEG",
+  "width": 1800,
+  "height": 2401,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   300,
+   300
+  ]
+ },
+ {
+  "path": "Miavana/images-1.jpg",
+  "bytes": 27875,
+  "sha256": "f4e33c4d1cef83d02b0e3913049532b0aec882ec62dfafafa0cadf479288a70d",
+  "format": "JPEG",
+  "width": 351,
+  "height": 492,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/images-2.jpg",
+  "bytes": 5373,
+  "sha256": "5943082ddadd8ede4a9ecc3f300809f556fe442726009f4da5730ec86f1b527a",
+  "format": "JPEG",
+  "width": 447,
+  "height": 447,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/images-4.jpg",
+  "bytes": 31991,
+  "sha256": "29bef5977c8de9518fd5d2a8f7e2782f52c0c323e5a6f77059c543c3709ee0e1",
+  "format": "JPEG",
+  "width": 375,
+  "height": 500,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/ring-tailed-lemur-foraging-in-lush-green-grass-2026-09-23-05-35-04-utc.jpg",
+  "bytes": 8187966,
+  "sha256": "1e11d10031f3fc6507654a41727c153e59f85cb752834162747ff768b0671bd7",
+  "format": "JPEG",
+  "width": 4500,
+  "height": 3000,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   300,
+   300
+  ]
+ },
+ {
+  "path": "Miavana/ring-tailed-lemur-profile-on-green-background-2026-09-24-10-40-22-utc.jpg",
+  "bytes": 8738550,
+  "sha256": "d5a51a239ba9cc158def9339e85b70bbd04ef7bcaeae87a5b74784fabaf6e992",
+  "format": "JPEG",
+  "width": 6000,
+  "height": 4000,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   300,
+   300
+  ]
+ },
+ {
+  "path": "Miavana/ring-tailed-lemur-resting-on-branch-in-verdant-set-2026-09-23-05-56-25-utc.jpg",
+  "bytes": 3723178,
+  "sha256": "569c83bbce4d48e205d18258320406cbe220c180739128ac7ed4f26e09494bd5",
+  "format": "JPEG",
+  "width": 2222,
+  "height": 3332,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   762,
+   762
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/Firefly_remove background 477817 (1).png",
+  "bytes": 1248332,
+  "sha256": "f85cb3cba1997b578053650472f7f6f5bff18f7fed26e3dfebce4dd012417065",
+  "format": "PNG",
+  "width": 1535,
+  "height": 2752,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   523,
+   156,
+   1051,
+   2274
+  ],
+  "opaque_w": 528,
+  "opaque_h": 2118,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/Firefly_remove background 477817.png",
+  "bytes": 434447,
+  "sha256": "e5a6c9b334d8bfaf6920247cabd1bc1d21e89075880aacd72137c46836850867",
+  "format": "PNG",
+  "width": 768,
+  "height": 1376,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   263,
+   79,
+   525,
+   1136
+  ],
+  "opaque_w": 262,
+  "opaque_h": 1057,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/a ring-tailed lemur hanging upside-down by its tail (1).png",
+  "bytes": 1930067,
+  "sha256": "a72db9b8c1fe180e7782156a53892f53ec3d0baabb4d83e1a1dd8032ca758e00",
+  "format": "PNG",
+  "width": 768,
+  "height": 1376,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/upscaled/a ring-tailed lemur hanging upside-down by its tail (2).png",
+  "bytes": 17295428,
+  "sha256": "d1ef968f9ac709f57f16b9466429a19cd40905247d799b65038ba05a70615a40",
+  "format": "PNG",
+  "width": 3072,
+  "height": 5504,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/upscaled/a ring-tailed lemur hanging upside-down by its tail, natural motion, slow sway.mp4",
+  "bytes": 1516529,
+  "sha256": "68f3bc87f139c56472bb333b4cb4cf8413c20e0538c53a38b2af7d364f04aa42",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 720,
+    "height": 1280,
+    "fps": 24.0,
+    "frames": 144,
+    "pix_fmt": "yuv420p",
+    "profile": "High",
+    "bit_rate": "1874941"
+   },
+   {
+    "type": "audio",
+    "codec": "aac"
+   }
+  ],
+  "duration_s": 6.016,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Miavana/upscaled/a ring-tailed lemur hanging upside-down by its tail.png",
+  "bytes": 1866792,
+  "sha256": "fb6db9e020934693472e5e1678e092bee2a15eb79a3bfac46644c21cb2555301",
+  "format": "PNG",
+  "width": 768,
+  "height": 1376,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/upscaled/a ring-tailed lemur produces a mango, throws it up and to the right.mp4",
+  "bytes": 1496909,
+  "sha256": "7230b60495a7deb239c5f1609ce7ada0fd0f90f5262a424ab98872cc9824fbca",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 720,
+    "height": 1280,
+    "fps": 24.0,
+    "frames": 144,
+    "pix_fmt": "yuv420p",
+    "profile": "High",
+    "bit_rate": "1848765"
+   },
+   {
+    "type": "audio",
+    "codec": "aac"
+   }
+  ],
+  "duration_s": 6.016,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Miavana/upscaled/lemur.png",
+  "bytes": 4463864,
+  "sha256": "81d21f1cccafeeaf6993beef6c29c609ed4d5c2a7163fda37b201430c76072ee",
+  "format": "PNG",
+  "width": 1796,
+  "height": 3192,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   333,
+   126,
+   1462,
+   3058
+  ],
+  "opaque_w": 1129,
+  "opaque_h": 2932,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/lemur2.png",
+  "bytes": 4628124,
+  "sha256": "6fa7b5771a82ab597d04f112ff5ccbe0f6d95ca08aad2a9569b3a0d5db5abb6d",
+  "format": "PNG",
+  "width": 1035,
+  "height": 2717,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   1035,
+   2717
+  ],
+  "opaque_w": 1035,
+  "opaque_h": 2717,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   762,
+   762
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/lemur3.png",
+  "bytes": 4837809,
+  "sha256": "bbf20cdfbf1ad56ecab825d100c9e8224e77bd52adb38515817be442d072df1c",
+  "format": "PNG",
+  "width": 1068,
+  "height": 2689,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   1068,
+   2689
+  ],
+  "opaque_w": 1068,
+  "opaque_h": 2689,
+  "alpha_min_max": [
+   0,
+   255
+  ],
+  "dpi": [
+   762,
+   762
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana copy.png",
+  "bytes": 502349,
+  "sha256": "703cd8bc9aa4ce90a93e0440cb2d95e5f3cc5bc4f1858e49b89f35b46c0677c8",
+  "format": "PNG",
+  "width": 2508,
+  "height": 1411,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   96,
+   96
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana.psd",
+  "bytes": 3643965,
+  "sha256": "0d7782dfb3bf801e0f839b33ea21d81931e5eab4852132ffb2af2e69d69fda81",
+  "format": "PSD",
+  "width": 2508,
+  "height": 1411,
+  "mode": "RGB",
+  "psd_layers": 6,
+  "alpha": false
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0000_left_lemur.png",
+  "bytes": 170601,
+  "sha256": "5e8c76f5823c873a30a45f25ed8d54704827d1ccf9d91b5f443b3fb792d565f8",
+  "format": "PNG",
+  "width": 226,
+  "height": 632,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   226,
+   632
+  ],
+  "opaque_w": 226,
+  "opaque_h": 632,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0001_right_lemur.png",
+  "bytes": 172865,
+  "sha256": "537a1a36491e8655fbac7c57fcd1f43dd70b66383297125997503cf3c1af25e9",
+  "format": "PNG",
+  "width": 156,
+  "height": 603,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   156,
+   603
+  ],
+  "opaque_w": 156,
+  "opaque_h": 603,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0002_miavana.png",
+  "bytes": 42753,
+  "sha256": "7bab9fb52fc2a7003b29e4617d0ab55e489bcccb4c6b6926a88989d1ed516432",
+  "format": "PNG",
+  "width": 2260,
+  "height": 201,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   2260,
+   201
+  ],
+  "opaque_w": 2260,
+  "opaque_h": 201,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0003_islandsanctuary.png",
+  "bytes": 39811,
+  "sha256": "e27881bcc9ddf4a41f270078fb3c59a16f5d23ec55b6264b0b6a0cadbe2a538a",
+  "format": "PNG",
+  "width": 1684,
+  "height": 101,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   1684,
+   101
+  ],
+  "opaque_w": 1684,
+  "opaque_h": 101,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0004_bytimeandtide.png",
+  "bytes": 18734,
+  "sha256": "322c95d8520b934ae66e7ba6092dc476a03a67fbbad0d0326caab18da75fab67",
+  "format": "PNG",
+  "width": 588,
+  "height": 58,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   0,
+   0,
+   588,
+   58
+  ],
+  "opaque_w": 588,
+  "opaque_h": 58,
+  "alpha_min_max": [
+   0,
+   255
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_0005_Layer-0.png",
+  "bytes": 143235,
+  "sha256": "3db9df40a9d6df1dd58b0e18dbd188d4356b1cf79386fe59cb7cf874abe2c5ca",
+  "format": "PNG",
+  "width": 2508,
+  "height": 1411,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Miavana/upscaled/miavana_text - crop 2026-09-25 00-56-17.png",
+  "bytes": 162714,
+  "sha256": "83aaec0e5d3f8695ba1f07827b136d14ca8e832af2548c268f751b1f9cb3d4d8",
+  "format": "JPEG",
+  "width": 2508,
+  "height": 1260,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   96,
+   96
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/miavana_text.png",
+  "bytes": 6178777,
+  "sha256": "acaab313ccf8dee19d981f8f51deb3348dcdd956d26e5ce3138f8cd9d6a50b9f",
+  "format": "PNG",
+  "width": 2508,
+  "height": 2508,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/playful-ringtailed-lemurs-frolic-around-the-majest-2026-09-17-17-06-01-utc.mov",
+  "bytes": 78546957,
+  "sha256": "829e404a250a291d72db0c54bec3d954b62a396ff0f68144239ef6b6adc1ae1a",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 3840,
+    "height": 2160,
+    "fps": 30.0,
+    "frames": 300,
+    "pix_fmt": "yuv420p",
+    "profile": "High",
+    "bit_rate": "62669181"
+   },
+   {
+    "type": "data",
+    "codec": null
+   }
+  ],
+  "duration_s": 10.0,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Miavana/upscaled/resort.png",
+  "bytes": 33215544,
+  "sha256": "e45f2cbebee14b270964baf69bad9ed3b1a1fc8913b870179d3c9cc5453319ef",
+  "format": "PNG",
+  "width": 3600,
+  "height": 4802,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   300,
+   300
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/ring-tailed-lemur-grazing-on-green-grass-2026-09-17-16-14-17-utc.mp4",
+  "bytes": 38054449,
+  "sha256": "9d5566de839a667c007bca1877f536cbd7b143090c2d735a8d4a026a576f03db",
+  "streams": [
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 1920,
+    "height": 1080,
+    "fps": 25.0,
+    "frames": 821,
+    "pix_fmt": "yuv420p",
+    "profile": "High",
+    "bit_rate": "9267409"
+   },
+   {
+    "type": "data",
+    "codec": null
+   }
+  ],
+  "duration_s": 32.84,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Miavana/upscaled/ring-tailed-lemur-perched-on-a-wooden-surface-2026-09-21-13-52-13-utc.jpg",
+  "bytes": 3445823,
+  "sha256": "afca95a5c26e236554d4796b4927260b0075d0b306a704c530eabfceda3dba0a",
+  "format": "JPEG",
+  "width": 2038,
+  "height": 3058,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   762,
+   762
+  ]
+ },
+ {
+  "path": "Miavana/upscaled/ringtail-lemur-looking-around-in-singapore-zoo-2026-09-16-05-24-14-utc.mov",
+  "bytes": 32434509,
+  "sha256": "a93facbbed3875ee98c34257a4862c7ff0deb5a14fa3058f05384198e462efb0",
+  "streams": [
+   {
+    "type": "audio",
+    "codec": "aac"
+   },
+   {
+    "type": "video",
+    "codec": "h264",
+    "width": 3840,
+    "height": 2160,
+    "fps": 29.97,
+    "frames": 180,
+    "pix_fmt": "yuv420p",
+    "profile": "High",
+    "bit_rate": "40587721"
+   }
+  ],
+  "duration_s": 6.006,
+  "container": "mov,mp4,m4a,3gp,3g2,mj2"
+ },
+ {
+  "path": "Necker Island/07D6D2DD-B1C4-4F3A-A698-BEFC90F1162C.jpg",
+  "bytes": 99907,
+  "sha256": "2d59b1f423301a87883365344ffe63c3b756b8518a7030de78fe4dee97d2dc7a",
+  "format": "JPEG",
+  "width": 1320,
+  "height": 1240,
+  "mode": "RGB",
+  "alpha": false,
+  "dpi": [
+   72,
+   72
+  ]
+ },
+ {
+  "path": "North Island/0873e031-511a-499b-a9d5-8a2b7a701d87.png",
+  "bytes": 2716375,
+  "sha256": "9ea4cd56ce10d8405859381eaf119ed29e6b7100480d7c62ebe08690094a7965",
+  "format": "PNG",
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "North Island/7e26a98a-718f-43e1-8719-c7f930b25af3.png",
+  "bytes": 3032089,
+  "sha256": "dcffb70eae40b8f8fa8737d323670fdeedcb2c4e8966df0945562f573c5eda1e",
+  "format": "PNG",
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "North Island/b261916d-7215-4f97-8607-d091aabe911a.png",
+  "bytes": 1473138,
+  "sha256": "5941148443b0aef6ba346056184451ec1029c2b49b0fbd6801cafdafd1503a6c",
+  "format": "PNG",
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "North Island/download.jpg",
+  "bytes": 3943,
+  "sha256": "25776441cc4fa398b344f14cb6349361ab0d933b3a6bbc61a67dabcad9290ac9",
+  "format": "JPEG",
+  "width": 225,
+  "height": 121,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Passalaqua/46e10c0f-f505-41f9-a395-57fca38d4551.png",
+  "bytes": 932289,
+  "sha256": "ad973f3f5985fabaa84c04aa96ad64ff52d9bfaabf61dcb6d35289a1d137212f",
+  "format": "PNG",
+  "width": 1421,
+  "height": 1107,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Passalaqua/b74514e7-03e1-4fab-98a6-e903c4f48506.png",
+  "bytes": 2857593,
+  "sha256": "ff7b7d0ab25cf7f042ab4ef248fb958264fae39cb4f635d1d0888637386f765d",
+  "format": "PNG",
+  "width": 1536,
+  "height": 1024,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Passalaqua/images-3.jpg",
+  "bytes": 12566,
+  "sha256": "0eb3883c7d3d65151c067a7e91cf0c5c8b74beef8f212b2e2675cb1cdce89fe0",
+  "format": "JPEG",
+  "width": 275,
+  "height": 183,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Passalaqua/passalacqua.jpg",
+  "bytes": 7660,
+  "sha256": "7b58ccac1949593d5cb54b5ebdf712e48b6eef93a45562068f5a524678df5e1b",
+  "format": "JPEG",
+  "width": 410,
+  "height": 319,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/1651551468329.webp",
+  "bytes": 229220,
+  "sha256": "798388b8512cd934d6553e98e23fab4fc68636b5740681dadce93e1945d8f338",
+  "format": "WEBP",
+  "width": 1170,
+  "height": 780,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/4ad9ad80-ccba-4b14-8cd7-b85c4eb54f27.png",
+  "bytes": 2646001,
+  "sha256": "363812bf316d4f1ea89597ad1317d662e4eb8a5d7b75fcabb38def24facc41fb",
+  "format": "PNG",
+  "width": 1023,
+  "height": 1537,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/965d5f9a-d71a-4435-b487-cfabab3a0186.png",
+  "bytes": 2454100,
+  "sha256": "2d4e16a7b05c19f2733c6b7ea862bc5b62768d6bd6a9a9963d0aae9d048936fc",
+  "format": "PNG",
+  "width": 1023,
+  "height": 1537,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/cfb72e66-8752-47fc-8f43-2f824eeb0f1d (1).png",
+  "bytes": 1888344,
+  "sha256": "b7d5f678f25212eb4694c35f9401969afb500519953e8f6cc8372118921b28cb",
+  "format": "PNG",
+  "width": 1024,
+  "height": 1536,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   227,
+   0,
+   1010,
+   1527
+  ],
+  "opaque_w": 783,
+  "opaque_h": 1527,
+  "alpha_min_max": [
+   0,
+   254
+  ]
+ },
+ {
+  "path": "Versali/cfb72e66-8752-47fc-8f43-2f824eeb0f1d.png",
+  "bytes": 1888344,
+  "sha256": "b7d5f678f25212eb4694c35f9401969afb500519953e8f6cc8372118921b28cb",
+  "format": "PNG",
+  "width": 1024,
+  "height": 1536,
+  "mode": "RGBA",
+  "alpha": true,
+  "alpha_bbox": [
+   227,
+   0,
+   1010,
+   1527
+  ],
+  "opaque_w": 783,
+  "opaque_h": 1527,
+  "alpha_min_max": [
+   0,
+   254
+  ]
+ },
+ {
+  "path": "Versali/fd1e32ee-80ef-4d63-9d10-59e07f81e997.png",
+  "bytes": 2462819,
+  "sha256": "5912331011a2122f7e904847edab6f72fe94e2baa987f47ca764e8b1e9d7fe9e",
+  "format": "PNG",
+  "width": 1024,
+  "height": 1536,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/images copy.jpg",
+  "bytes": 9504,
+  "sha256": "2718e16c0b531b108b5a83548d64e05ce6d8043a44d1f3beda32d2c6fd4484e6",
+  "format": "JPEG",
+  "width": 447,
+  "height": 447,
+  "mode": "RGB",
+  "alpha": false
+ },
+ {
+  "path": "Versali/images.jpg",
+  "bytes": 17458,
+  "sha256": "49ed08269d31e7153bcfd72680da568a6205e66602c346994303430fb8a3af23",
+  "format": "JPEG",
+  "width": 554,
+  "height": 554,
+  "mode": "RGB",
+  "alpha": false
+ }
+]

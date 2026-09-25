@@ -1,2 +1,3 @@
 generation_kit/*/
 __pycache__/
+generation_kit/.uploads.json

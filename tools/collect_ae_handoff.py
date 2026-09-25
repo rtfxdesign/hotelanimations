@@ -116,10 +116,28 @@ def necker_island(pull: Path, out: Path):
     cp(SHEETS / "necker_island_EDIT_SHEET.md", out / "necker_island", "EDIT_SHEET.md")
 
 
+def fifth_avenue(pull: Path, out: Path):
+    a = out / "fifth_avenue" / "assets"
+    up = pull / "5th ave hotel NYC" / "upscaled"
+    for n in ("turtlewalkers.psd", "woman.png", "man.png", "leash.png", "turtle.png", "Asset 1@2x.png"):
+        cp(up / n, a)
+    for n in ("fifth_avenue_wordmark.png", "fifth_avenue_wordmark_goldtype.png"):
+        cp(WM / n, a)
+    kit = ROOT / "generation_kit" / "02_fifth_avenue"
+    cp(kit / "fa_shot5_START_walk.png", a); cp(kit / "fa_shot5_END_target_layers_offset.png", a)
+    cp(GEN / "02_fifth_avenue" / "fa_1_t1.mp4", a)
+    an = ROOT / "fifth_avenue" / "animatic"
+    for n in ("fa_park_couple_no_tortoise.png", "fa_park_couple_leash.png", "fa_tortoise_hd_alpha.png"):
+        if (an / n).exists():
+            cp(an / n, a)
+    cp(an / "fifth_avenue_animatic_v0.1.mp4", out / "fifth_avenue")
+    cp(SHEETS / "fifth_avenue_EDIT_SHEET.md", out / "fifth_avenue", "EDIT_SHEET.md")
+
+
 def main():
     pull, out = (Path(a).expanduser().resolve() for a in sys.argv[1:3])
     out.mkdir(parents=True, exist_ok=True)
-    giraffe_manor(pull, out); north_island(pull, out); passalacqua(pull, out); miavana(pull, out); necker_island(pull, out)
+    giraffe_manor(pull, out); north_island(pull, out); passalacqua(pull, out); miavana(pull, out); necker_island(pull, out); fifth_avenue(pull, out)
     cp(SHEETS / "README.md", out)
     total = 0
     for p in sorted(out.rglob("*")):

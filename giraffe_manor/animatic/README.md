@@ -30,3 +30,9 @@ Rebuild: `python giraffe_manor/animatic/build_animatic.py PULL_ROOT WALK_FRAMES_
 | S8, S9 | 322–373 | same plate; mark and return as v0.1 |
 
 Build: `GM_S6_FRAMES=<dir of clip PNGs> GM_S7_PLATE=<gm_3b_t1.png> python3 build_animatic.py PULL_ROOT WALK_FRAMES_DIR OUT_DIR`. Without the two variables the v0.1 placeholders render.
+
+## v0.3 (2026-09-25, after Sol round 3)
+
+`giraffe_manor_animatic_v0.3.mp4` — shot 7 is now the generated GM-4 clip (Kling 3, first frame GM-3c necks lowered, last frame GM-3b heads in the windows): necks rise over f269–291, heads in from f291, and shots 8–9 continue on the same clip (source f53–103) so the payoff keeps breathing under the mark. Shot 6 unchanged from v0.2.
+
+Build: `GM_S6_FRAMES=<GM-2 t3 PNGs> GM_S7_FRAMES=<GM-4 PNGs> python3 build_animatic.py PULL_ROOT WALK_FRAMES_DIR OUT_DIR`. `GM_S7_PLATE` remains as the still fallback when no clip is given.

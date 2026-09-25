@@ -37,7 +37,7 @@ WORDMARK = REPO / "assets" / "wordmarks" / "giraffe_manor_wordmark.png"
 # Shot boundaries in frames @24 (v2 board). Each entry: (name, in, out)
 SHOTS = [
     ("S1 hold", 0, 48), ("S2 logo", 48, 86), ("S3a enter", 86, 120), ("S3b stop", 120, 154),
-    ("S4 reveal", 154, 178), ("S5 pull-back", 178, 206), ("S6 turn (Kling t3 f58-120)", 206, 269),
+    ("S4 reveal", 154, 178), ("S5 pull-back", 178, 206), ("S6 turn (Kling GM-2 t3, 2x)", 206, 269),
     ("S7 windows (GM-3b plate, push-in)", 269, 322), ("S8 payoff + mark", 322, 351),
     ("S9 return", 351, 373), ("S10 loop hold", 373, 384),
 ]
@@ -313,7 +313,7 @@ def render_frame(A: Assets, f: int, burnin=True):
         # The necks-rise motion (GM-4) is not generated yet; this is a still with a push.
         t = ease((f - 269) / 53)
         # hard cut: shot 7 is a new framing of the same house, a dissolve across the zoom reads as an error
-        canvas = s7_plate(lerp(1.0, 1.04, t))
+        canvas = s7_plate(lerp(1.0, 1.04, t)).copy()   # copy: burn() must not draw into the cache
         extra = "SHOT 7 — GM-3b plate, still + push-in; GM-4 motion pending"
     elif 269 <= f < 322:
         # ---- S7 placeholder: dissolve (12 f) to the client reference of the payoff, slow push-in

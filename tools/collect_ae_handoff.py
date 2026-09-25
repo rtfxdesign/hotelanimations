@@ -26,6 +26,13 @@ SHEETS = ROOT / "docs" / "ae_handoff"
 Image.MAX_IMAGE_PIXELS = None
 
 
+def jsx(out: Path, film: str):
+    """Copy the film's After Effects builder script next to its assets folder, when one exists."""
+    j = SHEETS / "jsx" / f"build_{film}.jsx"
+    if j.exists():
+        cp(j, out / film)
+
+
 def cp(src: Path, dst_dir: Path, name: str | None = None):
     dst_dir.mkdir(parents=True, exist_ok=True)
     dst = dst_dir / (name or src.name)
@@ -49,6 +56,7 @@ def giraffe_manor(pull: Path, out: Path):
         cp(GEN / "01_giraffe_manor" / n, a)
     cp(ROOT / "giraffe_manor" / "animatic" / "giraffe_manor_animatic_v0.3.mp4", out / "giraffe_manor")
     cp(SHEETS / "giraffe_manor_EDIT_SHEET.md", out / "giraffe_manor", "EDIT_SHEET.md")
+    jsx(out, "giraffe_manor")
 
 
 def north_island(pull: Path, out: Path):

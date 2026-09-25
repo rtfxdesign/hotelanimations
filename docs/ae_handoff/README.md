@@ -15,6 +15,8 @@ club22/          EDIT_SHEET.md  club22_animatic_v0.1.mp4         assets/
 
 Every comp: 1920×1080, 24 fps, square pixels. The last frame must equal the first frame, pixel for pixel; the films loop.
 
+Where a folder has a `build_<film>.jsx`, After Effects can build the comp itself: with the folder unzipped so `assets/` sits next to the script, open After Effects, File > Scripts > Run Script File, pick the `.jsx`. It imports the assets into a folder, makes the comp, adds every layer with its timing, transform, parenting, effects and keyframes, and drops shot markers on the timeline. Anything it cannot find in `assets/` (the walk cycle, the audio bed) it asks you to locate, and Cancel skips that layer. Then check the comp against the animatic at a few frames and refine. The scripts have not been run in After Effects by us; report the first error and it gets fixed.
+
 How to read an edit sheet: one row per layer, bottom to top. Frames are comp frames at 24 fps (f0 = first frame). "in/out" is where the layer is visible. Positions are pixels in the 1920×1080 comp unless the row says "in plate px", which means the layer is parented to the plate and positioned in the plate's own pixels. Scale is the layer's Transform scale. Keyframes are written `f48 0 → f67 100` and are eased unless marked linear.
 
 Generated clips are 5 s Kling renders at 24 fps, 121 frames, H.264. "stretch 52 %" means the layer's Stretch value in AE (the clip plays faster). Where a sheet says "source f92 at comp f197" the clip's frame 92 lands on comp frame 197.

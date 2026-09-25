@@ -139,6 +139,9 @@ def header_meta(md: str):
     m = re.search(r"TRT[^|\n]*\|\s*([^|\n]+)", md)
     if m:
         return re.sub(r"\*", "", m.group(1)).strip()
+    m = re.search(r"TRT\**[^0-9\n]{0,24}(\d+(?:\.\d+)?\s*s[^|\n]{0,80})", md)
+    if m:
+        return re.sub(r"\*", "", m.group(1)).strip()
     m = re.search(r"(\d+(?:\.\d+)?\s*s\s*/\s*f?\d+[^|\n]*)", md)
     return m.group(1).strip() if m else ""
 

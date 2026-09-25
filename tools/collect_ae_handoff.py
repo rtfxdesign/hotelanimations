@@ -134,10 +134,37 @@ def fifth_avenue(pull: Path, out: Path):
     cp(SHEETS / "fifth_avenue_EDIT_SHEET.md", out / "fifth_avenue", "EDIT_SHEET.md")
 
 
+def versailles(pull: Path, out: Path):
+    a = out / "versailles" / "assets"
+    v = pull / "Versali"
+    cp(v / "cfb72e66-8752-47fc-8f43-2f824eeb0f1d.png", a, "cfb72e66_cake_chandelier_cutout_alpha.png")
+    cp(v / "images copy.jpg", a)
+    for n in ("ve_1_t1.png", "ve_2a_t1.png", "ve_2b_t1.png", "ve_3a_t1.png", "ve_3b_t1.png", "ve_4_t1.png"):
+        cp(GEN / "04_versailles" / n, a)
+    an = ROOT / "versailles" / "animatic"
+    for p in sorted((an / "_elements").glob("*.png")) if (an / "_elements").exists() else []:
+        cp(p, a)
+    cp(an / "versailles_animatic_v0.1.mp4", out / "versailles")
+    cp(SHEETS / "versailles_EDIT_SHEET.md", out / "versailles", "EDIT_SHEET.md")
+
+
+def club22(pull: Path, out: Path):
+    a = out / "club22" / "assets"
+    cp(WM / "club22_wordmark.png", a)
+    for n in ("cl_1_t2.png", "cl_2_t1.png", "cl_3_t1.png", "club22_rhythm_124bpm.wav"):
+        cp(GEN / "08_club22" / n, a)
+    an = ROOT / "club22" / "animatic"
+    for p in sorted((an / "_elements").glob("*.png")) if (an / "_elements").exists() else []:
+        cp(p, a)
+    cp(an / "club22_animatic_v0.1.mp4", out / "club22")
+    cp(SHEETS / "club22_EDIT_SHEET.md", out / "club22", "EDIT_SHEET.md")
+
+
 def main():
     pull, out = (Path(a).expanduser().resolve() for a in sys.argv[1:3])
     out.mkdir(parents=True, exist_ok=True)
     giraffe_manor(pull, out); north_island(pull, out); passalacqua(pull, out); miavana(pull, out); necker_island(pull, out); fifth_avenue(pull, out)
+    versailles(pull, out); club22(pull, out)
     cp(SHEETS / "README.md", out)
     total = 0
     for p in sorted(out.rglob("*")):

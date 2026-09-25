@@ -1,6 +1,6 @@
 # Theria hotel animations: After Effects handoff
 
-Six films are ready to build. Each folder has everything the comp needs, an edit sheet, and the animatic (the timed rough cut) to match.
+All eight films are ready to build. Each folder has everything the comp needs, an edit sheet, and the animatic (the timed rough cut) to match.
 
 ```
 giraffe_manor/   EDIT_SHEET.md  giraffe_manor_animatic_v0.3.mp4  assets/
@@ -9,6 +9,8 @@ passalacqua/     EDIT_SHEET.md  passalacqua_animatic_v0.1.mp4    assets/
 miavana/         EDIT_SHEET.md  miavana_animatic_v0.1.mp4        assets/
 necker_island/   EDIT_SHEET.md  necker_island_animatic_v0.1.mp4  assets/
 fifth_avenue/    EDIT_SHEET.md  fifth_avenue_animatic_v0.1.mp4   assets/
+versailles/      EDIT_SHEET.md  versailles_animatic_v0.1.mp4     assets/
+club22/          EDIT_SHEET.md  club22_animatic_v0.1.mp4         assets/
 ```
 
 Every comp: 1920×1080, 24 fps, square pixels. The last frame must equal the first frame, pixel for pixel; the films loop.

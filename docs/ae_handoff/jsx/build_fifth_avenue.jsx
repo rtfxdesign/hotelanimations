@@ -40,6 +40,7 @@ function setEase(prop) {
     }
 }
 function keys(prop, arr, ease) {   // arr = [[frame, value], ...]
+    if (!prop) return;   // a lookup that found nothing: skip rather than abort the build
     for (var i = 0; i < arr.length; i++) prop.setValueAtTime(T(arr[i][0]), arr[i][1]);
     if (ease) setEase(prop);
 }
@@ -86,6 +87,19 @@ function effect(layer, matchName, displayName) {
 }
 function marker(comp, f, text) { try { comp.markerProperty.setValueAtTime(T(f), new MarkerValue(text)); } catch (e) {} }
 function audioLevels(layer) { return layer.property("ADBE Audio Group").property("ADBE Audio Levels"); }
+function exposureStops(fx) {
+    // Exposure effect layout: 0001 Channels, 0002 "Master" group (no value) holding 0003 Exposure, 0004 Offset, 0005 Gamma.
+    var cands = [fx.property("ADBE Exposure2-0003")];
+    var grp = fx.property("ADBE Exposure2-0002");
+    if (grp && grp.propertyValueType == PropertyValueType.NO_VALUE && grp.numProperties) cands.push(grp.property("ADBE Exposure2-0003"), grp.property(1));
+    for (var i = 0; i < cands.length; i++) if (cands[i] && cands[i].propertyValueType == PropertyValueType.OneD) return cands[i];
+    // last resort: the first scalar under any group in the effect
+    for (var g = 1; g <= fx.numProperties; g++) {
+        var q = fx.property(g);
+        if (q.propertyType != PropertyType.PROPERTY) for (var j = 1; j <= q.numProperties; j++) if (q.property(j).propertyValueType == PropertyValueType.OneD) return q.property(j);
+    }
+    return null;
+}
 function linearWipe(layer, completionKeys, angleDeg, feather) {
     var fx = effect(layer, "ADBE Linear Wipe", "Wipe");
     keys(fx.property("ADBE Linear Wipe-0001"), completionKeys, true);

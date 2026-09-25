@@ -61,6 +61,7 @@ function setEase(prop) {
     }
 }
 function keys(prop, arr, ease) {   // arr = [[frame, value], ...]
+    if (!prop) return;   // a lookup that found nothing: skip rather than abort the build
     for (var i = 0; i < arr.length; i++) prop.setValueAtTime(T(arr[i][0]), arr[i][1]);
     if (ease) setEase(prop);
 }
@@ -107,6 +108,19 @@ function effect(layer, matchName, displayName) {
 }
 function marker(comp, f, text) { try { comp.markerProperty.setValueAtTime(T(f), new MarkerValue(text)); } catch (e) {} }
 function audioLevels(layer) { return layer.property("ADBE Audio Group").property("ADBE Audio Levels"); }
+function exposureStops(fx) {
+    // Exposure effect layout: 0001 Channels, 0002 "Master" group (no value) holding 0003 Exposure, 0004 Offset, 0005 Gamma.
+    var cands = [fx.property("ADBE Exposure2-0003")];
+    var grp = fx.property("ADBE Exposure2-0002");
+    if (grp && grp.propertyValueType == PropertyValueType.NO_VALUE && grp.numProperties) cands.push(grp.property("ADBE Exposure2-0003"), grp.property(1));
+    for (var i = 0; i < cands.length; i++) if (cands[i] && cands[i].propertyValueType == PropertyValueType.OneD) return cands[i];
+    // last resort: the first scalar under any group in the effect
+    for (var g = 1; g <= fx.numProperties; g++) {
+        var q = fx.property(g);
+        if (q.propertyType != PropertyType.PROPERTY) for (var j = 1; j <= q.numProperties; j++) if (q.property(j).propertyValueType == PropertyValueType.OneD) return q.property(j);
+    }
+    return null;
+}
 function linearWipe(layer, completionKeys, angleDeg, feather) {
     var fx = effect(layer, "ADBE Linear Wipe", "Wipe");
     keys(fx.property("ADBE Linear Wipe-0001"), completionKeys, true);
@@ -541,8 +555,8 @@ def versailles() -> str:
         var m = ellipseMask(sa, 836, 540, 174, 139, 260);
         keys(m.property("ADBE Mask Offset"), [[53, 0], [86, 1300], [326, 1300], [350, -200]], true);
         var ex = effect(sa, "ADBE Exposure2", "Grade (stops)");
-        keys(ex.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
-        sa.comment = "If the Exposure effect's property index is off, the keyed property is Master Exposure: 0 / -1.5 / -0.5 / 0 stops.";
+        keys(exposureStops(ex), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+        sa.comment = "Grade keys are on Exposure > Master > Exposure: 0 / -1.5 / -0.5 / 0 stops.";
     }
     if (markItem) { var mk = addStill(comp, markItem, "Wordmark (gold-cream)", 106, 223); place(mk, null, [960, 997], 37.5); keys(opacity(mk), [[106, 0], [123, 100], [211, 100], [223, 0]], true); }
     if (gUpItem) { var gu = addStill(comp, gUpItem, "Guillotine, blade up", 149, 370); place(gu, [388, 1040], [960, 1050], 100); keys(opacity(gu), [[149, 0], [200, 100], [350, 100], [370, 0]], true);
@@ -555,7 +569,7 @@ def versailles() -> str:
     if (chanItem) { var ch = addStill(comp, chanItem, "Chandelier", 0, 374); place(ch, [112, 0], [960, 8], 100); keys(opacity(ch), [[149, 100], [200, 0], [350, 0], [370, 100]], true); }
     var gr = adjustment(comp, "Grade: elements (stops)", 149, 370);
     var ex2 = effect(gr, "ADBE Exposure2", "Grade (stops)");
-    keys(ex2.property("ADBE Exposure2-0002"), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
+    keys(exposureStops(ex2), [[149, 0], [211, -1.5], [254, -1.5], [270, -0.5], [350, -0.5], [370, 0]], true);
     var fl = solid(comp, "Flash", [255, 255, 255], 1920, 1080, 246, 249); opacity(fl).setValue(35);
     fl.comment = "Kick the whole comp (+4, -3) px at f246 settling by f254, 1 px jitter f235-238: a null parent on the element layers.";
     log("Loop: f373 must equal f0 (cake + chandelier on black, grade 0).");

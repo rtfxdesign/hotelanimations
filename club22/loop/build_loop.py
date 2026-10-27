@@ -7,6 +7,8 @@ usage: python build_loop.py LOGO_PNG VINYL_IMG OUT_DIR [FRAMES]
   OUT_DIR    writes club22_loop_1080p24.mp4 (H.264), club22_loop_1080p24_prores.mov (ProRes 422 HQ),
              club22_loop_1080p24_hap.mov (HAP), contact_sheet.jpg
   FRAMES     optional, e.g. 0,100,300 -> PNG stills only, no encode
+  --green    key-green ground (54,255,0) instead of black: no beam haze on the ground, dust only over
+             the record, grain only on the mark/record; files get a _green suffix
 Needs numpy, Pillow, ffmpeg on PATH. Deterministic (fixed seed).
 
 The vinyl photo is split into a static light layer (masked blur of the vinyl area: the broad sheen)
@@ -32,9 +34,11 @@ R_REC = 470.0
 VINYL_CX, VINYL_CY, VINYL_R_LABEL, VINYL_R_REC = 756.3, 760.8, 207.0, 605.0
 LOGO_SMALL = 0.40               # mark scale on the label (ink 520 px -> 208 px)
 RED = np.array([199, 54, 46], np.float32)       # mark colour in the supplied still
-LABEL_INK = np.array([92, 26, 22], np.float32)  # mark printed on the label
+LABEL_INK = np.array([92, 26, 22], np.float32)  # mark printed on the label (black in --green, per plate 4.webp)
 T_HOLD, T_LIGHT, T_SHRINK, T_SPIN, T_OUT, T_END = 48, 144, 240, 432, 528, 576
 SPIN_REVS, SPIN_ACC = 6, 40
+GREEN = np.array([54, 255, 0], np.float32)
+BRAND_RED = np.array([178, 47, 40], np.float32)  # key colour of the supplied greenscreen plates
 
 def smooth(t):
     t = min(max(t, 0.0), 1.0)
@@ -112,12 +116,14 @@ class Motes:
             d.ellipse((xi - s, yi - s, xi + s, yi + s), fill=int(b))
         return np.asarray(im.filter(ImageFilter.GaussianBlur(0.8)), np.float32)
 
-def main(logo_png, vinyl_img, out_dir, only=None):
+def main(logo_png, vinyl_img, out_dir, only=None, green=False):
     out = Path(out_dir); out.mkdir(parents=True, exist_ok=True)
+    sfx = "_green" if green else ""
     rng = np.random.default_rng(22)
     src = np.asarray(Image.open(logo_png).convert("RGB")).astype(np.float32)
     assert src.shape == (H, W, 3), src.shape
     a_full = np.clip(src[..., 0] / RED[0], 0, 1)  # mark alpha from the red channel
+    MARK = BRAND_RED if green else RED  # green plates (5/6.png) carry the brand red
     logo_a = Image.fromarray((a_full * 255).astype(np.uint8), "L")
     det, vlight, vmask, size, r_lab = build_vinyl(vinyl_img)
     beam, cone, pool = spot_maps()
@@ -137,7 +143,7 @@ def main(logo_png, vinyl_img, out_dir, only=None):
 
     ff = None if only else subprocess.Popen(
         ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-         "-c:v", "prores_ks", "-profile:v", "3", "-pix_fmt", "yuv422p10le", str(out / "club22_loop_1080p24_prores.mov")],
+         "-c:v", "prores_ks", "-profile:v", "3", "-pix_fmt", "yuv422p10le", str(out / f"club22_loop_1080p24{sfx}_prores.mov")],
         stdin=subprocess.PIPE)
     sheet = []
     for f in (only or range(N)):
@@ -146,10 +152,12 @@ def main(logo_png, vinyl_img, out_dir, only=None):
         rec_a = seg(f, T_LIGHT, T_SHRINK) * (1 - seg(f, T_SPIN, T_OUT - 16))
         rot = angle(f)
 
-        frame = np.zeros((H, W, 3), np.float32)
-        if light > 0:
+        frame = np.zeros((H, W, 3), np.float32)  # premultiplied over black; cov = object coverage
+        cov = np.zeros((H, W, 1), np.float32)
+        dust = motes.draw(f) * cone * light if light > 0 else None
+        if light > 0 and not green:
             frame += beam[..., None] * light
-            frame += (motes.draw(f) * cone * light)[..., None]
+            frame += dust[..., None]
         if rec_a > 0:
             rs = lerp(0.85, 1.0, rec_a)
             sz = int(size * rs)
@@ -171,6 +179,9 @@ def main(logo_png, vinyl_img, out_dir, only=None):
             vinyl = layer[..., :3] * gain[..., None]
             ra = layer[..., 3:4] / 255 * rec_a
             frame = frame * (1 - ra) + vinyl * ra
+            cov = cov * (1 - ra) + ra
+            if green and light > 0:  # dust only where the record is
+                frame += dust[..., None] * ra
 
         # mark: scale about centre, rotate with the record
         s = lerp(1.0, LOGO_SMALL, shrink)
@@ -182,16 +193,19 @@ def main(logo_png, vinyl_img, out_dir, only=None):
             canvas.paste(m, (int(round(CX - sw / 2)), int(round(CY - sh / 2))))
             m = canvas
         ma = np.asarray(m, np.float32)[..., None] / 255
-        ink = RED * (1 - rec_a) + LABEL_INK * rec_a
+        ink = MARK * (1 - rec_a) + (np.array([10, 9, 9], np.float32) if green else LABEL_INK) * rec_a
         lit = ink * (1 + 0.18 * light * pool[..., None]) + np.array([42, 70, 70], np.float32) * (light * (1 - rec_a)) * pool[..., None]
         frame = frame * (1 - ma) + lit * ma
+        cov = cov * (1 - ma) + ma
 
         # grain only while the light is on, so the holds stay exactly the source image
         if light > 0:
             g = np.random.default_rng(int(grain_seeds[f])).normal(0, 2.0, (H, W, 1)).astype(np.float32)
-            frame += g * light
+            frame += g * light * (cov if green else 1)
         if light == 0 and rec_a == 0 and s == 1.0:
-            frame = src.copy()
+            frame = src.copy() if not green else MARK * a_full[..., None] + GREEN * (1 - a_full[..., None])
+        elif green:
+            frame = frame + GREEN * (1 - cov)
         out8 = np.clip(frame + 0.5, 0, 255).astype(np.uint8)
         if only:
             Image.fromarray(out8).save(out / f"still_f{f:03d}.png"); continue
@@ -202,15 +216,16 @@ def main(logo_png, vinyl_img, out_dir, only=None):
     ff.stdin.close(); ff.wait()
     assert ff.returncode == 0
 
-    pr = str(out / "club22_loop_1080p24_prores.mov")
+    pr = str(out / f"club22_loop_1080p24{sfx}_prores.mov")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", pr, "-c:v", "libx264", "-crf", "14", "-preset", "slow",
-                    "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(out / "club22_loop_1080p24.mp4")], check=True)
+                    "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(out / f"club22_loop_1080p24{sfx}.mp4")], check=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", pr, "-c:v", "hap", "-format", "hap",
-                    str(out / "club22_loop_1080p24_hap.mov")], check=True)
+                    str(out / f"club22_loop_1080p24{sfx}_hap.mov")], check=True)
     cs = Image.new("RGB", (480 * 4, 270 * 3))
     for i, im in enumerate(sheet):
         cs.paste(im, ((i % 4) * 480, (i // 4) * 270))
-    cs.save(out / "contact_sheet.jpg", quality=88)
+    cs.save(out / f"contact_sheet{sfx}.jpg", quality=88)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2], sys.argv[3], [int(x) for x in sys.argv[4].split(",")] if len(sys.argv) > 4 else None)
+    args = [a for a in sys.argv[1:] if a != "--green"]
+    main(args[0], args[1], args[2], [int(x) for x in args[3].split(",")] if len(args) > 3 else None, "--green" in sys.argv)
